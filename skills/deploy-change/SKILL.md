@@ -1,7 +1,6 @@
 ---
 name: deploy-change
-description: Sipk.ai POD stage 7, Deploy. Re-runs the hard gate on the merge candidate, merges through the protected route, has the founder start the deployment, verifies live behavior and rollback, and closes the story as DEPLOYED. Use only on a deliberate human invocation after a Regression Certificate for the current HEAD.
-disable-model-invocation: true
+description: Sipk.ai POD stage 7, Deploy. Re-runs the hard gate on the merge candidate, merges through the protected route, deploys to the development environment, pushes main, verifies live behavior and rollback, and closes the story as DEPLOYED. Use after a Regression Certificate for the current HEAD; a production release waits for the founder's yes.
 ---
 
 # Stage 7 · Deploy · `/deploy-change`
@@ -16,7 +15,7 @@ disable-model-invocation: true
 | Accountable, does the work | **Ivan** (DevOps and Deploy) |
 | Consulted | **Adam** on the pre-flight's secrets and workflow changes; **Miro** on what goes into the product's living docs |
 | Orchestrates | **Sipk.ai**, who writes the ledger line and closes the story on the board |
-| Founder | invokes this stage himself, approves the release before merge, starts the deployment, gives a separate yes to any money, deletion, price or legal change, permission expansion or `--no-verify` |
+| Founder | approves a production release before it starts; gives a separate yes to money beyond the story, a deletion, a price or legal change, a production or account-level permission change, or `--no-verify`. A development release needs nothing from him |
 
 ## Input and output
 
@@ -25,15 +24,15 @@ disable-model-invocation: true
 
 ## Hard rule
 
-This stage can merge, deploy and spend, so it runs only on a deliberate human invocation, and the founder's release approval is recorded before merge (R-8.5). It never repairs product code; a changed candidate returns to Review and Regress. Money, resource deletion, price or legal changes, permission expansion and `--no-verify` each need their own explicit human yes (R-5.5).
+This stage can merge, deploy and spend, so Sipk.ai invokes it only once the Regression Certificate exists for the current HEAD, and a production release waits for the founder's recorded approval before merge (R-8.5). It never repairs product code; a changed candidate returns to Review and Regress. Money beyond the story, resource deletion, price or legal changes, production or account-level permission expansion and `--no-verify` each need their own explicit human yes (R-5.5).
 
 ## Steps
 
 1. **The hard gate again, on the merge candidate.** `--deploy`, or `--ui` when there is no deployable surface. Red means stop. No "it's the known failure" hand-waving: fix it, which invalidates the certificate and returns to `/clear-review` (R-3.21).
 2. **Pre-flight for release-bound work.** Walk `templates/release-preflight.md` and record each item with evidence. Inspect the exact file set for secrets, workflow changes, generated artifacts and unrelated changes (R-8.10, R-8.11).
-3. **Merge through the protected route.** Open the pull request with the Review Verdict as its description and let required CI pass (R-8.14). A merge that was not clean changed the candidate: rerun `/test-regression` on the merged tree first. Where a project does not use pull requests, its own documented protected route applies.
-4. **Deploy what changed, nothing more.** Only the affected surfaces, dev before production, by the project's deployment procedure. Where the project reserves deploy authority to the human, prepare the exact command or workflow run with its inputs and ask the founder to start it; the agent never deploys on its own credentials. Then verify the intended behavior live: smoke suite, health, logs, guardrail signals. A successful deploy command is not live verification. Roll back or stop the rollout when live evidence fails, and record what happened.
-5. **Close the loop.** Fill `## Deployment Record`: `- Human deployment approval:` (who, when), `- Required CI URL or receipt:`, `- Merge SHA:`, artifact or provenance id, deployment surface and id, `- Live behavior observed:`, health and guardrail signals, monitoring window, `- Rollback status:` (R-2.7). A story with no deployable surface records `Deployment surface: none — merged to main`. Set `Deployment outcome: DEPLOYED` and `Stage: DEPLOYED`, and check only the Definition of Done boxes that are genuinely true (R-2.8, R-2.15). Set the story to `DONE`, update the board (status, stage, "Right now", the next story marker) and copy proven behavior into the product's living docs (R-3.26). Anything learned that changes the rules: a project rule, reviewer checklist, drift check or evaluation changes now in the same change; a change to the method becomes a proposal (R-10.6). Sipk.ai appends the spend line (R-7.11) and Tina adds the story to the bill.
+3. **Merge through the protected route.** Open the pull request with the Review Verdict as its description and let required CI pass (R-8.14). A merge that was not clean changed the candidate: rerun `/test-regression` on the merged tree first. Where a project does not use pull requests, its own documented protected route applies, and Ivan pushes `main` afterwards where the project allows it.
+4. **Deploy what changed, nothing more.** Only the affected surfaces, dev before production, by the project's deployment procedure. Development deployments run on the pod's own development credentials. For production, prepare the exact command or workflow run with its inputs and ask the founder to start it. Then verify the intended behavior live: smoke suite, health, logs, guardrail signals. A successful deploy command is not live verification. Roll back or stop the rollout when live evidence fails, and record what happened.
+5. **Close the loop.** Fill `## Deployment Record`: `- Human deployment approval:` (the founder, who and when, for production; `not required, development release (R-5.2)` otherwise), `- Required CI URL or receipt:`, `- Merge SHA:`, artifact or provenance id, deployment surface and id, `- Live behavior observed:`, health and guardrail signals, monitoring window, `- Rollback status:` (R-2.7). A story with no deployable surface records `Deployment surface: none — merged to main`. Set `Deployment outcome: DEPLOYED` and `Stage: DEPLOYED`, and check only the Definition of Done boxes that are genuinely true (R-2.8, R-2.15). Set the story to `DONE`, update the board (status, stage, "Right now", the next story marker) and copy proven behavior into the product's living docs (R-3.26). Anything learned that changes the rules: a project rule, reviewer checklist, drift check or evaluation changes now in the same change; a change to the method becomes a proposal (R-10.6). Sipk.ai appends the spend line (R-7.11) and Tina adds the story to the bill.
 
 ## Scripts and checks
 

@@ -40,4 +40,4 @@ Nothing. Read-only, always. You cite defending code for suspected issues already
 
 ## How you report
 
-To Sipk.ai: findings `S-n` with severity, file and line, the concrete failure or attack, and the specific fix, ending CLEAR, CLEAR AFTER FIXES or BLOCK. A BLOCK on a control-plane change goes to the founder by name.
+To Sipk.ai: findings `S-n` with severity, file and line, the concrete failure or attack, and the specific fix, ending CLEAR, CLEAR AFTER FIXES or BLOCK. A BLOCK on a control-plane change in a product repository stops the merge until it is fixed; one in the method repository goes to the founder by name (R-8.2).

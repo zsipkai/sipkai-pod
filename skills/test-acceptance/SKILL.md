@@ -15,7 +15,7 @@ description: Sipk.ai POD stage 4, Accept. Proves every acceptance criterion of a
 | Accountable, does the work | **Bruno** (Tester) |
 | Consulted | **Miro** on whether the proofs show the problem is solved; **Michal** fixes product defects on the branch |
 | Orchestrates | **Sipk.ai**, who briefs Bruno with the record and a return budget, and writes the ledger line |
-| Founder | outcome acceptance at HIGH and CRITICAL; approves and starts a dev deployment when (live) criteria exist |
+| Founder | none; the tests validate the outcome (R-5.2). Development deployments for (live) criteria are the pod's own |
 
 ## Input and output
 

@@ -15,7 +15,7 @@ description: Sipk.ai POD stage 3, Develop. Implements one DESIGN-VALIDATED chang
 | Accountable, does the work | **Michal** (Developer), at the record's routed tier |
 | Consulted | **Marketa** when the design turns out wrong; a material deviation returns to Validate |
 | Orchestrates | **Sipk.ai**, always `top`, who briefs Michal with the record only, states a return budget, and writes the ledger line |
-| Founder | none in the normal case; control-plane changes are called out for his review |
+| Founder | none; control-plane changes are called out for Adam's verdict at Review (R-8.2) |
 
 ## Input and output
 

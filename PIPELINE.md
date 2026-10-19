@@ -32,19 +32,19 @@ Each stage exists because catching the same mistake one stage later costs roughl
 
 ## Who does what, stage by stage
 
-A: accountable for the stage's verdict. D: does the work. C: consulted, gives findings or a decision. The founder's column lists the human checkpoints by risk tier (R-5.2).
+A: accountable for the stage's verdict. D: does the work. C: consulted, gives findings or a decision. The founder's column lists the few human checkpoints that remain (R-5.2).
 
 | Stage | Sipk.ai | Miro | Marketa | Michal | Bruno | Adam | Ivan | Tina | Independent reviewer | Founder |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Before Plan: the story | | A, D | C | | | | | | | story selection, readiness |
-| Plan | orchestrates | C | A, D | | C | C | | C budget | | readiness (STANDARD+) |
-| Validate | orchestrates | C lens | A, D | | | C lens | C | | C (Risk above LOW) | design approval (HIGH+), authority, billable resources |
+| Before Plan: the story | takes the next one | A, D | C | | | | | | | may reorder the board |
+| Plan | orchestrates | C | A, D | | C | C | | C budget | | |
+| Validate | orchestrates | C lens | A, D | | | C lens | C | | C (Risk above LOW) | design approval (CRITICAL), production or account-level authority, undeclared billable resources |
 | Develop | orchestrates, ledger | | C on deviations | A, D | | | | | | |
-| Accept | orchestrates | C does it solve the problem | | C fixes | A, D | | | | | outcome acceptance (HIGH+) |
-| Review | A, generalist pass | C lens | C lens | C fixes | C test diff, doc drift | C lens | C control plane | | C (Risk above LOW) | merge (HIGH+), control-plane verdicts |
+| Accept | orchestrates | C does it solve the problem | | C fixes | A, D | | | | | |
+| Review | A, generalist pass | C lens | C lens | C fixes | C test diff, doc drift | C lens | C control plane | | C (Risk above LOW) | |
 | Regress | orchestrates | | | | A, D | | C | | | |
-| Deploy | orchestrates | | | | | C | A, D | | | release approval, starts the deploy |
-| Always | enforces `AGENTS.md` | owns the backlog | | | | | owns the gate, hooks, CI | ledger, metrics, proposals | | approves every change to the method |
+| Deploy | orchestrates | | | | | C | A, D | | | production release approval |
+| Always | enforces `AGENTS.md` | owns the backlog | | | | | owns the gate, hooks, CI | ledger, metrics, proposals | | approves every change to the method; may overturn any recorded decision |
 
 ## Evidence states and the change record
 
@@ -96,10 +96,10 @@ The lane is said out loud at the start and written in the record's `Lane:` field
 
 | Risk | Typical change | Executing tier | Human checkpoints |
 |---|---|---|---|
-| LOW | isolated, reversible, no durable contract | `small` when mechanical and fully specified | story selection, final deploy decision |
-| STANDARD | normal product behavior with tested rollback | `mid` | story readiness, final deploy decision |
-| HIGH | security, money, privacy, migration, public contract, broad dependency change, control-plane files | `top` | story readiness, design approval, outcome acceptance, merge |
-| CRITICAL | irreversible actions, regulated behavior, destructive data change, production authority expansion | `top` | named owner approval at every transition plus independent review |
+| LOW | isolated, reversible, no durable contract | `small` when mechanical and fully specified | production release only |
+| STANDARD | normal product behavior with tested rollback | `mid` | production release only |
+| HIGH | security, money, privacy, migration, public contract, broad dependency change, control-plane files | `top` | production release only |
+| CRITICAL | irreversible actions, regulated behavior, destructive data change, production authority expansion | `top` | design approval and production release, plus independent review |
 
 Size sets the budget: S 300k, M 750k, L 1.5M, XL 3M tokens for the whole pipeline; XXL is split first (R-7.9).
 
@@ -121,12 +121,12 @@ The model may vary its proposal. The evidence required to reach production does 
 
 How "fix a wrong category in one tap" runs through the team:
 
-1. **Miro** has the story `DEFINED`: outcome, owner, falsifiable criteria, non-goals, risk and size on the board. The founder picks it.
+1. **Miro** has the story `DEFINED`: outcome, owner, falsifiable criteria, non-goals, risk and size on the board. Sipk.ai takes it from the top of the board when the previous story is `DEPLOYED` and the token allowance covers its budget.
 2. **`/plan-task`.** Sipk.ai opens a fresh session. Marketa maps the blast radius, searches the decisions, writes the Discovery Brief with the acceptance map, routes the tier and sets the budget. Miro confirms the criteria still say what the product needs. `PLANNED`.
 3. **`/validate-design`.** Marketa attacks her own brief as devil's advocate; Adam and Miro read it through their lenses in parallel; the independent reviewer judges the pack from outside. One blocker lands, the record is amended. `DESIGN-VALIDATED`.
 4. **`/develop-code`.** Michal builds on a story branch at the routed tier, docs in the same commit, fast gate green, self-check against the governance rules. Sipk.ai writes the measured spend into the record. `DEVELOPED`.
 5. **`/test-acceptance`.** Bruno gives every criterion a named proof, a Playwright test for what the user sees, and a counterexample that shows each test can fail. `ACCEPTANCE-TEST-PROVEN`.
 6. **`/clear-review`.** Marketa, Adam, Miro and Bruno review the diff in parallel; the independent reviewer judges it from outside; Sipk.ai does the generalist pass, consolidates one table, and has Michal fix the one HIGH finding and re-run its proof. `REVIEW-CLEARED`.
 7. **`/test-regression`.** Bruno runs the full gate on the exact reviewed SHA and issues the certificate. `REGRESSION-TEST-PROVEN`.
-8. **`/deploy-change`.** The founder says ship. Ivan re-runs the hard gate on the merge candidate, merges through the protected route, prepares the exact deploy command, and the founder starts it. Ivan verifies live behavior and records the rollback status. `DEPLOYED`.
+8. **`/deploy-change`.** Sipk.ai starts the stage once the certificate exists. Ivan re-runs the hard gate on the merge candidate, merges through the protected route, deploys to the development environment and pushes `main`; a production release waits for the founder's yes. Ivan verifies live behavior and records the rollback status. `DEPLOYED`.
 9. **Tina** adds the story to the bill, updates the delivery metrics, and files the one thing the story taught as a proposal.

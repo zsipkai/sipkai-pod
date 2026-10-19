@@ -1,5 +1,15 @@
 # Sipk.ai POD changelog
 
+## 2.1.0 — 2026-10-19
+
+Approved by Zoltán Šipkai (IMPROVEMENTS.md SI-157). The pod runs on its own; the founder keeps the method and production.
+
+- **No human scheduler.** Sipk.ai starts every stage in a fresh session itself and takes the next story from the top of the board when one is `DEPLOYED` and the token allowance covers its budget (R-2.12, R-2.13, R-2.18).
+- **Checkpoints reduced to what matters.** LOW to HIGH: only a production release needs the founder; CRITICAL adds design approval. Tests validate the outcome; lenses, the independent reviewer and the gate clear the merge (R-5.2).
+- **Development is the pod's.** Deployments, infrastructure and permissions in the development environment inside an approved story need no human; production and account-level changes do (R-5.5, R-5.10, R-8.5). `/deploy-change` is invoked by Sipk.ai after the certificate and pushes `main` where the project allows it.
+- **Second opinion fully automatic** (R-6.7). Design QUESTIONs are answered by Sipk.ai with the best-supported option and reported (R-6.13).
+- **Control plane.** In the method repository the founder reviews every change; in a product repository Adam gives the verdict (R-8.2).
+
 ## 2.0.0 — 2026-10-19
 
 Approved by Zoltán Šipkai (IMPROVEMENTS.md SI-156; SADR-004, SADR-005). Structure only; no rule changed.

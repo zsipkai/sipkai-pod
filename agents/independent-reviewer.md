@@ -18,7 +18,7 @@ bash sipkai-pod/scripts/second-opinion.sh STORY-NNN review          # pack for R
 bash sipkai-pod/scripts/second-opinion.sh STORY-NNN review --auto   # send it to the other family's API
 ```
 
-The paste path: the founder pastes the pack into the other family's top model and pastes the findings back. The automatic path: `--auto` sends the pack to that family's API, with the key read at run time from a fixed Keychain item and never stored in the repository or shown in the process list, and writes the findings next to the pack. Never a mini or nano variant: verification never downsizes, across families too (R-6.12).
+`--auto` sends the pack to that family's API, with the key read at run time from a fixed Keychain item and never stored in the repository or shown in the process list, and writes the findings next to the pack; when the API fails, the stage records it and declares the skip (R-6.7). The paste path stays for a human who wants to run it by hand. Never a mini or nano variant: verification never downsizes, across families too (R-6.12).
 
 ## What it returns
 

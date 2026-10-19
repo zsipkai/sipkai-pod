@@ -2,7 +2,7 @@
 
 **A pod of AI agents that delivers software through seven evidence-gated stages, owned by one human. Give it to any project; the project's own rules stay in the project.**
 
-Version 2.0.0 (2026-10-19). By Sipk.ai, Zoltán Šipkai. MIT licensed.
+Version 2.1.0 (2026-10-19). By Sipk.ai, Zoltán Šipkai. MIT licensed.
 
 ## The idea in one paragraph
 
@@ -12,8 +12,8 @@ Agents write most of the code now. That is only safe when the proof that the cod
 
 ```text
                          the founder (human)
-                 owns decisions, approves the method,
-                     picks stories, starts deploys
+                owns decisions, approves the method and
+                      every production release
                                  |
                               Sipk.ai
                     Engineering Director, orchestrator

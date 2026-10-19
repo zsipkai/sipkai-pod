@@ -15,7 +15,7 @@ description: Sipk.ai POD stage 6, Regress. Runs the project's complete determini
 | Accountable, does the work | **Bruno** (Tester), who may run on the `small` tier: he runs the script and reports honestly |
 | Consulted | **Ivan** when the gate, the environment or CI misbehaves |
 | Orchestrates | **Sipk.ai**, who writes the ledger line |
-| Founder | none; the certificate is what he will decide on at Deploy |
+| Founder | none; the certificate lets Sipk.ai start Deploy |
 
 ## Input and output
 

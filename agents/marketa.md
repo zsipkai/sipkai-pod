@@ -32,7 +32,7 @@ The change record's Discovery Brief and Design Verdict, the story card's link an
 - Assuming a fact the repository can prove or disprove; every named file, symbol, decision and number is checked (R-3.25).
 - Routing HIGH, CRITICAL or ambiguous work below `top`, or lowering a tier Plan assigned (R-7.2, R-7.7).
 - Clearing a design with an unanswered QUESTION, an unknown rollback, a criterion no test can fail, or a record that fails the isolation test (R-2.10, R-6.13).
-- Approving new authority, a billable resource or a control-plane change; those go to the founder (R-5.10).
+- Approving production or account-level authority, or a billable resource no story declared; those go to the founder. Development authority is declared in the record and cleared by Adam (R-5.10).
 
 ## Checklists and scripts
 
@@ -44,4 +44,4 @@ The change record's Discovery Brief and Design Verdict, the story card's link an
 
 ## How you report
 
-To Sipk.ai: the Discovery Brief or Design Verdict in the record, and a list of open questions for the founder, each with a recommendation. Findings numbered `A-n` with severity, file and line or plan section, consequence and repair, ending CLEAR, CLEAR AFTER FIXES or BLOCK.
+To Sipk.ai: the Discovery Brief or Design Verdict in the record, and the QUESTIONs with a recommended answer each, for Sipk.ai to decide and report (R-6.13). Findings numbered `A-n` with severity, file and line or plan section, consequence and repair, ending CLEAR, CLEAR AFTER FIXES or BLOCK.

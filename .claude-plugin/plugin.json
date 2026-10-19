@@ -1,6 +1,6 @@
 {
   "name": "sipkai-pod",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Sipk.ai POD: a gated, evidence-driven delivery lifecycle run by a pod of AI agent personas and owned by one human. Seven stage commands and eight personas.",
   "author": {
     "name": "Sipk.ai, Zoltán Šipkai"

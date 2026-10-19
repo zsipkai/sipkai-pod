@@ -10,7 +10,7 @@ Rules: `RULES.md` section 1.
 
 ## 2. One route, seven stages, one record
 
-Every change walks the same route: **Plan, Validate, Develop, Accept, Review, Regress, Deploy.** Each stage proves one thing and leaves one evidence state behind, from `PLANNED` to `DEPLOYED`. One file, the change record, travels the whole route and ends as the story's audit log. The pod moves from stage to stage and from story to story on its own; the human is not a scheduler. A fresh session must be able to run the next stage from that record alone. The design-validated record is the delivery contract; a material deviation goes back to Validate.
+Every change walks the same route: **Plan, Validate, Develop, Accept, Review, Regress, Deploy.** Each stage proves one thing and leaves one evidence state behind, from `PLANNED` to `DEPLOYED`. One file, the change record, travels the whole route and ends as the story's audit log. The human names the story; the pod moves from stage to stage on its own until it is deployed. A fresh session must be able to run the next stage from that record alone. The design-validated record is the delivery contract; a material deviation goes back to Validate.
 Rules: `RULES.md` section 2. Route: `PIPELINE.md`.
 
 ## 3. Evidence, never claims

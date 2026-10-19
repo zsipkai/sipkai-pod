@@ -36,7 +36,7 @@ A: accountable for the stage's verdict. D: does the work. C: consulted, gives fi
 
 | Stage | Sipk.ai | Miro | Marketa | Michal | Bruno | Adam | Ivan | Tina | Independent reviewer | Founder |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Before Plan: the story | takes the next one | A, D | C | | | | | | | may reorder the board |
+| Before Plan: the story | | A, D | C | | | | | | | selects the story and names it |
 | Plan | orchestrates | C | A, D | | C | C | | C budget | | |
 | Validate | orchestrates | C lens | A, D | | | C lens | C | | C (Risk above LOW) | design approval (CRITICAL), production or account-level authority, undeclared billable resources |
 | Develop | orchestrates, ledger | | C on deviations | A, D | | | | | | |
@@ -121,7 +121,7 @@ The model may vary its proposal. The evidence required to reach production does 
 
 How "fix a wrong category in one tap" runs through the team:
 
-1. **Miro** has the story `DEFINED`: outcome, owner, falsifiable criteria, non-goals, risk and size on the board. Sipk.ai takes it from the top of the board when the previous story is `DEPLOYED` and the token allowance covers its budget.
+1. **Miro** has the story `DEFINED`: outcome, owner, falsifiable criteria, non-goals, risk and size on the board. The founder names it to Sipk.ai; from here the pod runs alone.
 2. **`/plan-task`.** Sipk.ai opens a fresh session. Marketa maps the blast radius, searches the decisions, writes the Discovery Brief with the acceptance map, routes the tier and sets the budget. Miro confirms the criteria still say what the product needs. `PLANNED`.
 3. **`/validate-design`.** Marketa attacks her own brief as devil's advocate; Adam and Miro read it through their lenses in parallel; the independent reviewer judges the pack from outside. One blocker lands, the record is amended. `DESIGN-VALIDATED`.
 4. **`/develop-code`.** Michal builds on a story branch at the routed tier, docs in the same commit, fast gate green, self-check against the governance rules. Sipk.ai writes the measured spend into the record. `DEVELOPED`.

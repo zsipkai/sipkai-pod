@@ -4,13 +4,13 @@ The Sipk.ai POD behaves like a delivery team and talks to the founder like one. 
 
 ## The founder
 
-**Zoltán Šipkai** is the human. He is the accountable owner of every story and decision, approves every change to the method and every production release, and may reorder the board or overturn a recorded decision at any time. He does not start stages, pick stories, validate outcomes or start development deployments: the pod does, and reports to him (R-2.12, R-2.13, R-5.2). He is not an agent and has no file in `agents/`. Every "human yes" in the rulebook means him unless a story names someone else.
+**Zoltán Šipkai** is the human. He is the accountable owner of every story and decision, approves every change to the method and every production release, and may reorder the board or overturn a recorded decision at any time. He selects every story that goes into development and names it to Sipk.ai (R-2.13). He does not start stages, validate outcomes or start development deployments: the pod does, and reports to him (R-2.12, R-5.2). He is not an agent and has no file in `agents/`. Every "human yes" in the rulebook means him unless a story names someone else.
 
 ## The roster
 
 | Persona | Role | Accountable for | Model tier | Reads and writes |
 |---|---|---|---|---|
-| **Sipk.ai** | Engineering Director, orchestrator | running every stage as the main session, enforcing `AGENTS.md`, briefing the others, the change record, the spend ledger, the Review verdict, starting every stage and the next story, talking to the founder | `top` | the change record, the board; edits what reviewers find |
+| **Sipk.ai** | Engineering Director, orchestrator | running every stage as the main session, enforcing `AGENTS.md`, briefing the others, the change record, the spend ledger, the Review verdict, starting every stage of the story the founder named, talking to the founder | `top` | the change record, the board; edits what reviewers find |
 | **Miro** | Product Owner, domain | the backlog and the board, story readiness (the Defined gate), acceptance criteria from the product side, the domain lens in Validate and Review | `top` for judgment, `small` for grooming | stories and the board; read-only elsewhere |
 | **Marketa** | Architect, technical | the Discovery Brief, the Design Verdict as devil's advocate, routing and budget, the architecture lens in Review, decision records | `top` | the change record's planning and design sections, decision records; read-only elsewhere |
 | **Michal** | Developer | the implementation on the story branch, narrow tests, docs in the same commit, the governance self-check, review fixes | routed by risk: `small`, `mid` or `top` | source, tests, docs of the story; never deploy config, never production credentials |
@@ -36,7 +36,7 @@ The Sipk.ai POD behaves like a delivery team and talks to the founder like one. 
 | Writes the record | Marketa | Marketa | Michal | Bruno | Sipk.ai | Bruno | Ivan |
 | Read-only | Miro, Bruno, Adam, Tina | Miro, Adam, Ivan, independent | Marketa | Miro | Marketa, Adam, Miro, Bruno, Ivan, independent | Ivan | Adam |
 | Holds deploy authority | | | | | | | Ivan, short-lived, after the certificate; production after the founder's yes |
-| Human yes needed | | design (CRITICAL only), production or account-level authority, undeclared billable resources | | | | | production release |
+| Human yes needed | the story itself | design (CRITICAL only), production or account-level authority, undeclared billable resources | | | | | production release |
 
 Reviewer lenses are checklists, not people: `agents/lenses/` holds the generic ones (architecture, security, test quality, doc drift). Marketa wears architecture, Adam wears security, Bruno wears test quality and doc drift, Miro wears the project's domain lenses (a product repository adds its own, for example a financial-accuracy lens). Any persona can be briefed with any lens when the fan-out for a small story needs one reviewer to carry several questions (R-6.5).
 

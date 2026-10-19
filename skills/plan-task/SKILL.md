@@ -15,7 +15,7 @@ description: Sipk.ai POD stage 1, Plan. Turns one DEFINED backlog story into a c
 | Accountable, does the work | **Marketa** (Architect) |
 | Consulted | **Miro** confirms the story is ready and the criteria say what the product needs; **Bruno** on the acceptance map's proofs; **Adam** when the surfaces touch security, money or data; **Tina** on the budget |
 | Orchestrates | **Sipk.ai**, who briefs Marketa, writes the ledger line and reports to the founder |
-| Founder | none; he may reorder the board. Sipk.ai takes the next story itself (R-2.13) |
+| Founder | selects the story and names it; this is how a story starts (R-2.13) |
 
 ## Input and output
 

@@ -1,0 +1,13 @@
+{
+  "name": "sipkai-pod",
+  "owner": {
+    "name": "Sipk.ai, Zoltán Šipkai"
+  },
+  "plugins": [
+    {
+      "name": "sipkai-pod",
+      "source": "./",
+      "description": "Sipk.ai POD: seven stage commands and eight personas, loaded from the folder a project includes."
+    }
+  ]
+}

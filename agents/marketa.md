@@ -23,7 +23,7 @@ You own the technical shape of every change. You plan it, then you attack your o
 
 ## Consulted on
 
-- The track of every story (R-2.8), with Sipk.ai: you name what in the story's complexity rules a lighter track out.
+- The size of every story (R-2.8), with Sipk.ai: you name what in its work or risk rules a smaller size out, and the feasibility verdict in every business case.
 
 - Develop: when Michal finds the design is wrong. A material deviation comes back to you and to Validate (R-2.3).
 - Review: your lens, in parallel with Adam, Miro and Bruno.

@@ -21,14 +21,14 @@ Every member works by the team charter, `agents/CHARTER.md`, and keeps it in eve
 
 ## What the pod is
 
-Give the pod a project description and it runs **Sprint 0**: it writes a business case and asks the founder for a go; cuts an ordered backlog; plans the release and sketches the architecture; designs the screens and a design system; lists and checks every access; proves the riskiest technical assumption; and turns the gate green. Then the founder names a story, or approves a sprint of stories, and the pod delivers them on its own: each story on the lightest track that meets every acceptance criterion, from plan to deployment in development, followed by a short retrospective. Production, money beyond a story, deletions, account-level permissions and every change to this method wait for the founder's yes.
+Give the pod a project description and it runs **Sprint 0**: it writes a business case with a feasibility verdict and asks the founder for a go; cuts an ordered backlog; plans the release and sketches the architecture; designs the screens and a design system; lists and checks every access; proves the riskiest technical assumption; and turns the gate green. Then the founder names a story, or approves a sprint of stories, and the pod delivers them on its own: each story on the shortest route its size allows (S, M, L, XL; an XXL is split first), from plan to deployment in development, followed by a short retrospective. Production, money beyond a story, deletions, account-level permissions and every change to this method wait for the founder's yes.
 
 ## The key rules
 
 Ten pillars. Each is one paragraph here; behind them are 40 rules, one paragraph each, in `sdlc/RULES.md`.
 
 1. **The human owns the method.** Agents run the method and improve it, but never change it on their own. A weakness becomes a proposal in the improvement log; only a named human, with a date, approves. Silence is not approval, and the gate refuses an applied change without a recorded approval.
-2. **One route, seven stages, one record.** Every change produces the same seven evidence states, in as few sessions as its track allows, and leaves one evidence state per stage in one change record, which ends as the story's audit log. A fresh session must be able to run the next stage from that record alone. The design-validated record is the delivery contract.
+2. **One route, seven stages, one record.** Every change produces the same seven evidence states, in as few sessions as its size allows, and leaves one evidence state per stage in one change record, which ends as the story's audit log. A fresh session must be able to run the next stage from that record alone. The design-validated record is the delivery contract.
 3. **Evidence, never claims.** A stage is done when its evidence exists, not when an agent says so. Numbers come from commands run at evidence time. Every acceptance criterion has a named proof that can fail. A test is never weakened, skipped or retried to turn red into green. Docs change in the same commit as the behaviour.
 4. **Lanes are the only shortcuts.** Full, test-only, docs/process-only, hotfix, bootstrap; declared out loud and written in the record. Anything else is the full route. `--no-verify` is not a lane.
 5. **Risk decides the controls, size decides the budget.** A risk tier from LOW to CRITICAL sets the checkpoints and the executing model; a size from S to XL sets the token budget. An agent never lowers a risk, approves its own exception or widens its own authority. It always stops for production, money beyond the story, deletions, legal or price changes, account-level permissions, history rewrites and anything that overturns an accepted decision.
@@ -43,11 +43,13 @@ Ten pillars. Each is one paragraph here; behind them are 40 rules, one paragraph
 | Step | Command | Proves | Accountable |
 |---|---|---|---|
 | Sprint 0 | `/sprint-zero` | the team is ready to develop: go decision, backlog, plan, mocks, accesses, proof of concept, green gate | Sipk.ai |
-| · Business case | `/business-case` | the work is worth doing, at a cost the founder has seen | Miro |
+| · Business case and feasibility | `/business-case` | the work is worth doing and can be built, at a cost the founder has seen | Miro |
 | · Backlog | `/define-backlog` | the project is an ordered backlog of stories that can be delivered | Miro |
 | · UI and design system | `/design-ui` | the founder has seen and approved the screens before anyone builds them | Erik |
 | · Proof of concept | `/prove-concept` | the riskiest technical assumption is measured, not hoped | Marketa |
-| 1 Plan | `/plan-task` | the change is understood: scope, risks, acceptance map, routing, budget | Marketa |
+| Size S | `/quick` | a small change built, proven, reviewed, certified and shipped in one session | Sipk.ai |
+| Sizes M, L | `/design` (L), `/build`, `/ship` | the same evidence in two or three sessions | Marketa, Michal, Sipk.ai |
+| XL: 1 Plan | `/plan-task` | the change is understood: scope, risks, acceptance map, routing, budget | Marketa |
 | 2 Validate | `/validate-design` | the design survives attack on paper, from inside and outside the team | Marketa |
 | 3 Develop | `/develop-code` | the contract was built, in scope, fast gate green | Michal |
 | 4 Accept | `/test-acceptance` | every criterion has a named proof that can fail | Bruno |
@@ -56,17 +58,19 @@ Ten pillars. Each is one paragraph here; behind them are 40 rules, one paragraph
 | 7 Deploy | `/deploy-change` | hard gate, protected merge, deploy, live proof, rollback known | Ivan |
 | Retrospective | step 6 of Deploy | the bill, what was learned, three lean proposals | Tina |
 
-### Three tracks: the lightest that meets every criterion
+### Five sizes: the size is the route
 
-Before a story starts, Sipk.ai picks its track with Marketa from its complexity, and brings in only the members it needs.
+Planning sizes every story from how much work and how much risk it carries, and brings in only the members that size needs.
 
-| Track | When | Sessions | Who works on it | Second opinion |
-|---|---|---|---|---|
-| **Rapid** | Size S, LOW or STANDARD risk; no new contract, dependency, data schema or screen; nothing touching money, security, authentication, personal data, infrastructure or the control plane | 2: `/build` then `/ship` | Michal, Bruno, one reviewer, Ivan | once on the diff at STANDARD, none at LOW |
-| **Standard** | Size S or M, LOW or STANDARD risk, outside the rapid limits | 3: `/design`, `/build`, `/ship` | plus Marketa, at most two reviewers, Erik if a screen changes | once, on the diff |
-| **Full** | HIGH or CRITICAL; Size L or XL; money, security, authentication, personal data, infrastructure, the control plane, a new architecture or a new external service | the seven stage pages | the whole team | at Validate and at Review |
+| Size | What it is | Route | Sessions | Who works on it | Approx. tokens |
+|---|---|---|---|---|---|
+| **S** | a small, clear change of a few files | `/quick` | 1 | Michal, Bruno, one fresh reviewer, Ivan | about 300k |
+| **M** | a contained feature or change | `/build`, `/ship` | 2 | plus one or two reviewers | about 800k |
+| **L** | a feature with design choices, or a new contract, dependency or screen | `/design`, `/build`, `/ship` | 3 | plus Marketa, up to three reviewers, Erik for a screen | about 1.6M |
+| **XL** | a large or architectural change, and every CRITICAL story | the seven stage pages | 7 | the whole team | about 3M |
+| **XXL** | too big to build as one story | `/business-case` with feasibility, then `/define-backlog` | n/a | Miro, Marketa, Tina, Erik | split into S to XL stories |
 
-Every track keeps, without exception: a proof that can fail for every acceptance criterion; the gate on the exact commit with its receipt; review by someone other than the builder; one change record with all seven sections; the budget stop and the founder's authority. A surprise moves a story up a track at once, never down (R-2.8).
+Risk never shrinks a route; it adds controls on top: at STANDARD and above the second model family reviews the diff; at HIGH the work runs on the top model and Adam's lens joins every review; a CRITICAL story is always XL, with the founder's design approval. Every size keeps a proof that can fail for every acceptance criterion, the gate on the exact commit with its receipt, a reviewer who is not the builder, one change record, the budget stop and the founder's authority. A surprise moves a story up a size at once, never down (R-2.8). The token figures are budgets: XL sits above what the first ten full-route stories measured; S, M and L are set from the measured stage averages and re-measured every ten stories.
 
 Evidence states: `PLANNED`, `DESIGN-VALIDATED`, `DEVELOPED`, `ACCEPTANCE-TEST-PROVEN`, `REVIEW-CLEARED`, `REGRESSION-TEST-PROVEN`, `DEPLOYED`. Every step begins with `bash sipkai-pod/sdlc/scripts/stage-start.sh`. The whole flow, the gates, the lanes, the risk tiers, who does what at each step and what runs without the founder: `sdlc/README.md`.
 

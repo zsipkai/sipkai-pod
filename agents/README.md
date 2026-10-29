@@ -27,7 +27,7 @@ The Sipk.ai POD behaves like a delivery team and talks to the founder like one. 
 
 Every story runs the same loop, stage after stage:
 
-1. **Sipk.ai picks the track** (R-2.8) with Marketa: the lightest of rapid, standard and full that meets every acceptance criterion, and with it the members the story needs. Nobody else is pulled in.
+1. **Sipk.ai and Marketa size the story** (R-2.8): S, M, L or XL from its work and its risk, and with it the route and the members it needs. Nobody else is pulled in; an XXL is split first.
 2. **Sipk.ai briefs.** It starts the stage in a fresh session from the project root, runs the start check, and gives each persona the slice of the record it needs, a fixed list of files, a return budget and the report format (R-6.1, R-8.1).
 3. **The accountable persona does the work**, at its model tier, inside the files and tools its page allows. Lenses review in parallel and form their findings before reading the builder's conclusions (R-6.1).
 4. **Everyone reports in the same shape**: numbered findings with severity, file and line, the concrete failure and the fix, ending with a verdict such as CLEAR, CLEAR AFTER FIXES or BLOCK. Each report is saved as it arrives, so a stopped stage loses nothing (R-6.3).

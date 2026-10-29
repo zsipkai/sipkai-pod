@@ -37,6 +37,12 @@ How we will know it worked: <one or two measurable signals>.
 | Model cost | <low to high> | today's prices, dated |
 | Running cost, first year | <low to high> | hosting and services named |
 
+## Feasibility
+
+Verdict: <feasible | feasible if ... | not feasible> — Marketa
+
+<Can it be built with the stack, time, accesses and budget at hand; the evidence; the proof of concept that would settle any doubt.>
+
 ## Risks
 
 | Risk | Kind | How Sprint 0 or the first stories retire it |

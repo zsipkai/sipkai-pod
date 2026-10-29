@@ -6,7 +6,7 @@
 # SUPERSEDED. Also enforces metadata, the routing floor (HIGH/CRITICAL run
 # on `top`), no placeholders in completed sections, regression and
 # deployment receipts, and a fully checked Definition of Done at DEPLOYED.
-# Since 2.2 also: the track's limits (R-2.8, since 2.4), the declared second
+# Since 2.2 also: size as the route (R-2.8, since 2.6), the declared second
 # opinion (R-6.2), the gate receipt behind a Regression Certificate (R-2.2)
 # and the budget stop (R-7.2). Records listed in SDLC_LEGACY_RECORDS
 # (sdlc.config.sh) were finished before 2.2 and keep the old checks only.
@@ -56,7 +56,6 @@ while IFS= read -r record; do
   esac
   lane=$(sed -n 's/^Lane:[[:space:]]*//p' "$record" | head -n 1 | tr -d '[:space:]')
   size=$(sed -n 's/^Size:[[:space:]]*//p' "$record" | head -n 1 | awk '{print $1}')
-  track=$(sed -n 's/^Track:[[:space:]]*//p' "$record" | head -n 1 | awk '{print $1}')
 
   for i in "${!SECTIONS[@]}"; do
     grep -Fqx "## ${SECTIONS[$i]}" "$record" || { report_fail "$name: missing section '## ${SECTIONS[$i]}'"; continue; }
@@ -78,22 +77,13 @@ while IFS= read -r record; do
   fi
   id="${name%.md}"
   if [[ "$LEGACY" != *" $id "* ]]; then
-    # The track (R-2.8): every full-lane record names one, within its limits.
-    if [ "$lane" = "full" ]; then
-      case "$track" in
-        rapid)
-          [ "$size" = "S" ] || report_fail "$name: the rapid track is for Size S only (got '${size:-none}') — R-2.8"
-          case "$risk" in LOW|STANDARD) ;; *) report_fail "$name: the rapid track is for LOW or STANDARD risk (got '${risk:-none}') — R-2.8";; esac ;;
-        standard)
-          case "$size" in S|M) ;; *) report_fail "$name: the standard track is for Size S or M (got '${size:-none}') — R-2.8";; esac
-          case "$risk" in LOW|STANDARD) ;; *) report_fail "$name: the standard track is for LOW or STANDARD risk (got '${risk:-none}') — R-2.8";; esac ;;
-        full) ;;
-        *) report_fail "$name: needs 'Track: rapid', 'Track: standard' or 'Track: full' (got '${track:-none}') — R-2.8" ;;
-      esac
+    # Size is the route (R-2.8): a CRITICAL story is always planned as XL.
+    if [ "$risk" = "CRITICAL" ] && [ "$size" != "XL" ]; then
+      report_fail "$name: a CRITICAL story is always planned as XL (got Size '${size:-none}') — R-2.8"
     fi
-    # Declared second opinion (R-6.2): the full track at Validate and Review; every track at Review above LOW.
+    # Declared second opinion (R-6.2): on the diff above LOW risk for every size, and on the design too for XL.
     if [ "$risk" != "LOW" ]; then
-      if [ "$lane" = "full" ] && [ "$track" = "full" ] && [ "$rank" -ge 1 ] && ! section_body "$record" "Design Verdict" | grep -Eq '^Second opinion:[[:space:]]*[^[:space:]<]'; then
+      if [ "$lane" = "full" ] && [ "$size" = "XL" ] && [ "$rank" -ge 1 ] && ! section_body "$record" "Design Verdict" | grep -Eq '^Second opinion:[[:space:]]*[^[:space:]<]'; then
         report_fail "$name: Design Verdict needs a 'Second opinion:' line (the X-n findings, or 'skipped' with the reason) — R-6.2"
       fi
       if [ "$lane" = "full" ] && [ "$rank" -ge 4 ] && ! section_body "$record" "Review Verdict" | grep -Eq '^Second opinion:[[:space:]]*[^[:space:]<]'; then

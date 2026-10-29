@@ -1,7 +1,7 @@
 {
   "name": "sipkai-pod",
-  "version": "2.5.0",
-  "description": "Sipk.ai POD: a digital agile team of AI agent personas, owned by one human. Sprint 0 from a project description, then seven evidence-gated stages per story.",
+  "version": "2.6.0",
+  "description": "Sipk.ai POD: a digital agile team of AI agent personas, owned by one human. Business case, feasibility and Sprint 0 from a project description; then every story on the route its size sets, S to XL.",
   "author": {
     "name": "Sipk.ai, Zoltán Šipkai"
   },

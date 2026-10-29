@@ -2,7 +2,7 @@
 
 **A digital agile team of AI agents, owned by one human. Give it a project description: it runs Sprint 0, then delivers story after story through seven evidence-gated stages. Give it to any project; everything project-specific stays in the project.**
 
-Version 2.5.0 (2026-10-29). By Sipk.ai, Zoltán Šipkai. MIT licensed.
+Version 2.6.0 (2026-10-29). By Sipk.ai, Zoltán Šipkai. MIT licensed.
 
 ## The idea in one paragraph
 
@@ -33,13 +33,15 @@ Each persona is one file in `agents/`, which is also its agent definition: goal,
 
 ```text
 Project description
-  -> Sprint 0: business case (go?) -> backlog -> plan and architecture
+  -> Sprint 0: business case and feasibility (go?) -> backlog -> plan and architecture
                -> UI mocks and design system -> accesses -> proof of concept -> gate green
   -> the founder names a story or approves a sprint
-  -> per story, the lightest track that meets every criterion:
-       rapid:    /build -> /ship
-       standard: /design -> /build -> /ship
-       full:     Plan -> Validate -> Develop -> Accept -> Review -> Regress -> Deploy
+  -> per story, the route its size sets:
+       S:   /quick                                   (one session)
+       M:   /build -> /ship                          (two)
+       L:   /design -> /build -> /ship               (three)
+       XL:  Plan -> Validate -> Develop -> Accept -> Review -> Regress -> Deploy
+       XXL: business case and feasibility -> backlog -> S to XL stories
   -> retrospective
 ```
 

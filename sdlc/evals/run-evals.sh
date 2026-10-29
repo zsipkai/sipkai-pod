@@ -41,10 +41,9 @@ evaluate "records: certificate without the gate receipt"   nonzero "needs '- Gat
 evaluate "records: over budget, stage completed anyway"    nonzero "without a human's"         records over-budget-no-decision
 evaluate "records: over budget, halted inside the stage"   0       "PASS"                      records over-budget-halted
 evaluate "records: over budget with a human's decision"    0       "PASS"                      records over-budget-decided
-evaluate "records: rapid track on a Size M story"          nonzero "rapid track is for Size S only" records rapid-size-m
-evaluate "records: rapid track, LOW risk, reviewed alone"  0       "PASS"                      records rapid-low-risk
-evaluate "records: standard track on HIGH risk"            nonzero "standard track is for LOW or STANDARD" records standard-high-risk
-evaluate "records: a new record without a track"           nonzero "needs 'Track: rapid'"      records missing-track
+evaluate "records: a CRITICAL story below XL"              nonzero "always planned as XL"      records critical-below-xl
+evaluate "records: Size S at LOW risk, reviewed alone"     0       "PASS"                      records s-low-risk-reviewed
+evaluate "records: Size L design needs no second opinion"  0       "PASS"                      records l-high-design-without-opinion
 
 # Start-of-stage check: the session's folder and the budget stop.
 evaluate "stage start: session outside the project root"   nonzero "not in the project root"   bash -c 'cd sipkai-pod && bash sdlc/scripts/stage-start.sh STORY-901'

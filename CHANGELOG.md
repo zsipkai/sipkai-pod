@@ -1,5 +1,15 @@
 # Sipk.ai POD changelog
 
+## 2.6.0 — 2026-10-29
+
+Approved by Zoltán Šipkai in chat on 2026-10-29 ("refactor the AI SDLC that it will be S, M, L, XL, XXL ... the most rapid, token efficient but quality development"). SI-171. 50 process evaluations.
+
+- **Size is the route** (R-2.8). S: one session, `/quick`. M: `/build`, `/ship`. L: `/design`, `/build`, `/ship`. XL: the seven stage pages. XXL: never one story; a business case with feasibility and a backlog of S to XL stories. The three tracks of 2.4 are gone.
+- **Risk adds controls, never removes them**: the second model family on the diff at STANDARD and above, the top model and Adam's lens at HIGH, XL and the founder's design approval for every CRITICAL story. The checker refuses a CRITICAL story below XL and asks for a design-stage second opinion only at XL.
+- **Budgets by size** (R-7.2): S 300k, M 800k, L 1.6M, XL 3M; an XXL epic spends an M budget on its case and backlog.
+- **Feasibility** is now an explicit step and verdict in every business case, and only a feasible case goes on.
+- Every size still keeps a proof that can fail per criterion, the gate on the exact commit with its receipt, a reviewer who is not the builder, the full record, the budget stop and the founder's authority.
+
 ## 2.5.0 — 2026-10-29
 
 Approved by Zoltán Šipkai in chat on 2026-10-29 ("simplify the 146 rules ... not compromise any quality and any step"). SI-170. 51 process evaluations.

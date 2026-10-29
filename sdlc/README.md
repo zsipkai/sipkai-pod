@@ -24,15 +24,15 @@ flowchart LR
     AC --> POC[/prove-concept/]
     POC --> G0[gate green:<br/>ready to develop]
     G0 --> SP{founder names a story<br/>or approves a sprint}
-    SP --> TR{track:<br/>rapid, standard, full}
-    TR --> ST[build and ship,<br/>story after story]
+    SP --> TR{size:<br/>S, M, L, XL}
+    TR --> ST[the route its size sets,<br/>story after story]
     ST --> RT[retrospective]
     RT --> SP
 ```
 
 1. **Sprint 0** (`/sprint-zero`, R-2.5). Once per project, time-boxed. It ends when the team is ready to develop: the founder said go on the business case, the backlog is ordered, the riskiest assumption is proven, the mocks are approved, every access works and the gate is green.
 2. **The founder names a story, or approves a sprint** (R-2.4): an ordered list of stories from the top of the board.
-3. **Each story runs on the lightest track that meets every criterion** (R-2.8): rapid in two sessions, standard in three, full through the seven stage pages. Every session is fresh, started by Sipk.ai, and leaves its evidence in the change record. Stories in a sprint run one after another; a story never starts while a story it depends on is open.
+3. **Each story runs the route its size sets** (R-2.8): S in one session, M in two, L in three, XL through the seven stage pages; an XXL is split first. Every session is fresh, started by Sipk.ai, and leaves its evidence in the change record. Stories in a sprint run one after another; a story never starts while a story it depends on is open.
 4. **After every story the team sits down** (R-10.2): Tina's one-page retrospective with the bill and at most three lean proposals.
 5. **After the sprint** Sipk.ai reports to the founder: what shipped, what it cost, what was learned, and the recommended next sprint.
 
@@ -48,15 +48,17 @@ flowchart LR
 | writing improvement proposals | approving any change to the method |
 | | a budget crossed, money beyond a story, deletions, permission widening at account level |
 
-## Three tracks
+## Five sizes
 
-| Track | When | Sessions | Who works on it | Second opinion |
-|---|---|---|---|---|
-| **Rapid** | Size S, LOW or STANDARD risk; no new contract, dependency, data schema or screen; nothing touching money, security, authentication, personal data, infrastructure or the control plane | 2: `/build` then `/ship` | Michal, Bruno, one reviewer, Ivan | once on the diff at STANDARD, none at LOW |
-| **Standard** | Size S or M, LOW or STANDARD risk, outside the rapid limits | 3: `/design`, `/build`, `/ship` | plus Marketa, at most two reviewers, Erik if a screen changes | once, on the diff |
-| **Full** | HIGH or CRITICAL; Size L or XL; money, security, authentication, personal data, infrastructure, the control plane, a new architecture or a new external service | the seven stage pages | the whole team | at Validate and at Review |
+| Size | What it is | Route | Sessions | Who works on it | Approx. tokens |
+|---|---|---|---|---|---|
+| **S** | a small, clear change of a few files | `/quick` | 1 | Michal, Bruno, one fresh reviewer, Ivan | about 300k |
+| **M** | a contained feature or change | `/build`, `/ship` | 2 | plus one or two reviewers | about 800k |
+| **L** | a feature with design choices, or a new contract, dependency or screen | `/design`, `/build`, `/ship` | 3 | plus Marketa, up to three reviewers, Erik for a screen | about 1.6M |
+| **XL** | a large or architectural change, and every CRITICAL story | the seven stage pages | 7 | the whole team | about 3M |
+| **XXL** | too big to build as one story | `/business-case` with feasibility, then `/define-backlog` | n/a | Miro, Marketa, Tina, Erik | split into S to XL stories |
 
-Every track keeps, without exception: a proof that can fail for every acceptance criterion; the gate on the exact commit with its receipt; review by someone other than the builder; one change record with all seven sections; the budget stop and the founder's authority. A surprise moves a story up a track at once, never down (R-2.8).
+Risk never shrinks a route; it adds controls on top: at STANDARD and above the second model family reviews the diff; at HIGH the work runs on the top model and Adam's lens joins every review; a CRITICAL story is always XL, with the founder's design approval. Every size keeps a proof that can fail for every acceptance criterion, the gate on the exact commit with its receipt, a reviewer who is not the builder, one change record, the budget stop and the founder's authority. A surprise moves a story up a size at once, never down (R-2.8). The token figures are budgets: XL sits above what the first ten full-route stories measured; S, M and L are set from the measured stage averages and re-measured every ten stories.
 
 ## Sprint 0
 

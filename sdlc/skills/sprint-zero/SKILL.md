@@ -28,7 +28,7 @@ Sprint 0 is time-boxed (aim: one to three working days of the founder's calendar
 ## Steps
 
 0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh SPRINT-0`, before any `cd` (R-8.1).
-1. **Business case** (`/business-case`, Miro with Tina and Marketa). Problem, users, outcome, scope and non-goals, the first release, risks, the cost to build in tokens and money, and a recommendation. **Gate: the founder says go or no-go** (R-2.5).
+1. **Business case and feasibility** (`/business-case`, Miro with Tina and Marketa). Problem, users, outcome, scope and non-goals, the first release, Marketa's feasibility verdict, risks, the cost to build in tokens and money, and a recommendation. **Gate: the founder says go or no-go; only a feasible case goes on** (R-2.5).
 2. **Workspace and bridge** (Ivan). Run `bash sipkai-pod/sdlc/scripts/adopt.sh`: it creates `sdlc.config.sh`, the project's `AGENTS.md` and the workspace folders. Everything project-specific lives there, never in `sipkai-pod/` (R-8.6).
 3. **Backlog** (`/define-backlog`, Miro). Epics, stories with criteria that can fail, sizes and risks, the proposed order with a reason per story (R-2.6). The first release is marked on the board.
 4. **Plan** (Marketa). `sprint-0/release-plan.md`: the milestones, the first sprint's stories, what is deliberately left out. `sprint-0/architecture.md`: one page and one diagram of the components, data and boundaries, the stack and why, the riskiest technical assumption; each lasting choice also becomes a decision record (R-5.3).

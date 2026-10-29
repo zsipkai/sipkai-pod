@@ -7,7 +7,6 @@ Execution model: mid
 Budget: 100k
 Owner: Evaluation owner
 Story: `backlog/stories/STORY-901-fixture.md`
-Track: full
 Lane: full
 Deployment candidate: PENDING
 

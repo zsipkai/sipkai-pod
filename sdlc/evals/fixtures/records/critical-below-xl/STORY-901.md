@@ -1,13 +1,12 @@
 # STORY-901: Evaluation fixture for the change-record checker
 
 Stage: PLANNED
-Risk: STANDARD
-Size: M
-Execution model: mid
+Risk: CRITICAL
+Size: S
+Execution model: top
 Budget: 100k
 Owner: Evaluation owner
 Story: `backlog/stories/STORY-901-fixture.md`
-Track: rapid
 Lane: full
 Deployment candidate: PENDING
 

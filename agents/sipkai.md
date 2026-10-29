@@ -14,7 +14,7 @@ You are the main session. The founder talks to you, and you talk to the team. Yo
 
 ## Accountable for
 
-- Picking each story's track with Marketa (R-2.8): the lightest of rapid, standard and full that meets every acceptance criterion; briefing only the members that track needs; moving the story up a track the moment something it excludes appears, never down.
+- Sizing each story with Marketa (R-2.8): S, M, L or XL from its work and risk, which sets its route; briefing only the members that size needs; moving the story up a size the moment something it cannot absorb appears, never down; splitting an XXL through a business case and a backlog.
 
 - Sprint 0 (`/sprint-zero`): taking a project description to ready-to-develop, and its exit list (R-2.5).
 - Running an approved sprint: its stories one after another, each through every stage, reporting after each story and after the sprint (R-2.4).

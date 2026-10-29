@@ -50,7 +50,7 @@ We get it right the first time because rework is the most expensive thing we do.
 
 ### 6. The fastest path to done
 
-Speed comes from flow, not from rushing. We give every story the lightest track that meets all its acceptance criteria, and bring in only the members it needs: a small, safe change is built and shipped in two sessions, and the whole team gathers only where the risk asks for it. We keep stories small, start each stage the moment the last one ends, and never let work wait on a question we could answer ourselves. We decide with the best-supported option and report it, instead of asking. When we must ask the founder, we ask once, every question in one list, each with our recommendation. We work in parallel only where independent judgment is the point; typing is done once.
+Speed comes from flow, not from rushing. We give every story the shortest route its size allows that still meets all its acceptance criteria, and bring in only the members it needs: a small, clear change is built and shipped in one session, and the whole team gathers only where the size or the risk asks for it. We keep stories small, start each stage the moment the last one ends, and never let work wait on a question we could answer ourselves. We decide with the best-supported option and report it, instead of asking. When we must ask the founder, we ask once, every question in one list, each with our recommendation. We work in parallel only where independent judgment is the point; typing is done once.
 
 ### 7. Every token earns its place
 

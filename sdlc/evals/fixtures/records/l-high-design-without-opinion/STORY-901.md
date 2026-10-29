@@ -1,13 +1,12 @@
 # STORY-901: Evaluation fixture for the change-record checker
 
-Stage: PLANNED
+Stage: DESIGN-VALIDATED
 Risk: HIGH
-Size: S
+Size: L
 Execution model: top
 Budget: 100k
 Owner: Evaluation owner
 Story: `backlog/stories/STORY-901-fixture.md`
-Track: standard
 Lane: full
 Deployment candidate: PENDING
 
@@ -19,7 +18,7 @@ Evidence recorded for the fixture.
 
 ## Design Verdict
 
-Design outcome: PENDING
+Design outcome: DESIGN-VALIDATED
 
 Evidence recorded for the fixture.
 

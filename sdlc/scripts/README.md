@@ -6,7 +6,7 @@ The gate and its checks, unchanged from version 1.2.0 apart from the folder name
 |---|---|---|
 | `stage-start.sh` | the first step of every stage: started in the project root, inside the budget (R-8.1, R-7.2) | every stage |
 | `sdlc-gate.sh` | the gate: `--fast`, `--full`, `--ui`, `--deploy`; a passing `--full` or higher prints a gate receipt (R-3.5, R-2.2) | the hook, CI, Michal, Bruno, Ivan |
-| `check-change-records.sh` | the stage never outruns its evidence (R-2.2); since 2.2 the second-opinion line, the gate receipt and the budget stop; since 2.4 the track and its limits | every gate |
+| `check-change-records.sh` | the stage never outruns its evidence (R-2.2); since 2.2 the second-opinion line, the gate receipt and the budget stop; since 2.6 size as the route (a CRITICAL story is XL) | every gate |
 | `check-record-drift.sh` | the story card, the board and the change record agree on stage, tier and budget; no retired phrase in the truth files, open stories or board (R-3.6) | every gate |
 | `check-improvements.sh` | no applied improvement without a human approver and date (R-1.2) | every gate |
 | `check-doc-drift.sh` | documentation claims against reality (R-3.6) | every gate, Bruno |

@@ -148,7 +148,7 @@ The gate fails closed, runs identically in the hook, in CI and at deploy (R-3.5)
 
 | Lane | Stages run | When it applies |
 |---|---|---|
-| Full | all seven | any change a user can observe, any money, security, data or infrastructure change |
+| Full | every stage, in the sessions the story's size sets (S one, M two, L three, XL seven) | any change a user can observe, any money, security, data or infrastructure change |
 | Test-only | Develop, Accept, Regress, Deploy, with a short plan note | adding or fixing tests with zero production-code change |
 | Docs/process-only | edit plus the fast gate at commit | docs, rules, skills, templates; batched between stories, control-plane edits still reviewed by the owner |
 | Hotfix | Develop, Accept, Regress, Deploy now; Discovery Brief and Design Verdict written retroactively the same day | production is broken and users are hurting |
@@ -172,10 +172,10 @@ Size sets the budget: S 750k, M 2M, L 2.5M, XL 4M tokens for the whole pipeline;
 | Layer | Question | Control |
 |---|---|---|
 | Planning | Are we solving a clear problem, and do we understand the current system? | ready checklist, repository exploration, decisions, context manifest |
-| Design validation | Is this the smallest design that fits the product and its single owners? | devil's advocate, lenses, independent reviewer, rollback and authority checks |
+| Design validation | Is this the smallest design that fits the product and its single owners? | a reviewer who is not the builder, lenses by size, the second family at XL, rollback and authority checks |
 | Development integrity | Do code, tests, docs, decisions and contracts agree? | narrow tests, fast gate, drift checks, governance self-check |
 | Acceptance | Does the requested outcome work, including adverse and UI behavior? | criterion-to-proof map, targeted and UI tests |
-| Independent review | What could still be wrong despite green tests? | read-only lenses, second family, generalist diff review, test-diff review |
+| Independent review | What could still be wrong despite green tests? | read-only lenses, the second family on the diff above LOW risk, generalist diff review, test-diff review |
 | Regression | Did the reviewed combined system stay healthy? | complete deterministic matrix and required CI on one SHA |
 | Deployment authority | Should this exact candidate go live? | human decision, protected merge, staged deploy, live observation, rollback |
 

@@ -12,7 +12,7 @@ from pathlib import Path
 from urllib.parse import unquote
 
 
-ROOT = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path(__file__).resolve().parents[2]  # sipkai-pod/sdlc/scripts/ -> the including repository
+ROOT = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path(__file__).resolve().parents[3]  # sipkai-pod/sdlc/scripts/ -> sipkai-pod/sdlc -> sipkai-pod -> the including repository
 SKIP = {".git", "node_modules", "target", "build", "cdk.out", "dist"}
 LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 EXTERNAL = re.compile(r"^[a-z][a-z0-9+.-]*:", re.IGNORECASE)

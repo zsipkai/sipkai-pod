@@ -6,7 +6,7 @@ Every access the work needs. Secrets never live in the repository, a file the ga
 |---|---|---|---|---|---|---|
 | Source repository | the code and the workspace | <founder> | <none: SSH key or credential helper> | push to the default branch after the gate | `git ls-remote` | <granted, date> |
 | Cloud account (development) | the development environment | <founder> | <the cloud's own sign-in> | create and change development resources inside an approved story | <read-only command> | <...> |
-| Second model family API | the independent reviewer | <founder> | <Keychain item> | review packs only | `second-opinion.sh --auto` on a fixture | <...> |
+| Second model family API | the independent reviewer | <founder> | <a key file outside the repository, or a Keychain item> | review packs only | `second-opinion.sh --auto` on a fixture | <...> |
 
 ## Deny rules in the harness settings
 

@@ -18,11 +18,11 @@ require() {
   fi
 }
 
-require git "Install Apple's command line tools or Homebrew git."
-require rg "Run: brew install ripgrep"
-require gitleaks "Run: brew install gitleaks"
-require osv-scanner "Run: brew install osv-scanner"
-require python3 "Install Python 3."
+require git "Install git: https://git-scm.com/downloads"
+require rg "Install ripgrep: https://github.com/BurntSushi/ripgrep#installation"
+require gitleaks "Install gitleaks: https://github.com/gitleaks/gitleaks#installing"
+require osv-scanner "Install osv-scanner: https://google.github.io/osv-scanner/installation/"
+require python3 "Install Python 3: https://www.python.org/downloads/"
 # The project's own tools and versions (a language runtime, a build tool)
 # live in sdlc.config.sh as project_tool_checks, which uses `require`.
 if declare -F project_tool_checks >/dev/null; then

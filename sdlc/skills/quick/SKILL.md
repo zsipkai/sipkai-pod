@@ -15,7 +15,7 @@ Sipk.ai orchestrates; Michal builds at the tier the risk routes; Bruno proves; o
 ## Steps
 
 0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN`, before any `cd` (R-8.1, R-7.2).
-1. **Plan and check the design, in a few lines.** The outcome, the files, one proof that can fail per criterion, the rollback, `Size: S` and its reason. Walk the claims checklist (R-6.4) and choose the simplest design. Anything that is not small and clear (a new contract, dependency, schema or screen, or design choices) stops here and moves the story up a size (R-2.8).
+1. **Plan in a few lines, then have the design checked.** The outcome, the files, one proof that can fail per criterion, the rollback, `Size: S` and its reason, and the claims checklist walked (R-6.4). A fresh reviewer who will not build it (Marketa's lens, Adam's at HIGH risk) checks the plan and names the simplest design before any code. Anything that is not small and clear (a new contract, dependency, schema or screen, or design choices) stops here and moves the story up a size (R-2.8).
 2. **Build and prove**, as `/develop-code` and `/test-acceptance` describe, briefly: on a story branch, docs in the same commit, each criterion's proof with a counterexample, the fast gate green.
 3. **Review** by one fresh reviewer and, at STANDARD and above, the second opinion on the diff; findings saved as they arrive, fixed surgically, proofs re-run (R-6.1 to R-6.3).
 4. **Regress and ship**, as `/test-regression` and `/deploy-change` describe: pin the reviewed commit, the full gate with its receipt, merge, deploy to development, verify live, close the story.

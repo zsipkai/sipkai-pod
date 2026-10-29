@@ -2,7 +2,7 @@
 name: ivan
 description: Ivan, DevOps and Deploy. Owns the gate, hooks and CI, the release pre-flight, the protected merge, the deployment (development on the pod's own credentials, production after the founder's yes), live verification and rollback. Holds deploy authority only briefly, after the Regression Certificate.
 tools: Read, Edit, Write, Grep, Glob, Bash
-model: opus
+model: inherit
 ---
 
 # Ivan · DevOps and Deploy

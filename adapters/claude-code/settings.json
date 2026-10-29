@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "disableBypassPermissionsMode": "disable",
+    "deny": [
+      "Bash(*--no-verify*)",
+      "Bash(git push* --force*)",
+      "Bash(git push* -f *)",
+      "Bash(git push* +*)",
+      "Bash(*git credential*)",
+      "Bash(*git-credential*)",
+      "Bash(security *)",
+      "Read(~/.aws/**)",
+      "Read(~/.ssh/**)"
+    ]
+  },
+  "extraKnownMarketplaces": {
+    "sipkai-pod": { "source": { "source": "directory", "path": "./sipkai-pod" } }
+  },
+  "enabledPlugins": { "sipkai-pod@sipkai-pod": true }
+}

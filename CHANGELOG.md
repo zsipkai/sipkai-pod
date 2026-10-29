@@ -1,5 +1,16 @@
 # Sipk.ai POD changelog
 
+## 2.7.0 — 2026-10-29
+
+Approved by Zoltán Šipkai in chat on 2026-10-29 ("Yes, all five"; "fix my team comprehensively based on the independent study ... hierarchical, no duplication, no drift, but all the rules in place ... this is a hard rule"). The study is filed as `method/reviews/2026-10-29-independent-study.md`. SI-172 to SI-176. 56 process evaluations.
+
+- **A green gate on day one** (SI-172). `adopt.sh` refuses a folder that is not a git repository, and creates the secret-scan config, `docs/SDLC-PROJECT.md` (new template with the bootstrap lane), every truth file, the Claude Code settings and the workspace. `sdlc_none "<reason>"` declares a stage with no code yet and fails once any story has built code. Sprint 0 starts with `adopt.sh`. Fixed: since 2.3 the link checker checked the pod's links instead of the project's. Two evaluations prove a brand-new project is green and a stage declared none turns red once code exists.
+- **Nothing about one project, vendor or tool inside the pod** (SI-173). Money Review's figures left R-7.2; the npm rule, the Java-shaped proof forms and `data-testid` are general; install hints point at the tools' own pages; the integration branch, the dependency-scan skips, the second-opinion model and its key source (a file outside the repository, or the macOS Keychain) come from `sdlc.config.sh`. Method proposals start in the project's own log, marked `METHOD:`, and Tina carries them into the pod's log; the project's gate checks only the project's log.
+- **One home per fact** (SI-174). `CLAUDE.md` is the map and holds the pillars and how the pod talks; the team page holds how the team is built, who owns what, how it operates, where authority ends and the model tiers; the flow page holds the sizes, steps and who is accountable for each; `templates/README.md` the workspace and artefacts; the old-number map moved to `method/RULE-MAP.md`. The contradictions the study found are fixed.
+- **Honest orchestration** (SI-175). R-2.4 says how Sipk.ai starts each step in each kind of harness; in S and M a fresh reviewer, never the builder, checks the design; a BLOCK is cleared only by the reviewer who raised it or by the founder, and disagreements are settled by a written rule; every artefact has one owner; a `Budget decision:` must quote the founder's own words; every ledger line says `measured` or `estimate`; a second skipped second opinion in a row stops the next review.
+- **Adapters** (SI-176). `adapters/README.md` lists the five things any harness must supply; `adapters/claude-code/` says how Claude Code does it and holds a deny-rule settings template. Member pages name tiers only (`model: inherit`).
+- **Every rule kept.** A sentence-by-sentence comparison with 2.6 found 16 changed sentences; each was generalised, made stricter, or moved to its one home, and none dropped an obligation. All 40 rules remain.
+
 ## 2.6.0 — 2026-10-29
 
 Approved by Zoltán Šipkai in chat on 2026-10-29 ("refactor the AI SDLC that it will be S, M, L, XL, XXL ... the most rapid, token efficient but quality development"). SI-171. 50 process evaluations.

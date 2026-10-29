@@ -1,6 +1,6 @@
 # Scripts
 
-The gate and its checks, unchanged from version 1.2.0 apart from the folder name. They read folder paths and gate stages from the project's `sdlc.config.sh` and never hard-code product paths.
+The gate and its checks. They read folders, gate stages and tools from the project's `sdlc.config.sh` and never hard-code a product's paths.
 
 | Script | Does | Run by |
 |---|---|---|

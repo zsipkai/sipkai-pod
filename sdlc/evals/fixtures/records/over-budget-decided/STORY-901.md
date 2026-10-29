@@ -16,10 +16,10 @@ Planning outcome: PLANNED
 
 Evidence recorded for the fixture.
 
-Tokens spent (plan-task): 60000 — fixture
-Tokens spent (validate-design): 50000 — fixture
-Tokens spent (develop-code): 10000 — fixture
-Budget decision: finish the stage on the current budget, then split the rest — Evaluation owner, 2026-10-29
+Tokens spent (plan-task): 60000 — measured, fixture
+Tokens spent (validate-design): 50000 — measured, fixture
+Tokens spent (develop-code): 10000 — measured, fixture
+Budget decision: "finish this stage on the current budget, then split the rest" — Evaluation owner, 2026-10-29
 
 ## Design Verdict
 

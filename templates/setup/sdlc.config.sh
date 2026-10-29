@@ -3,9 +3,9 @@
 # Copy to the repository root, then fill in the project's paths and gate
 # stages. Sourced by sipkai-pod/sdlc/scripts/*.sh from the repository root.
 #
-# Every stage function must exit non-zero on failure. A stage the project
-# has not configured yet calls `sdlc_unconfigured "<what>"`, which fails the
-# gate on purpose: unconfigured is never green.
+# Every stage function must exit non-zero on failure. A stage with nothing to
+# run yet calls `sdlc_none "<reason>"`: green until the first story builds
+# code, then it must be configured. `sdlc_unconfigured "<what>"` fails always.
 
 SDLC_PROJECT_NAME="Project name"
 
@@ -20,7 +20,7 @@ SDLC_LESSONS_DIR="delivery/lessons-learned"
 SDLC_REVIEWS_DIR="delivery/reviews"
 SDLC_PROJECT_IMPROVEMENTS="delivery/IMPROVEMENTS.md"
 
-# Files that must contain no TODO or UNCONFIGURED markers.
+# Files that must contain no unfinished markers (the two words check-doc-drift.sh looks for).
 SDLC_TRUTH_FILES=(
   AGENTS.md
   sdlc.config.sh
@@ -28,13 +28,13 @@ SDLC_TRUTH_FILES=(
   docs/TESTS.md
 )
 
-project_static_analysis() { sdlc_unconfigured "static analysis (formatters, linters, type checks)"; }
-project_fast_tests()      { sdlc_unconfigured "fast tests (unit and architecture tests)"; }
-project_build()           { sdlc_unconfigured "build"; }
-project_full_tests()      { sdlc_unconfigured "full automated tests (integration)"; }
-project_ui_tests()        { sdlc_unconfigured "UI journeys and accessibility checks"; }
-project_deploy_checks()   { sdlc_unconfigured "deployment-bound checks"; }
-project_drift_checks()    { sdlc_unconfigured "drift checks (doc-versus-code contracts); write 'return 0 # none yet: <reason>' to declare none"; }
+project_static_analysis() { sdlc_none "no code yet; configure static analysis (formatters, linters, type checks) with the first story that needs it"; }
+project_fast_tests() { sdlc_none "no code yet; configure fast tests (unit and architecture tests) with the first story that needs it"; }
+project_build() { sdlc_none "no code yet; configure build with the first story that needs it"; }
+project_full_tests() { sdlc_none "no code yet; configure full automated tests (integration) with the first story that needs it"; }
+project_ui_tests() { sdlc_none "no code yet; configure UI journeys and accessibility checks with the first story that needs it"; }
+project_deploy_checks() { sdlc_none "no code yet; configure deployment-bound checks with the first story that needs it"; }
+project_drift_checks()    { sdlc_none "no doc-versus-code contracts yet"; }
 
 # The project's own tools and versions; check-tools.sh runs this after its
 # generic tools. Use `require <program> "<install hint>"`.
@@ -45,10 +45,20 @@ project_tool_checks()     { return 0; }
 # files, the stories and the board.
 SDLC_RETIRED_PHRASES=()
 
-# The independent reviewer's endpoint and Keychain item (R-6.2). The key
-# itself is never written anywhere.
+# The independent reviewer (R-6.2): its endpoint (OpenAI-compatible chat
+# completions), its model (the other family's top model) and where its key
+# lives: a file outside the repository, or on macOS a Keychain item. The key
+# itself is never written into the repository.
 # SDLC_SECOND_OPINION_URL="https://api.openai.com/v1/chat/completions"
 # SDLC_SECOND_OPINION_KEYCHAIN_ITEM="sipkai-openai-api"
+# SDLC_SECOND_OPINION_KEY_FILE="$HOME/.config/<project>/second-opinion.key"
+SECOND_OPINION_MODEL=""
+
+# The integration branch stories merge into.
+SDLC_MAIN_BRANCH="main"
+
+# Folders the dependency scan skips besides node_modules, target, build, dist and vendor.
+SDLC_DEPENDENCY_SKIP=()
 
 # Change records finished before Sipk.ai POD 2.2 keep the older checks: list
 # their ids here, separated by spaces. New records always get every check.

@@ -17,7 +17,7 @@ Marketa (accountable, does the work); up to three lenses chosen for the story's 
 0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN`, before any `cd` (R-8.1, R-7.2).
 1. **Plan**, as `/plan-task` describes, briefly: outcome, the facts a fresh session needs inline, scope, the acceptance map with a proof that can fail for each criterion, risks with rollback, routing and budget. Confirm `Size: L` and its one-line reason; anything that belongs to XL (R-2.8) moves the story up now.
 2. **Validate**, as `/validate-design` describes, briefly: attack the brief yourself with the claims checklist (R-6.4), then brief up to three lenses in parallel. No second opinion here; it runs on the diff at `/ship` (R-6.2).
-3. **Verdict.** Findings consolidated; QUESTIONs answered with the best-supported option and reported (R-6.3). Set `Planning outcome` and `Design outcome`, `Stage: DESIGN-VALIDATED`, append the spend line, hand off to `/build` in a fresh session.
+3. **Verdict.** Findings consolidated; QUESTIONs answered with the best-supported option and reported (R-6.3). Set `Planning outcome` and `Design outcome`, `Stage: DESIGN-VALIDATED`, append the spend line, Sipk.ai starts `/build` in a fresh session (R-2.4).
 
 ## Exit condition
 

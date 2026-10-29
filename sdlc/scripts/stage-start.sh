@@ -11,7 +11,8 @@
 #    started in.
 # 2. The story is inside its budget, or a named human decided to go on.
 #    The record's `Tokens spent` lines are summed against `Budget:`; at or
-#    above it, the stage stops unless a `Budget decision:` line names a
+#    above it, the stage stops unless a `Budget decision:` line quotes the
+#    founder's own words and names
 #    human and a date (SI-070).
 #
 # CHECK_RECORDS_DIR overrides the records folder (the process evaluations use fixtures).
@@ -57,13 +58,13 @@ print(int(n * (1000 if u == "k" else 1000000 if u == "m" else 1)))' "${budget_te
     echo "FAIL  $story has no numeric Budget: line"; fail=1
   elif [ "$spent" -lt "$budget" ]; then
     echo "PASS  $story has spent $spent of its $budget token budget"
-  elif grep -Eq '^Budget decision:.*[^[:space:]].*[0-9]{4}-[0-9]{2}-[0-9]{2}' "$record"; then
+  elif grep -Eq '^Budget decision:[[:space:]]*"[^"]{3,}".*[0-9]{4}-[0-9]{2}-[0-9]{2}' "$record"; then
     echo "PASS  $story is over budget ($spent of $budget), and a human decided to go on:"
     grep -E '^Budget decision:' "$record" | tail -n 1 | sed 's/^/      /'
   else
     echo "FAIL  $story has spent $spent of its $budget token budget (R-7.2)."
     echo "      Stop. The founder chooses: raise the budget, split the story, or escalate the tier."
-    echo "      Record his answer as a new Budget: value, or as 'Budget decision: <what> — <name>, YYYY-MM-DD'."
+    echo "      Record his answer as a new Budget: value, or as 'Budget decision: \"<his own words>\" — <name>, YYYY-MM-DD'."
     fail=1
   fi
 fi

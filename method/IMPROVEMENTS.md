@@ -1,8 +1,8 @@
 # Sipk.ai POD improvement log
 
-The open proposals to improve the method itself, grouped by theme. Agents add a row whenever they find a weakness, gap, contradiction or missing check in the method (R-1.1); Tina keeps the log lean and puts at most three in front of the founder after each story (R-10.9). Only a named human approves or rejects, with a date (R-1.2). `sdlc/scripts/check-improvements.sh` runs in every gate and refuses an approval without a human's name and date, an agent as approver, and an applied row without where it landed.
+The open proposals to improve the method itself, grouped by theme. Proposals about the method reach this log from each project's own log, where they are marked `METHOD:`, and Tina carries them here when the next pod version is prepared (R-1.2); Tina keeps the log lean and puts at most three in front of the founder after each story (R-10.9). Only a named human approves or rejects, with a date (R-1.2). `sdlc/scripts/check-improvements.sh` runs in every gate and refuses an approval without a human's name and date, an agent as approver, and an applied row without where it landed.
 
-Status values: `PROPOSED` (an agent suggests it), `APPROVED` (a human said yes), `REJECTED` (a human said no), `APPLIED` (shipped, evaluations replayed). Applied and rejected rows move to `IMPROVEMENTS-ARCHIVE.md`; rows about one project's own rules live in that project's log (R-8.19). Rows SI-001 to SI-155 were written while the method lived in Money Review as `sipkai-sdlc/`; their paths refer to that layout. Next free id: SI-172.
+Status values: `PROPOSED` (an agent suggests it), `APPROVED` (a human said yes), `REJECTED` (a human said no), `APPLIED` (shipped, evaluations replayed). Applied and rejected rows move to `IMPROVEMENTS-ARCHIVE.md`; rows about one project's own rules live in that project's log (R-8.19). Rows SI-001 to SI-155 were written while the method lived in Money Review as `sipkai-sdlc/`; their paths refer to that layout. Next free id: SI-177.
 
 ## B Review and validate cost
 

@@ -7,7 +7,7 @@
     {
       "name": "sipkai-pod",
       "source": "./",
-      "description": "Sipk.ai POD: an intake, seven stage commands and eight personas, loaded from the folder a project includes."
+      "description": "Sipk.ai POD: the step commands (Sprint 0, business case, backlog, design, the size routes and the seven stages) and the team of personas, loaded from the folder a project includes."
     }
   ]
 }

@@ -15,7 +15,7 @@ Owner: Erik. Style: clean, modern, simple, in the spirit of Apple's design: cont
 
 | Component | States | Accessibility | Test identifier |
 |---|---|---|---|
-| <Button> | default, hover, focus, disabled, busy | role, label, focus ring | `<data-testid>` |
+| <Button> | default, hover, focus, disabled, busy | role, label, focus ring | `<stable test id>` |
 
 ## Vocabulary
 

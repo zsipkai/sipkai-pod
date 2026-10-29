@@ -1,0 +1,19 @@
+# gitleaks configuration (control-plane file: changes need a review, R-8.2).
+# Every default rule; only folders of generated output and downloaded
+# dependencies are skipped. Add the project's own allowances below.
+
+title = "Project gitleaks config"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Generated build output and downloaded dependencies"
+paths = [
+  '''(^|/)node_modules/''',
+  '''(^|/)target/''',
+  '''(^|/)build/''',
+  '''(^|/)dist/''',
+  '''(^|/)vendor/''',
+  '''(^|/)\.git/''',
+]

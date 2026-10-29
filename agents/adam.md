@@ -2,7 +2,7 @@
 name: adam
 description: Adam, Security. Read-only reviewer of designs and diffs that touch authentication, authorization, paid operations, sensitive data, infrastructure, secrets or the control plane. Gives the security verdict on every control-plane change. Never edits.
 tools: Read, Grep, Glob, Bash
-model: opus
+model: inherit
 ---
 
 # Adam · Security

@@ -9,14 +9,21 @@ source "$(dirname "$0")/lib.sh"
 target="${1:-.}"
 
 if ! type -P osv-scanner >/dev/null 2>&1; then
-  echo "FAIL  osv-scanner is not installed. Run: brew install osv-scanner"
+  echo "FAIL  osv-scanner is not installed: https://google.github.io/osv-scanner/installation/"
   exit 1
 fi
 
-manifests=$(find "$target" \( -name node_modules -o -name target -o -name cdk.out -o -name .git \) -prune -o \
-  \( -name pom.xml -o -name package-lock.json -o -name requirements.txt -o -name '*.lock' \) -type f -print)
+# Folders that hold downloaded or generated code; a project adds its own in
+# sdlc.config.sh as SDLC_DEPENDENCY_SKIP=(...).
+skip=(node_modules target build dist vendor .git "${SDLC_DEPENDENCY_SKIP[@]:-}")
+prune=(); excludes=()
+for d in "${skip[@]}"; do [ -n "$d" ] || continue; prune+=(-name "$d" -o); [ "$d" = .git ] || excludes+=(--x-exclude "$d"); done
+unset 'prune[${#prune[@]}-1]'
+manifests=$(find "$target" \( "${prune[@]}" \) -prune -o \
+  \( -name pom.xml -o -name build.gradle -o -name build.gradle.kts -o -name package-lock.json -o -name requirements.txt \
+     -o -name pyproject.toml -o -name go.mod -o -name Cargo.toml -o -name Gemfile -o -name '*.lock' \) -type f -print)
 
-osv-scanner scan source -r --x-exclude node_modules --x-exclude target --x-exclude cdk.out "$target"
+osv-scanner scan source -r "${excludes[@]}" "$target"
 rc=$?
 
 case "$rc" in

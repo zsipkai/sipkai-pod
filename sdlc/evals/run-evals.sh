@@ -38,9 +38,11 @@ evaluate "records: DEPLOYED without receipts"             nonzero "Deployment Re
 evaluate "records: review without a declared second opinion" nonzero "Review Verdict needs a 'Second opinion:'" records missing-second-opinion
 evaluate "records: certificate names an unknown commit"    nonzero "does not have"             records receipt-unknown-sha
 evaluate "records: certificate without the gate receipt"   nonzero "needs '- Gate receipt:'"   records receipt-missing
-evaluate "records: over budget, stage completed anyway"    nonzero "without a human's"         records over-budget-no-decision
+evaluate "records: over budget, stage completed anyway"    nonzero "quoting the founder's own words" records over-budget-no-decision
 evaluate "records: over budget, halted inside the stage"   0       "PASS"                      records over-budget-halted
 evaluate "records: over budget with a human's decision"    0       "PASS"                      records over-budget-decided
+evaluate "records: a budget decision without the founder's words" nonzero "quoting the founder's own words" records over-budget-unquoted
+evaluate "records: a ledger line without measured or estimate" nonzero "'measured' or 'estimate'" records unlabelled-ledger
 evaluate "records: a CRITICAL story below XL"              nonzero "always planned as XL"      records critical-below-xl
 evaluate "records: Size S at LOW risk, reviewed alone"     0       "PASS"                      records s-low-risk-reviewed
 evaluate "records: Size L design needs no second opinion"  0       "PASS"                      records l-high-design-without-opinion
@@ -48,7 +50,7 @@ evaluate "records: Size L design needs no second opinion"  0       "PASS"       
 # Start-of-stage check: the session's folder and the budget stop.
 evaluate "stage start: session outside the project root"   nonzero "not in the project root"   bash -c 'cd sipkai-pod && bash sdlc/scripts/stage-start.sh STORY-901'
 evaluate "stage start: over budget stops the stage"         nonzero "token budget (R-7.2)"     env CHECK_RECORDS_DIR="$F/records/over-budget-no-decision" bash "$S/stage-start.sh" STORY-901
-evaluate "stage start: a human's budget decision lets it go" 0      "a human decided"           env CHECK_RECORDS_DIR="$F/records/over-budget-decided" bash "$S/stage-start.sh" STORY-901
+evaluate "stage start: the founder's quoted decision lets it go" 0   "a human decided"           env CHECK_RECORDS_DIR="$F/records/over-budget-decided" bash "$S/stage-start.sh" STORY-901
 
 evaluate "drift: clean file with angle brackets passes"   0       "no TODO or UNCONFIGURED"   env CHECK_TRUTH_FILES="$F/drift/clean.md" bash "$S/check-doc-drift.sh"
 evaluate "drift: TODO marker is caught"                   nonzero "markers remain"            env CHECK_TRUTH_FILES="$F/drift/marker.md" bash "$S/check-doc-drift.sh"
@@ -108,6 +110,7 @@ so_failed() {
 }
 evaluate "second opinion: API error is NOT obtained"       0       "exit 3, no findings file"  so_failed error
 evaluate "second opinion: empty answer is NOT obtained"    0       "exit 3, no findings file"  so_failed empty
+evaluate "second opinion: a key file inside the repository is refused" nonzero "refuses a key file inside the repository" env SDLC_SECOND_OPINION_KEY_FILE="$PWD/README.md" bash "$S/second-opinion.sh" STORY-001 design --auto
 mkdir -p "$tmp/so-records"
 printf '# STORY-902: Fixture\n\nStage: PLANNED\n\n- Expected files or directories: `sipkai-pod/VERSION`, `no/such/file.txt`\n' > "$tmp/so-records/STORY-902.md"
 evaluate "second opinion: the pack carries the current text of named files" 0 "## Current text of sipkai-pod/VERSION" bash -c 'CHECK_RECORDS_DIR="$1" bash "$2/second-opinion.sh" STORY-902 design >/dev/null && cat build/second-opinion-STORY-902-design.md' _ "$tmp/so-records" "$S"
@@ -135,11 +138,19 @@ evaluate "improvements: agent named as approver refused"    nonzero "only a huma
 evaluate "improvements: APPLIED without location refused"   nonzero "without saying where"      improvements applied-without-location
 evaluate "improvements: approval without a date refused"    nonzero "has no date"               improvements approval-without-date
 evaluate "improvements: an apostrophe in the approver is read" 0  "every approval is human"   improvements apostrophe-approver
+evaluate "improvements: the method's own logs pass"           0       "every approval is human"   bash "$S/check-improvements.sh" --method
 
 # adopt.sh creates the bridge, the constitution and the team's workspace in a fresh project.
-mkdir -p "$tmp/fresh/sipkai-pod/sdlc"; cp -R sipkai-pod/sdlc/scripts "$tmp/fresh/sipkai-pod/sdlc/scripts"; cp -R sipkai-pod/templates "$tmp/fresh/sipkai-pod/templates"
+mkdir -p "$tmp/fresh/sipkai-pod/sdlc"; cp -R sipkai-pod/sdlc/scripts "$tmp/fresh/sipkai-pod/sdlc/scripts"; cp -R sipkai-pod/templates "$tmp/fresh/sipkai-pod/templates"; cp -R sipkai-pod/adapters "$tmp/fresh/sipkai-pod/adapters"; git -C "$tmp/fresh" init -q
 evaluate "adopt: a fresh project gets its workspace"          0       "created  delivery/sprint-0/" bash "$tmp/fresh/sipkai-pod/sdlc/scripts/adopt.sh"
 evaluate "adopt: running it again overwrites nothing"         0       "kept     delivery/backlog/BACKLOG.md" bash "$tmp/fresh/sipkai-pod/sdlc/scripts/adopt.sh"
+# A brand-new project reaches a green fast gate on day one (no code, every code stage declared none).
+mkdir -p "$tmp/day1/sipkai-pod"; cp -R sipkai-pod/sdlc sipkai-pod/templates sipkai-pod/adapters "$tmp/day1/sipkai-pod/"; rm -rf "$tmp/day1/sipkai-pod/sdlc/evals"
+git -C "$tmp/day1" init -q && printf 'A new project.\n' > "$tmp/day1/README.md" && git -C "$tmp/day1" add README.md && git -C "$tmp/day1" -c user.email=eval@example.test -c user.name=eval commit -qm init
+day1() { (cd "$tmp/day1" && bash sipkai-pod/sdlc/scripts/adopt.sh >/dev/null && bash sipkai-pod/sdlc/scripts/sdlc-gate.sh --fast); }
+evaluate "adopt: a brand-new project's fast gate is green"   0       "GATE PASSED (--fast)"      day1
+mkdir -p "$tmp/day1/delivery/backlog/change-records"; printf '# STORY-001: Built\n\nStage: DEVELOPED\n' > "$tmp/day1/delivery/backlog/change-records/STORY-001.md"
+evaluate "adopt: a stage declared none fails once code exists" nonzero "has built code"      bash -c 'cd "$1" && bash sipkai-pod/sdlc/scripts/sdlc-gate.sh --fast' _ "$tmp/day1"
 
 mkdir -p "$tmp/clean" "$tmp/leak"
 echo "nothing secret here" > "$tmp/clean/note.txt"

@@ -16,9 +16,9 @@ Planning outcome: PLANNED
 
 Evidence recorded for the fixture.
 
-Tokens spent (plan-task): 60000 — fixture
-Tokens spent (validate-design): 30000 — fixture
-Tokens spent (develop-code): 20000 — fixture
+Tokens spent (plan-task): 60000 — measured, fixture
+Tokens spent (validate-design): 30000 — measured, fixture
+Tokens spent (develop-code): 20000 — measured, fixture
 
 ## Design Verdict
 

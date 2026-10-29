@@ -12,7 +12,7 @@ pass() { echo "PASS  $1"; }
 fail_check() { echo "FAIL  $1"; fail=1; }
 
 if ! type -P rg >/dev/null 2>&1; then
-  fail_check "ripgrep (rg) is not installed, so markers cannot be checked. Run: brew install ripgrep"
+  fail_check "ripgrep (rg) is not installed, so markers cannot be checked. Install ripgrep: https://github.com/BurntSushi/ripgrep#installation"
   exit 1
 fi
 

@@ -6,14 +6,16 @@
 
 set -uo pipefail
 source "$(dirname "$0")/lib.sh"
-# The method's open log and its archive, plus the project's own log when
-# sdlc.config.sh names one (SDLC_PROJECT_IMPROVEMENTS).
+# The project's own log (SDLC_PROJECT_IMPROVEMENTS). The method's logs are
+# the pod's business: checked with --method, and by the pod's evaluations.
 if [ -n "${CHECK_IMPROVEMENTS_FILE:-}" ]; then
   files=("$CHECK_IMPROVEMENTS_FILE")
+elif [ "${1:-}" = "--method" ]; then
+  files=(sipkai-pod/method/IMPROVEMENTS.md sipkai-pod/method/IMPROVEMENTS-ARCHIVE.md)
+elif [ -n "${SDLC_PROJECT_IMPROVEMENTS:-}" ]; then
+  files=("$SDLC_PROJECT_IMPROVEMENTS")
 else
-  files=(sipkai-pod/method/IMPROVEMENTS.md)
-  [ -f sipkai-pod/method/IMPROVEMENTS-ARCHIVE.md ] && files+=(sipkai-pod/method/IMPROVEMENTS-ARCHIVE.md)
-  [ -n "${SDLC_PROJECT_IMPROVEMENTS:-}" ] && [ -f "$SDLC_PROJECT_IMPROVEMENTS" ] && files+=("$SDLC_PROJECT_IMPROVEMENTS")
+  echo "PASS  this project keeps no improvement log of its own (SDLC_PROJECT_IMPROVEMENTS is not set)"; exit 0
 fi
 if [ ! -f "${files[0]}" ]; then
   echo "FAIL  improvement log ${files[0]} is missing"

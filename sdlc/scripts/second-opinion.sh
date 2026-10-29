@@ -11,7 +11,7 @@
 #
 # Usage: bash sipkai-pod/sdlc/scripts/second-opinion.sh STORY-NNN design|review [--auto]
 #   --auto  send the pack to the second family's API instead of pasting
-#           (key read only from the macOS Keychain item
+#           (key read from a file outside the repository, or the macOS Keychain item
 #           sipkai-openai-api, never stored in the repo; per-token cost
 #           on that account — the manual paste stays the free path).
 #           Exit 2: no key. Exit 3: the second opinion was NOT obtained.
@@ -31,12 +31,19 @@ case "$STAGE" in
   *) echo "Stage must be 'design' or 'review'" >&2; exit 1 ;;
 esac
 
-# The key comes only from this fixed Keychain item, never from the
+# The key comes from a file outside the repository (SDLC_SECOND_OPINION_KEY_FILE)
+# or, on macOS, from a fixed Keychain item; never from the
 # environment or a configurable command (SI-012).
 KEYCHAIN_ITEM="${SDLC_SECOND_OPINION_KEYCHAIN_ITEM:-sipkai-openai-api}"   # the item name may be set in sdlc.config.sh; the key never is
 if [ "$AUTO" = "1" ]; then
-  if ! OPENAI_KEY=$(security find-generic-password -a "$USER" -s "$KEYCHAIN_ITEM" -w 2>/dev/null) || [ -z "$OPENAI_KEY" ]; then
-    echo "--auto needs an OpenAI key in the macOS Keychain item '$KEYCHAIN_ITEM', and there is none." >&2
+  if [ -n "${SDLC_SECOND_OPINION_KEY_FILE:-}" ]; then
+    case "$(cd "$(dirname "$SDLC_SECOND_OPINION_KEY_FILE")" 2>/dev/null && pwd)/" in
+      "$(pwd)"/*) echo "--auto refuses a key file inside the repository: $SDLC_SECOND_OPINION_KEY_FILE" >&2; exit 2 ;;
+    esac
+    OPENAI_KEY=$(cat "$SDLC_SECOND_OPINION_KEY_FILE" 2>/dev/null || true)
+    [ -n "$OPENAI_KEY" ] || { echo "--auto found no key in $SDLC_SECOND_OPINION_KEY_FILE" >&2; exit 2; }
+  elif ! OPENAI_KEY=$(security find-generic-password -a "$USER" -s "$KEYCHAIN_ITEM" -w 2>/dev/null) || [ -z "$OPENAI_KEY" ]; then
+    echo "--auto needs an API key for the other model family: in the macOS Keychain item '$KEYCHAIN_ITEM', or in a file outside the repository named by SDLC_SECOND_OPINION_KEY_FILE." >&2
     echo "Add it once with: security add-generic-password -a \"\$USER\" -s $KEYCHAIN_ITEM -w" >&2
     echo "Or run without --auto and paste the pack by hand." >&2
     exit 2
@@ -102,10 +109,10 @@ OUT="build/second-opinion-${STORY}-${STAGE}.md"
     echo
     echo "---"
     echo
-    echo "## The diff (main...HEAD)"
+    echo "## The diff (${SDLC_MAIN_BRANCH:-main}...HEAD)"
     echo
     echo '```diff'
-    git diff main...HEAD
+    git diff "${SDLC_MAIN_BRANCH:-main}"...HEAD
     echo '```'
   fi
 } > "$OUT"
@@ -114,7 +121,8 @@ echo "Prompt pack: $OUT ($(wc -l < "$OUT" | tr -d ' ') lines)"
 
 if [ "$AUTO" = "1" ]; then
   # Top tier only (rule 4 crosses families). Snapshot — update as the lineup changes.
-  MODEL="${SECOND_OPINION_MODEL:-gpt-5.1}"
+  MODEL="${SECOND_OPINION_MODEL:-}"
+  [ -n "$MODEL" ] || { echo "--auto needs SECOND_OPINION_MODEL in sdlc.config.sh: the other family's top model" >&2; exit 2; }
   FINDINGS="build/second-opinion-${STORY}-${STAGE}-findings.md"
   PAYLOAD="build/second-opinion-${STORY}-${STAGE}-payload.json"
   RESPONSE="build/second-opinion-${STORY}-${STAGE}-response.json"

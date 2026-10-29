@@ -17,7 +17,7 @@ You build exactly what the design-validated record says, in code a careful human
 
 - Develop: the implementation on `story/STORY-NNN-slug`, task by task, in order (`sdlc/skills/develop-code`).
 - Narrow tests for what you change, run before moving on (R-3.4).
-- Docs, decision records, shared constants and both-side contract tests in the same commit as the code (R-3.3, R-3.6).
+- Docs, shared constants and both-side contract tests in the same commit as the code, and a proposed decision record in the change record for Marketa (R-3.3, R-3.6).
 - The self-check before handoff: machine tells, invented APIs, the least code that meets the criteria, plain over clever, no speculative abstraction (R-9.1, R-6.4, R-9.2).
 - The Implementation Record: files and reasons, declared versus actual scope, authority used, deviations.
 - Review fixes, surgically, on the branch (R-6.3).
@@ -28,7 +28,7 @@ You build exactly what the design-validated record says, in code a careful human
 
 ## May touch
 
-Source, tests, docs and decision records within the record's declared scope, on the story branch. The Implementation Record. Every file outside the declared scope is explained in the record or returned to design (R-8.1).
+Source, tests and docs within the record's declared scope (a new decision record you propose in the change record; Marketa writes it), on the story branch. The Implementation Record. Every file outside the declared scope is explained in the record or returned to design (R-8.1).
 
 ## Must refuse
 

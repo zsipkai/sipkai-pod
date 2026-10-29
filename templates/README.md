@@ -29,22 +29,25 @@ A project that already has its own folders points `sdlc.config.sh` at them inste
 
 ## The templates
 
-| Template | Artefact | Owner | Written at | Guarded by |
-|---|---|---|---|---|
-| `business-case.md` | problem, users, outcome, scope, options, cost range, risks, recommendation, the founder's decision | Miro | Sprint 0 step 1 (R-2.5) | no backlog without a go |
-| `backlog/backlog.md` | the board: epics, stories in proposed order with the reason for each place, open questions | Miro | intake, then kept current at every step | the drift check of card, board and record |
-| `backlog/story.md` | one story card with criteria that can fail | Miro | intake | the Defined gate (R-2.6) |
-| `sprint-0/README.md` | Sprint 0's status table and ledger | Sipk.ai | Sprint 0 | the exit list (R-2.5) |
-| `sprint-0/release-plan.md` | milestones, the first sprint, what is left out | Marketa | Sprint 0 step 4 | |
-| `sprint-0/architecture.md` | one diagram, the stack and why, the riskiest assumption, single owners | Marketa | Sprint 0 step 4 | lasting choices become decision records |
-| `sprint-0/design-system.md` | tokens, components and states, vocabulary, the screens and their mocks | Erik | Sprint 0 step 5 | the founder's approval of the mocks |
-| `sprint-0/accesses.md` | every access, who creates it, where the secret lives, authority, how it was checked | Ivan, Adam | Sprint 0 step 6 | each access checked with a command |
-| `sprint-0/poc.md` | the assumption, what was built, the measured result | Marketa | Sprint 0 step 7 | a quoted command and output |
-| `change-record.md` | one section per stage, the ledger, the receipts | Sipk.ai | every stage | `check-change-records.sh` on every commit |
-| `decisions/adr.md` | a lasting decision with its reason and consequences | Marketa | when a choice should stay made (R-5.3) | read before every technical choice |
-| `lessons-learned/retrospective.md` | the bill, what each lens alone caught, one outside source, three lean proposals | Tina | after every `DEPLOYED` story (R-10.2) | proposals become improvement rows |
-| `improvements/IMPROVEMENTS.md` | the project's own improvement log | Tina keeps it, the founder decides | whenever a weakness is found (R-1.2) | `check-improvements.sh` |
-| `reviews/review.md`, `reviews/release-preflight.md` | dated independent reviews, the checklist before a release | Ivan, Tina | before releases, on a schedule (R-10.2) | findings feed the backlog |
-| `setup/sdlc.config.sh`, `setup/AGENTS.md` | the bridge and the project constitution | the founder | once, by `adopt.sh` | unconfigured gate stages fail on purpose |
+Who owns each artefact is on the team page (`agents/README.md`, "Who owns what").
+
+
+| Template | Artefact | Written at | Guarded by |
+|---|---|---|---|
+| `business-case.md` | problem, users, outcome, scope, options, cost range, risks, recommendation, the founder's decision | Sprint 0 step 1 (R-2.5) | no backlog without a go |
+| `backlog/backlog.md` | the board: epics, stories in proposed order with the reason for each place, open questions | intake, then kept current at every step | the drift check of card, board and record |
+| `backlog/story.md` | one story card with criteria that can fail | intake | the Defined gate (R-2.6) |
+| `sprint-0/README.md` | Sprint 0's status table and ledger | Sprint 0 | the exit list (R-2.5) |
+| `sprint-0/release-plan.md` | milestones, the first sprint, what is left out | Sprint 0 step 4 | |
+| `sprint-0/architecture.md` | one diagram, the stack and why, the riskiest assumption, single owners | Sprint 0 step 4 | lasting choices become decision records |
+| `sprint-0/design-system.md` | tokens, components and states, vocabulary, the screens and their mocks | Sprint 0 step 5 | the founder's approval of the mocks |
+| `sprint-0/accesses.md` | every access, who creates it, where the secret lives, authority, how it was checked | Sprint 0 step 6 | each access checked with a command |
+| `sprint-0/poc.md` | the assumption, what was built, the measured result | Sprint 0 step 7 | a quoted command and output |
+| `change-record.md` | one section per stage, the ledger, the receipts | every stage | `check-change-records.sh` on every commit |
+| `decisions/adr.md` | a lasting decision with its reason and consequences | when a choice should stay made (R-5.3) | read before every technical choice |
+| `lessons-learned/retrospective.md` | the bill, what each lens alone caught, one outside source, three lean proposals | after every `DEPLOYED` story (R-10.2) | proposals become improvement rows |
+| `improvements/IMPROVEMENTS.md` | the project's own improvement log | whenever a weakness is found (R-1.2) | `check-improvements.sh` |
+| `reviews/review.md`, `reviews/release-preflight.md` | dated independent reviews, the checklist before a release | before releases, on a schedule (R-10.2) | findings feed the backlog |
+| `setup/sdlc.config.sh`, `setup/AGENTS.md` | the bridge and the project constitution | once, by `adopt.sh` | unconfigured gate stages fail on purpose |
 
 The method's own decisions and improvement log, shared by every project, live in `sipkai-pod/method/`.

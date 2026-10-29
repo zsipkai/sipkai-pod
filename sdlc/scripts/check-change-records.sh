@@ -108,6 +108,10 @@ while IFS= read -r record; do
         report_fail "$name: the gate receipt is for $receipt_sha, the certificate names $sha — R-2.2"
       fi
     fi
+    # Every ledger line says whether its number is measured or an estimate (R-7.3).
+    if grep -E '^Tokens spent \(' "$record" | grep -Evq '^Tokens spent \([^)]+\):[[:space:]]*~?[0-9]+[[:space:]]*—[[:space:]]*(measured|estimate)'; then
+      report_fail "$name: a 'Tokens spent' line does not say 'measured' or 'estimate' after its number — R-7.3"
+    fi
     # The budget stop (R-7.2): over budget, a stage may not complete without a human's decision.
     budget_text=$(sed -n 's/^Budget:[[:space:]]*//p' "$record" | head -n 1 | awk '{print $1}')
     budget=$(python3 -c '
@@ -120,8 +124,8 @@ print(int(n * (1000 if u == "k" else 1000000 if u == "m" else 1)))' "${budget_te
     last_rank=-1
     for i in "${!SKILLS[@]}"; do [ "${SKILLS[$i]}" = "$last" ] && last_rank=$i; done
     if [ "$budget" -gt 0 ] && [ "$spent" -ge "$budget" ] && [ "$rank" -ge "$last_rank" ] \
-       && ! grep -Eq '^Budget decision:.*[^[:space:]].*[0-9]{4}-[0-9]{2}-[0-9]{2}' "$record"; then
-      report_fail "$name: spent $spent of its $budget budget and reached $stage without a human's 'Budget decision:' or a raised Budget — R-7.2"
+       && ! grep -Eq '^Budget decision:[[:space:]]*"[^"]{3,}".*[0-9]{4}-[0-9]{2}-[0-9]{2}' "$record"; then
+      report_fail "$name: spent $spent of its $budget budget and reached $stage without a 'Budget decision:' quoting the founder's own words, or a raised Budget — R-7.2"
     fi
   fi
 

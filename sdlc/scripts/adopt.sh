@@ -26,7 +26,7 @@ if [ ! -e CLAUDE.md ]; then
   echo "created  CLAUDE.md"
 fi
 
-# The team's workspace (R-8.19), at the folders sdlc.config.sh names.
+# The team's workspace (R-8.6), at the folders sdlc.config.sh names.
 # shellcheck source=/dev/null
 source sdlc.config.sh
 T=sipkai-pod/templates

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Sipk.ai POD process evaluations: replay known good and known bad cases
 # and prove each check still reaches the right verdict. A mismatch fails
-# the run. Add a case for every new failure class (R-3.20).
+# the run. Add a case for every new failure class (R-3.5).
 
 set -uo pipefail
 cd "$(cd "$(dirname "$0")/../../.." && pwd)"
@@ -48,7 +48,7 @@ evaluate "records: a new record without a track"           nonzero "needs 'Track
 
 # Start-of-stage check: the session's folder and the budget stop.
 evaluate "stage start: session outside the project root"   nonzero "not in the project root"   bash -c 'cd sipkai-pod && bash sdlc/scripts/stage-start.sh STORY-901'
-evaluate "stage start: over budget stops the stage"         nonzero "token budget (R-7.10)"     env CHECK_RECORDS_DIR="$F/records/over-budget-no-decision" bash "$S/stage-start.sh" STORY-901
+evaluate "stage start: over budget stops the stage"         nonzero "token budget (R-7.2)"     env CHECK_RECORDS_DIR="$F/records/over-budget-no-decision" bash "$S/stage-start.sh" STORY-901
 evaluate "stage start: a human's budget decision lets it go" 0      "a human decided"           env CHECK_RECORDS_DIR="$F/records/over-budget-decided" bash "$S/stage-start.sh" STORY-901
 
 evaluate "drift: clean file with angle brackets passes"   0       "no TODO or UNCONFIGURED"   env CHECK_TRUTH_FILES="$F/drift/clean.md" bash "$S/check-doc-drift.sh"

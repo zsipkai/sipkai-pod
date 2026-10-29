@@ -1,5 +1,13 @@
 # Sipk.ai POD changelog
 
+## 2.5.0 — 2026-10-29
+
+Approved by Zoltán Šipkai in chat on 2026-10-29 ("simplify the 146 rules ... not compromise any quality and any step"). SI-170. 51 process evaluations.
+
+- **148 rules folded into 40**, one paragraph each, under the same ten pillars; the rulebook went from about 7,500 to about 5,050 words. Each new rule carries every obligation of the rules it replaced: no check, gate, stage, approval or proof was removed. Only two notes that obliged nothing were dropped as rules (the maturity ladder and "the Batch API is not adopted yet").
+- **A map from every old number to its new one** closes the rulebook. A mechanical check confirmed all 148 old rules appear in it exactly once and every target exists.
+- Every citation in the pod's pages, step pages, persona pages, scripts and evaluations was repointed; finished change records, reviews, decisions and finished story cards keep their old numbers, which the map resolves.
+
 ## 2.4.0 — 2026-10-29
 
 Approved by Zoltán Šipkai in chat on 2026-10-29 ("Yes, build 2.4"): a simpler, faster flow where the team decides from each story's complexity who it needs (SI-169). 51 process evaluations.

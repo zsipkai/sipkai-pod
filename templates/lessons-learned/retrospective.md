@@ -35,11 +35,11 @@ The best, the quickest, the cheapest, in that order (the charter). Compared with
 
 ## Outside practice
 
-<One source from outside the repository, classed UNTRUSTED (R-8.7): what it says, and whether it applies here.>
+<One source from outside the repository, classed UNTRUSTED (R-8.3): what it says, and whether it applies here.>
 
 ## Three lean proposals
 
-At most three, each filed as a `PROPOSED` row in the pod's `method/IMPROVEMENTS.md` with its evidence (R-1.1). Each names the number it would move.
+At most three, each filed as a `PROPOSED` row in the pod's `method/IMPROVEMENTS.md` with its evidence (R-1.2). Each names the number it would move.
 
 1. **<SI-NNN>** <one sentence: the change, and the tokens, minutes or defects it addresses>.
 2. **<SI-NNN>** <...>

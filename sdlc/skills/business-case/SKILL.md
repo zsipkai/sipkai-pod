@@ -23,11 +23,11 @@ description: Sipk.ai POD, Sprint 0 step 1. Writes the business case for a projec
 
 ## Hard rule
 
-A case is an argument, not a brochure: every claim about users, market or cost names its source, and a number nobody measured is labelled an estimate. If the honest answer is "do not build this", the case says so (R-2.21).
+A case is an argument, not a brochure: every claim about users, market or cost names its source, and a number nobody measured is labelled an estimate. If the honest answer is "do not build this", the case says so (R-2.5).
 
 ## Steps
 
-0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh CASE` (R-8.18).
+0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh CASE` (R-8.1).
 1. **The problem and the users.** Who has the problem, how they solve it today, what it costs them. Sources named.
 2. **The outcome.** What a user can do when the first release ships, in one paragraph, and how the founder will know it worked (one or two measurable signals).
 3. **Scope.** The first release, what comes later, and the non-goals.
@@ -42,4 +42,4 @@ The case names the problem, users, outcome, scope, options, cost range and risks
 
 ## Rules that bind this step
 
-R-2.21, R-5.7, R-7.9, R-7.11, R-8.7.
+R-2.5, R-5.3, R-7.2, R-7.3, R-8.3.

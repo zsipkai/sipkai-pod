@@ -1,6 +1,6 @@
 # Lens · Test quality
 
-Worn by Bruno at Review, and consulted at Accept for high-risk work (R-3.4). Read the evidence rules (`sdlc/RULES.md` section 3), the project's testing rules, the story's acceptance criteria, the approved test plan and the changed tests.
+Worn by Bruno at Review, and consulted at Accept for high-risk work (R-3.3). Read the evidence rules (`sdlc/RULES.md` section 3), the project's testing rules, the story's acceptance criteria, the approved test plan and the changed tests.
 
 One concern dominates: a green test must not pass for the wrong reason.
 

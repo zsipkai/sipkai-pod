@@ -25,7 +25,7 @@ Give the pod a project description and it runs **Sprint 0**: it writes a busines
 
 ## The key rules
 
-Ten pillars. Each is one paragraph here; every rule behind it is a numbered paragraph in `sdlc/RULES.md`, section by section.
+Ten pillars. Each is one paragraph here; behind them are 40 rules, one paragraph each, in `sdlc/RULES.md`.
 
 1. **The human owns the method.** Agents run the method and improve it, but never change it on their own. A weakness becomes a proposal in the improvement log; only a named human, with a date, approves. Silence is not approval, and the gate refuses an applied change without a recorded approval.
 2. **One route, seven stages, one record.** Every change produces the same seven evidence states, in as few sessions as its track allows, and leaves one evidence state per stage in one change record, which ends as the story's audit log. A fresh session must be able to run the next stage from that record alone. The design-validated record is the delivery contract.
@@ -66,7 +66,7 @@ Before a story starts, Sipk.ai picks its track with Marketa from its complexity,
 | **Standard** | Size S or M, LOW or STANDARD risk, outside the rapid limits | 3: `/design`, `/build`, `/ship` | plus Marketa, at most two reviewers, Erik if a screen changes | once, on the diff |
 | **Full** | HIGH or CRITICAL; Size L or XL; money, security, authentication, personal data, infrastructure, the control plane, a new architecture or a new external service | the seven stage pages | the whole team | at Validate and at Review |
 
-Every track keeps, without exception: a proof that can fail for every acceptance criterion; the gate on the exact commit with its receipt; review by someone other than the builder; one change record with all seven sections; the budget stop and the founder's authority. A surprise moves a story up a track at once, never down (R-2.22).
+Every track keeps, without exception: a proof that can fail for every acceptance criterion; the gate on the exact commit with its receipt; review by someone other than the builder; one change record with all seven sections; the budget stop and the founder's authority. A surprise moves a story up a track at once, never down (R-2.8).
 
 Evidence states: `PLANNED`, `DESIGN-VALIDATED`, `DEVELOPED`, `ACCEPTANCE-TEST-PROVEN`, `REVIEW-CLEARED`, `REGRESSION-TEST-PROVEN`, `DEPLOYED`. Every step begins with `bash sipkai-pod/sdlc/scripts/stage-start.sh`. The whole flow, the gates, the lanes, the risk tiers, who does what at each step and what runs without the founder: `sdlc/README.md`.
 

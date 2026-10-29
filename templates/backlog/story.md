@@ -1,7 +1,7 @@
 # STORY-NNN: User-visible outcome, written as a short title
 
 - Status: IDEA | DEFINED | IN DELIVERY | DONE
-- Risk: LOW | STANDARD | HIGH | CRITICAL — how wrong it can go; selects the executing model tier (sipkai-pod/sdlc/RULES.md, R-7.2)
+- Risk: LOW | STANDARD | HIGH | CRITICAL — how wrong it can go; selects the executing model tier (sipkai-pod/sdlc/RULES.md, R-7.1)
 - Size: S | M | L | XL | XXL — how much work; sets the token budget (XXL must be split before planning)
 - Proposed execution model: small | mid | top (confirmed by /plan-task, checked by /validate-design; test authoring capped at mid, control and security tests at top)
 - Epic: the milestone or theme

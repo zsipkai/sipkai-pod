@@ -2,7 +2,7 @@
 
 **A digital agile team of AI agents, owned by one human. Give it a project description: it runs Sprint 0, then delivers story after story through seven evidence-gated stages. Give it to any project; everything project-specific stays in the project.**
 
-Version 2.4.0 (2026-10-29). By Sipk.ai, Zoltán Šipkai. MIT licensed.
+Version 2.5.0 (2026-10-29). By Sipk.ai, Zoltán Šipkai. MIT licensed.
 
 ## The idea in one paragraph
 

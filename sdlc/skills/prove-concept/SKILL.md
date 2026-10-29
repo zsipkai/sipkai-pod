@@ -22,11 +22,11 @@ description: Sipk.ai POD, Sprint 0 step 7 and any story whose design rests on an
 
 ## Hard rule
 
-A proof of concept proves one thing and is thrown away. It is measured, not demonstrated: the result quotes a command and its output (R-3.17). It never creates billable or production resources the accesses list does not hold, and never touches real data.
+A proof of concept proves one thing and is thrown away. It is measured, not demonstrated: the result quotes a command and its output (R-3.4). It never creates billable or production resources the accesses list does not hold, and never touches real data.
 
 ## Steps
 
-0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh POC` (R-8.18).
+0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh POC` (R-8.1).
 1. **Name it.** The assumption in one sentence, the measure that would prove it false, and the time box.
 2. **Build the thinnest slice** that exercises it end to end, on `spike/<name>`.
 3. **Measure.** Run it; quote the commands and output; Bruno's test shows it can fail.
@@ -38,4 +38,4 @@ A proof of concept proves one thing and is thrown away. It is measured, not demo
 
 ## Rules that bind this step
 
-R-3.17, R-3.18, R-6.17, R-8.9.
+R-3.4, R-3.1, R-6.4, R-8.4.

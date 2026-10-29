@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Second opinion (R-6.7): build a self-contained prompt
+# Second opinion (R-6.2): build a self-contained prompt
 # pack for a reviewer from a DIFFERENT model family. The human pastes the
 # pack into that family's top model, pastes the findings back, and the
 # stage consolidates them like any reviewer's. Judge only — the deciding

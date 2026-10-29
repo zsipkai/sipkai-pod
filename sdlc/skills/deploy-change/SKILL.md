@@ -24,17 +24,17 @@ description: Sipk.ai POD stage 7, Deploy. Re-runs the hard gate on the merge can
 
 ## Hard rule
 
-This stage can merge, deploy and spend, so Sipk.ai invokes it only once the Regression Certificate exists for the current HEAD, and a production release waits for the founder's recorded approval before merge (R-8.5). It never repairs product code; a changed candidate returns to Review and Regress. Money beyond the story, resource deletion, price or legal changes, production or account-level permission expansion and `--no-verify` each need their own explicit human yes (R-5.5).
+This stage can merge, deploy and spend, so Sipk.ai invokes it only once the Regression Certificate exists for the current HEAD, and a production release waits for the founder's recorded approval before merge (R-8.1). It never repairs product code; a changed candidate returns to Review and Regress. Money beyond the story, resource deletion, price or legal changes, production or account-level permission expansion and `--no-verify` each need their own explicit human yes (R-5.2).
 
 ## Steps
 
-0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN`, before any `cd` (R-8.18, R-7.10). Red means stop: a session in the wrong folder is started again from the project root; a budget stop goes to the founder for a raise, a split or an escalation.
-1. **The hard gate again, on the merge candidate.** `--deploy`, or `--ui` when there is no deployable surface. Red means stop. No "it's the known failure" hand-waving: fix it, which invalidates the certificate and returns to `/clear-review` (R-3.21).
-2. **Pre-flight for release-bound work.** Walk `templates/reviews/release-preflight.md` and record each item with evidence. Inspect the exact file set for secrets, workflow changes, generated artifacts and unrelated changes (R-8.10, R-8.11).
-3. **Merge through the project's protected route.** The route the project names in its own docs: a pull request with the Review Verdict as its description and required CI, or a local merge after the certificate followed by Ivan's push of `main` where the project allows it (R-8.14). A merge that was not clean changed the candidate: rerun `/test-regression` on the merged tree first.
+0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN`, before any `cd` (R-8.1, R-7.2). Red means stop: a session in the wrong folder is started again from the project root; a budget stop goes to the founder for a raise, a split or an escalation.
+1. **The hard gate again, on the merge candidate.** `--deploy`, or `--ui` when there is no deployable surface. Red means stop. No "it's the known failure" hand-waving: fix it, which invalidates the certificate and returns to `/clear-review` (R-3.5).
+2. **Pre-flight for release-bound work.** Walk `templates/reviews/release-preflight.md` and record each item with evidence. Inspect the exact file set for secrets, workflow changes, generated artifacts and unrelated changes (R-8.4, R-8.5).
+3. **Merge through the project's protected route.** The route the project names in its own docs: a pull request with the Review Verdict as its description and required CI, or a local merge after the certificate followed by Ivan's push of `main` where the project allows it (R-3.5). A merge that was not clean changed the candidate: rerun `/test-regression` on the merged tree first.
 4. **Deploy what changed, nothing more.** Only the affected surfaces, dev before production, by the project's deployment procedure. Development deployments run on the pod's own development credentials. For production, prepare the exact command or workflow run with its inputs and ask the founder to start it. Then verify the intended behavior live: smoke suite, health, logs, guardrail signals. A successful deploy command is not live verification. Roll back or stop the rollout when live evidence fails, and record what happened.
-5. **Close the loop.** Fill `## Deployment Record`: `- Human deployment approval:` (the founder, who and when, for production; `not required, development release (R-5.2)` otherwise), `- Required CI URL or receipt:`, `- Merge SHA:`, artifact or provenance id, deployment surface and id, `- Live behavior observed:`, health and guardrail signals, monitoring window, `- Rollback status:` (R-2.7). A story with no deployable surface records `Deployment surface: none — merged to main`. Set `Deployment outcome: DEPLOYED` and `Stage: DEPLOYED`, and check only the Definition of Done boxes that are genuinely true (R-2.8, R-2.15). Set the story to `DONE`, update the board (status, stage, "Right now", the next story marker) and copy proven behavior into the product's living docs (R-3.26). Anything learned that changes the rules: a project rule, reviewer checklist, drift check or evaluation changes now in the same change; a change to the method becomes a proposal (R-10.6). Sipk.ai appends the spend line (R-7.11) and Tina adds the story to the bill.
-6. **Retrospective.** Tina writes the one-page retrospective from `templates/lessons-learned/retrospective.md` into the project's reviews folder (R-10.9): the bill by stage, what each lens alone caught, one outside source, at most three lean proposals filed as `PROPOSED` rows. Sipk.ai ends its report to the founder with her three sentences.
+5. **Close the loop.** Fill `## Deployment Record`: `- Human deployment approval:` (the founder, who and when, for production; `not required, development release (R-5.1)` otherwise), `- Required CI URL or receipt:`, `- Merge SHA:`, artifact or provenance id, deployment surface and id, `- Live behavior observed:`, health and guardrail signals, monitoring window, `- Rollback status:` (R-2.2). A story with no deployable surface records `Deployment surface: none — merged to main`. Set `Deployment outcome: DEPLOYED` and `Stage: DEPLOYED`, and check only the Definition of Done boxes that are genuinely true (R-2.2, R-2.7). Set the story to `DONE`, update the board (status, stage, "Right now", the next story marker) and copy proven behavior into the product's living docs (R-2.7). Anything learned that changes the rules: a project rule, reviewer checklist, drift check or evaluation changes now in the same change; a change to the method becomes a proposal (R-1.3). Sipk.ai appends the spend line (R-7.3) and Tina adds the story to the bill.
+6. **Retrospective.** Tina writes the one-page retrospective from `templates/lessons-learned/retrospective.md` into the project's reviews folder (R-10.2): the bill by stage, what each lens alone caught, one outside source, at most three lean proposals filed as `PROPOSED` rows. Sipk.ai ends its report to the founder with her three sentences.
 
 ## Scripts and checks
 
@@ -48,7 +48,7 @@ bash sipkai-pod/sdlc/scripts/cost-report.sh
 
 ## Model tier and budget
 
-Always `top` (R-7.5): it can touch production, and its token cost is trivial anyway.
+Always `top` (R-7.1): it can touch production, and its token cost is trivial anyway.
 
 ## Exit condition
 
@@ -56,8 +56,8 @@ Every affected surface deployed and observed live, or the failure honestly recor
 
 ## Rules that bind this stage
 
-R-2.7, R-2.8, R-2.15, R-2.17, R-3.21, R-3.26, R-4.7, R-5.5, R-7.5, R-7.11, R-8.5, R-8.10, R-8.11, R-8.13, R-8.14, R-10.6.
+R-2.2, R-2.7, R-2.1, R-3.5, R-4.1, R-5.2, R-7.1, R-7.3, R-8.1, R-8.4, R-8.5, R-1.3.
 
 ## Found a weakness in the method?
 
-Log it in `method/IMPROVEMENTS.md` as `PROPOSED` with evidence and the exact change, note it under "SDLC findings" in the record, and tell the founder. Never apply it yourself (R-1.1).
+Log it in `method/IMPROVEMENTS.md` as `PROPOSED` with evidence and the exact change, note it under "SDLC findings" in the record, and tell the founder. Never apply it yourself (R-1.2).

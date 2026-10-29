@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Card, board and record agree (R-3.22; SI-025, SI-040, SI-045, SI-062, SI-086).
+# Card, board and record agree (R-3.6; SI-025, SI-040, SI-045, SI-062, SI-086).
 #
 # For every change record, its story card and its board rows must say the
 # same thing as the record: the card's "(Stage X)" pointer and Status, the

@@ -27,18 +27,18 @@ Sprint 0 is time-boxed (aim: one to three working days of the founder's calendar
 
 ## Steps
 
-0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh SPRINT-0`, before any `cd` (R-8.18).
-1. **Business case** (`/business-case`, Miro with Tina and Marketa). Problem, users, outcome, scope and non-goals, the first release, risks, the cost to build in tokens and money, and a recommendation. **Gate: the founder says go or no-go** (R-2.21).
-2. **Workspace and bridge** (Ivan). Run `bash sipkai-pod/sdlc/scripts/adopt.sh`: it creates `sdlc.config.sh`, the project's `AGENTS.md` and the workspace folders. Everything project-specific lives there, never in `sipkai-pod/` (R-8.19).
-3. **Backlog** (`/define-backlog`, Miro). Epics, stories with criteria that can fail, sizes and risks, the proposed order with a reason per story (R-2.19). The first release is marked on the board.
-4. **Plan** (Marketa). `sprint-0/release-plan.md`: the milestones, the first sprint's stories, what is deliberately left out. `sprint-0/architecture.md`: one page and one diagram of the components, data and boundaries, the stack and why, the riskiest technical assumption; each lasting choice also becomes a decision record (R-5.8).
+0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh SPRINT-0`, before any `cd` (R-8.1).
+1. **Business case** (`/business-case`, Miro with Tina and Marketa). Problem, users, outcome, scope and non-goals, the first release, risks, the cost to build in tokens and money, and a recommendation. **Gate: the founder says go or no-go** (R-2.5).
+2. **Workspace and bridge** (Ivan). Run `bash sipkai-pod/sdlc/scripts/adopt.sh`: it creates `sdlc.config.sh`, the project's `AGENTS.md` and the workspace folders. Everything project-specific lives there, never in `sipkai-pod/` (R-8.6).
+3. **Backlog** (`/define-backlog`, Miro). Epics, stories with criteria that can fail, sizes and risks, the proposed order with a reason per story (R-2.6). The first release is marked on the board.
+4. **Plan** (Marketa). `sprint-0/release-plan.md`: the milestones, the first sprint's stories, what is deliberately left out. `sprint-0/architecture.md`: one page and one diagram of the components, data and boundaries, the stack and why, the riskiest technical assumption; each lasting choice also becomes a decision record (R-5.3).
 5. **UI and mocks, design system** (`/design-ui`, Erik). Clickable HTML mocks of the screens of the first release and `sprint-0/design-system.md` with tokens, components and their states. **Gate: the founder approves the mocks** or says what to change.
-6. **Accesses** (Ivan with Adam). `sprint-0/accesses.md`: every repository, cloud account, service, key and permission the work needs, who creates it, where the secret lives (never in the repository), the least authority each persona gets, and the deny rules in the harness settings (R-8.4 to R-8.6). The founder creates what only he can create; the pod checks each access with a read-only command and records it.
+6. **Accesses** (Ivan with Adam). `sprint-0/accesses.md`: every repository, cloud account, service, key and permission the work needs, who creates it, where the secret lives (never in the repository), the least authority each persona gets, and the deny rules in the harness settings (R-8.1). The founder creates what only he can create; the pod checks each access with a read-only command and records it.
 7. **Proof of concept** (`/prove-concept`, Marketa with Michal and Bruno). The riskiest technical assumption is tried end to end on a spike branch with a measured result: proven, disproven or changed. A disproven assumption returns to step 4.
-8. **Gate and CI** (Ivan). The project's gate stages are configured, the hook is installed, CI runs the same gate, and `sdlc-gate.sh --fast` is green on the empty project (bootstrap lane, R-4.6).
+8. **Gate and CI** (Ivan). The project's gate stages are configured, the hook is installed, CI runs the same gate, and `sdlc-gate.sh --fast` is green on the empty project (bootstrap lane, R-4.1).
 9. **Ready to develop.** Sipk.ai checks the exit list below, writes Sprint 0's ledger, and reports to the founder in one message: the go decision, the first release, the top five stories, the mocks link, open accesses, the proof of concept's result, and the recommended first story or first sprint.
 
-## Exit: ready to develop (R-2.20)
+## Exit: ready to develop (R-2.5)
 
 - [ ] The business case says go, with the founder's name and date.
 - [ ] The board holds the first release, ordered, with at least the first sprint's stories `DEFINED`.
@@ -59,12 +59,12 @@ bash sipkai-pod/sdlc/scripts/sdlc-gate.sh --fast
 
 ## Model tier and budget
 
-Planning, design and the business case run `top`; mocks and the design system `mid`; the proof of concept at the tier its risk routes. Sprint 0 aims at a Size L budget (R-7.9).
+Planning, design and the business case run `top`; mocks and the design system `mid`; the proof of concept at the tier its risk routes. Sprint 0 aims at a Size L budget (R-7.2).
 
 ## Rules that bind this step
 
-R-2.13, R-2.19, R-2.20, R-2.21, R-4.6, R-5.8, R-6.17, R-8.4 to R-8.6, R-8.18, R-8.19.
+R-2.4, R-2.6, R-2.5, R-4.1, R-5.3, R-6.4, R-8.1, R-8.6.
 
 ## Found a weakness in the method?
 
-Log it in `sipkai-pod/method/IMPROVEMENTS.md` as `PROPOSED` with evidence and the exact change, and tell the founder. Never apply it yourself (R-1.1).
+Log it in `sipkai-pod/method/IMPROVEMENTS.md` as `PROPOSED` with evidence and the exact change, and tell the founder. Never apply it yourself (R-1.2).

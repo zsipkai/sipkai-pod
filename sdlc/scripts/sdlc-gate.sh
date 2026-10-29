@@ -12,7 +12,7 @@
 # Fails closed: a missing tool or an unconfigured project stage fails the gate.
 # A passing --full, --ui or --deploy run prints a gate receipt (commit, mode,
 # result, UTC time) and appends it to build/gate-receipts.log; the Regression
-# Certificate quotes it (R-2.7). A dirty tree gets no receipt: the commit
+# Certificate quotes it (R-2.2). A dirty tree gets no receipt: the commit
 # would not be what the gate checked.
 # SDLC_GATE_QUIET=1 keeps success output to one line per stage (full detail in
 # build/gate-last.log); failures always print verbatim.

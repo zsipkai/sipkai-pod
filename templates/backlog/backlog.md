@@ -1,6 +1,6 @@
 # <Project name> backlog
 
-The board. Miro owns it; the founder names every story that goes into development (R-2.13). Stories live in the stories folder, their evidence in the change records.
+The board. Miro owns it; the founder names every story that goes into development (R-2.4). Stories live in the stories folder, their evidence in the change records.
 
 ## Right now
 
@@ -18,11 +18,11 @@ The board. Miro owns it; the founder names every story that goes into developmen
 
 ## Stories in proposed order
 
-The order follows R-2.19: blockers first, then the biggest open risk, then value per size; the founder's order always wins.
+The order follows R-2.6: blockers first, then the biggest open risk, then value per size; the founder's order always wins.
 
 | Order | ID | Story | Epic | Size | Risk | Tier | Budget | Depends on | Why here | Status | Stage |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | STORY-001, linked to its card | <outcome> | <E1> | <S/M/L/XL> | <LOW/STANDARD/HIGH/CRITICAL> | <small/mid/top> | <from R-7.9> | <ids or —> | <one line> | <DEFINED/IDEA> | — |
+| 1 | STORY-001, linked to its card | <outcome> | <E1> | <S/M/L/XL> | <LOW/STANDARD/HIGH/CRITICAL> | <small/mid/top> | <from R-7.2> | <ids or —> | <one line> | <DEFINED/IDEA> | — |
 
 ## Open questions
 

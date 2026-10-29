@@ -7,7 +7,7 @@ Execution model: small | mid | top (per sipkai-pod/sdlc/RULES.md section 7 — a
 Budget: <from the size table — S=750k M=2M L=2.5M XL=4M (total tokens); XXL must be split>
 Owner: <accountable human>
 Story: `backlog/stories/STORY-NNN-<slug>.md`
-Track: <rapid | standard | full> — <one line: why this is the lightest track that meets every criterion (R-2.22)>
+Track: <rapid | standard | full> — <one line: why this is the lightest track that meets every criterion (R-2.8)>
 Lane: full | test-only | docs/process-only | hotfix | bootstrap
 Coordination issue: <optional URL or key>
 Deployment candidate: PENDING
@@ -83,7 +83,7 @@ Order small tasks by dependency. Name verified files and tests; label uncertain 
 
 - Token budget (stop-loss): from the size table in the `Budget:` metadata
 - Allowed tier by stage: per sipkai-pod/sdlc/RULES.md section 7 (execution at the routed tier; verification always top)
-- Stop condition: crossing the budget halts the stage for a human decision — raise, split, or escalate the tier. `stage-start.sh` checks it at the start of every stage (R-7.10). A raise changes `Budget:`; a decision to go on without one is a line `Budget decision: <what> — <name>, YYYY-MM-DD`.
+- Stop condition: crossing the budget halts the stage for a human decision — raise, split, or escalate the tier. `stage-start.sh` checks it at the start of every stage (R-7.2). A raise changes `Budget:`; a decision to go on without one is a line `Budget decision: <what> — <name>, YYYY-MM-DD`.
 
 Each stage appends one line here as it finishes (mark estimates as such):
 
@@ -106,7 +106,7 @@ Design outcome: PENDING
 
 ### Second opinion (rule 16 — Risk ≠ LOW)
 
-Second opinion: <family and model, and the `X-n` findings in the table above — or `skipped`, with the reason (R-6.7)>
+Second opinion: <family and model, and the `X-n` findings in the table above — or `skipped`, with the reason (R-6.2)>
 
 ### Exceptions and waivers
 
@@ -164,7 +164,7 @@ Review outcome: PENDING
 
 ### Second opinion (rule 16 — Risk ≠ LOW)
 
-Second opinion: <family and model, and the `X-n` findings below — or `skipped`, with the reason (R-6.7)>
+Second opinion: <family and model, and the `X-n` findings below — or `skipped`, with the reason (R-6.2)>
 
 ### Findings, fixes, and focused retests
 
@@ -181,7 +181,7 @@ Regression outcome: PENDING
 - Commit SHA:
 - Environment:
 - Full gate command:
-- Gate receipt: <the line the passing gate printed: commit, mode, PASS, time (R-2.7)>
+- Gate receipt: <the line the passing gate printed: commit, mode, PASS, time (R-2.2)>
 - Build and static analysis:
 - Unit and integration:
 - UI or end-to-end:
@@ -206,7 +206,7 @@ Deployment outcome: PENDING
 
 ## SDLC findings
 
-Weaknesses, gaps or contradictions in the Sipk.ai POD or the project's rules noticed during this story, each logged in `sipkai-pod/method/IMPROVEMENTS.md` as `PROPOSED` (R-1.1). Write `None` if there were none. Nothing here is applied without a recorded human approval.
+Weaknesses, gaps or contradictions in the Sipk.ai POD or the project's rules noticed during this story, each logged in `sipkai-pod/method/IMPROVEMENTS.md` as `PROPOSED` (R-1.2). Write `None` if there were none. Nothing here is applied without a recorded human approval.
 
 | Improvement id | Stage that found it | Summary |
 |---|---|---|
@@ -222,7 +222,7 @@ Weaknesses, gaps or contradictions in the Sipk.ai POD or the project's rules not
 - [ ] Actual files, dependencies, tools, network access, and permissions match the declared scope or have an owned explanation.
 - [ ] Every control-plane change has explicit human owner review and evidence that the control was not weakened.
 - [ ] Every exception has an owner, compensating control, and expiry or follow-up.
-- [ ] The implementation is the simplest readable design that meets the criteria (R-9.4 to R-9.11).
+- [ ] The implementation is the simplest readable design that meets the criteria (R-9.2, R-9.1).
 - [ ] SDLC weaknesses found during this story are logged as proposals in `sipkai-pod/method/IMPROVEMENTS.md`; none were applied without human approval.
 - [ ] Required human checkpoints are recorded.
 - [ ] The reviewed combined tree passed the full required matrix.

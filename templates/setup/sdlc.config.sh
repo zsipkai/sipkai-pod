@@ -9,7 +9,7 @@
 
 SDLC_PROJECT_NAME="Project name"
 
-# The team's workspace in this project (R-8.19). Everything the pod produces
+# The team's workspace in this project (R-8.6). Everything the pod produces
 # for this project lives here, never inside sipkai-pod/. adopt.sh creates it.
 SDLC_WORKSPACE="delivery"
 SDLC_BOARD="delivery/backlog/BACKLOG.md"
@@ -45,7 +45,7 @@ project_tool_checks()     { return 0; }
 # files, the stories and the board.
 SDLC_RETIRED_PHRASES=()
 
-# The independent reviewer's endpoint and Keychain item (R-6.7). The key
+# The independent reviewer's endpoint and Keychain item (R-6.2). The key
 # itself is never written anywhere.
 # SDLC_SECOND_OPINION_URL="https://api.openai.com/v1/chat/completions"
 # SDLC_SECOND_OPINION_KEYCHAIN_ITEM="sipkai-openai-api"

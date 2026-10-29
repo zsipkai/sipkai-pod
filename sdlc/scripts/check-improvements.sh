@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sipk.ai POD improvement-log check (R-1.1, R-1.2).
+# Sipk.ai POD improvement-log check (R-1.2).
 # Every APPROVED or APPLIED improvement names a human approver and a date;
 # an agent or model is never an approver; APPLIED rows say where they landed.
 # CHECK_IMPROVEMENTS_FILE overrides the file (the process evaluations use fixtures).

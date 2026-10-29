@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Start-of-stage check (R-8.18, R-7.10). Every stage runs it before anything else:
+# Start-of-stage check (R-8.1, R-7.2). Every stage runs it before anything else:
 #
 #   bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN
 #
@@ -24,7 +24,7 @@ root="$(pwd -P)"
 story="${1:?usage: stage-start.sh STORY-NNN}"
 fail=0
 
-# The charter comes first (R-1.7): every stage begins with its agreements in view.
+# The charter comes first (R-1.1): every stage begins with its agreements in view.
 if [ -f "$charter" ]; then
   echo "Team charter (sipkai-pod/agents/CHARTER.md): the best, the quickest, the cheapest, in that order. Our agreements, in priority order:"
   grep -E '^### [0-9]+\. ' "$charter" | sed 's/^### /  /'
@@ -61,7 +61,7 @@ print(int(n * (1000 if u == "k" else 1000000 if u == "m" else 1)))' "${budget_te
     echo "PASS  $story is over budget ($spent of $budget), and a human decided to go on:"
     grep -E '^Budget decision:' "$record" | tail -n 1 | sed 's/^/      /'
   else
-    echo "FAIL  $story has spent $spent of its $budget token budget (R-7.10)."
+    echo "FAIL  $story has spent $spent of its $budget token budget (R-7.2)."
     echo "      Stop. The founder chooses: raise the budget, split the story, or escalate the tier."
     echo "      Record his answer as a new Budget: value, or as 'Budget decision: <what> — <name>, YYYY-MM-DD'."
     fail=1

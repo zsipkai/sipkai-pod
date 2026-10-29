@@ -37,7 +37,7 @@ The mocks and `design-system.md` in the project workspace, the design tokens fil
 - A screen with more than one main message, or words the product's users would not use.
 - A state left undesigned: loading, empty, error, success.
 - A colour or size outside the tokens; contrast or keyboard focus that fails the accessibility check.
-- Real personal data in a mock (R-8.9).
+- Real personal data in a mock (R-8.4).
 - Approving your own mocks: the founder approves them.
 
 ## Checklists and scripts

@@ -30,10 +30,10 @@ flowchart LR
     RT --> SP
 ```
 
-1. **Sprint 0** (`/sprint-zero`, R-2.20). Once per project, time-boxed. It ends when the team is ready to develop: the founder said go on the business case, the backlog is ordered, the riskiest assumption is proven, the mocks are approved, every access works and the gate is green.
-2. **The founder names a story, or approves a sprint** (R-2.13): an ordered list of stories from the top of the board.
-3. **Each story runs on the lightest track that meets every criterion** (R-2.22): rapid in two sessions, standard in three, full through the seven stage pages. Every session is fresh, started by Sipk.ai, and leaves its evidence in the change record. Stories in a sprint run one after another; a story never starts while a story it depends on is open.
-4. **After every story the team sits down** (R-10.9): Tina's one-page retrospective with the bill and at most three lean proposals.
+1. **Sprint 0** (`/sprint-zero`, R-2.5). Once per project, time-boxed. It ends when the team is ready to develop: the founder said go on the business case, the backlog is ordered, the riskiest assumption is proven, the mocks are approved, every access works and the gate is green.
+2. **The founder names a story, or approves a sprint** (R-2.4): an ordered list of stories from the top of the board.
+3. **Each story runs on the lightest track that meets every criterion** (R-2.8): rapid in two sessions, standard in three, full through the seven stage pages. Every session is fresh, started by Sipk.ai, and leaves its evidence in the change record. Stories in a sprint run one after another; a story never starts while a story it depends on is open.
+4. **After every story the team sits down** (R-10.2): Tina's one-page retrospective with the bill and at most three lean proposals.
 5. **After the sprint** Sipk.ai reports to the founder: what shipped, what it cost, what was learned, and the recommended next sprint.
 
 ### What runs on its own, and what waits for the founder
@@ -41,9 +41,9 @@ flowchart LR
 | Runs on its own | Waits for the founder |
 |---|---|
 | every stage of a named story or an approved sprint, one after another | go or no-go on the business case |
-| design questions, answered with the best-supported option and reported (R-6.13) | approving the mocks |
+| design questions, answered with the best-supported option and reported (R-6.3) | approving the mocks |
 | the second opinion, through the API | creating account-level accesses only he can create |
-| deploying to development inside an approved story (R-5.5) | naming the story or approving the sprint |
+| deploying to development inside an approved story (R-5.2) | naming the story or approving the sprint |
 | merging and pushing `main` where the project allows it | a production release |
 | writing improvement proposals | approving any change to the method |
 | | a budget crossed, money beyond a story, deletions, permission widening at account level |
@@ -56,7 +56,7 @@ flowchart LR
 | **Standard** | Size S or M, LOW or STANDARD risk, outside the rapid limits | 3: `/design`, `/build`, `/ship` | plus Marketa, at most two reviewers, Erik if a screen changes | once, on the diff |
 | **Full** | HIGH or CRITICAL; Size L or XL; money, security, authentication, personal data, infrastructure, the control plane, a new architecture or a new external service | the seven stage pages | the whole team | at Validate and at Review |
 
-Every track keeps, without exception: a proof that can fail for every acceptance criterion; the gate on the exact commit with its receipt; review by someone other than the builder; one change record with all seven sections; the budget stop and the founder's authority. A surprise moves a story up a track at once, never down (R-2.22).
+Every track keeps, without exception: a proof that can fail for every acceptance criterion; the gate on the exact commit with its receipt; review by someone other than the builder; one change record with all seven sections; the budget stop and the founder's authority. A surprise moves a story up a track at once, never down (R-2.8).
 
 ## Sprint 0
 
@@ -127,7 +127,7 @@ One file travels the route, created from `templates/change-record.md`. Each stag
 | Regress | Regression Certificate | `Regression outcome: REGRESSION-TEST-PROVEN` |
 | Deploy | Deployment Record | `Deployment outcome: DEPLOYED` |
 
-The change-record checker runs on every commit and enforces R-2.4 to R-2.8: the stage never outruns its evidence, metadata is present, no placeholders, receipts exist, the Definition of Done is checked. Reopening a stage resets everything after it to `PENDING` (R-2.9).
+The change-record checker runs on every commit and enforces R-2.2: the stage never outruns its evidence, metadata is present, no placeholders, receipts exist, the Definition of Done is checked. Reopening a stage resets everything after it to `PENDING` (R-2.2).
 
 ## The gates
 
@@ -140,7 +140,7 @@ Instructions are soft; an agent under context pressure will eventually skip one.
 | `--ui` | `--full` plus the project's UI journeys and accessibility checks | UI-touching stories, before releases |
 | `--deploy` | `--ui` plus deployment-bound checks | `/deploy-change` |
 
-The gate fails closed, runs identically in the hook, in CI and at deploy (R-3.21), and grows a new check for every new class of drift or defect (R-3.22). Required CI on a protected branch is the enforcement boundary; the local hook is fast feedback (R-8.14).
+The gate fails closed, runs identically in the hook, in CI and at deploy (R-3.5), and grows a new check for every new class of drift or defect (R-3.6). Required CI on a protected branch is the enforcement boundary; the local hook is fast feedback (R-3.5).
 
 ## Lanes: the sanctioned shortcuts
 
@@ -152,7 +152,7 @@ The gate fails closed, runs identically in the hook, in CI and at deploy (R-3.21
 | Hotfix | Develop, Accept, Regress, Deploy now; Discovery Brief and Design Verdict written retroactively the same day | production is broken and users are hurting |
 | Bootstrap | the project's documented one-time sequence before the gate exists | creating the repository and the first gate; never repeated |
 
-The lane is said out loud at the start and written in the record's `Lane:` field (R-4.1). `--no-verify` is not a lane (R-4.7).
+The lane is said out loud at the start and written in the record's `Lane:` field (R-4.1). `--no-verify` is not a lane (R-4.1).
 
 ## Risk tiers and human checkpoints
 
@@ -163,7 +163,7 @@ The lane is said out loud at the start and written in the record's `Lane:` field
 | HIGH | security, money, privacy, migration, public contract, broad dependency change, control-plane files | `top` | production release only |
 | CRITICAL | irreversible actions, regulated behavior, destructive data change, production authority expansion | `top` | design approval and production release, plus independent review |
 
-Size sets the budget: S 750k, M 2M, L 2.5M, XL 4M tokens for the whole pipeline; XXL is split first (R-7.9).
+Size sets the budget: S 750k, M 2M, L 2.5M, XL 4M tokens for the whole pipeline; XXL is split first (R-7.2).
 
 ## The layered quality stack
 

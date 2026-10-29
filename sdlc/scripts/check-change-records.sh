@@ -6,9 +6,9 @@
 # SUPERSEDED. Also enforces metadata, the routing floor (HIGH/CRITICAL run
 # on `top`), no placeholders in completed sections, regression and
 # deployment receipts, and a fully checked Definition of Done at DEPLOYED.
-# Since 2.2 also: the track's limits (R-2.22, since 2.4), the declared second
-# opinion (R-6.7), the gate receipt behind a Regression Certificate (R-2.7)
-# and the budget stop (R-7.10). Records listed in SDLC_LEGACY_RECORDS
+# Since 2.2 also: the track's limits (R-2.8, since 2.4), the declared second
+# opinion (R-6.2), the gate receipt behind a Regression Certificate (R-2.2)
+# and the budget stop (R-7.2). Records listed in SDLC_LEGACY_RECORDS
 # (sdlc.config.sh) were finished before 2.2 and keep the old checks only.
 # Runs in `sdlc-gate.sh --fast`, so the pre-commit hook enforces it.
 #
@@ -78,47 +78,47 @@ while IFS= read -r record; do
   fi
   id="${name%.md}"
   if [[ "$LEGACY" != *" $id "* ]]; then
-    # The track (R-2.22): every full-lane record names one, within its limits.
+    # The track (R-2.8): every full-lane record names one, within its limits.
     if [ "$lane" = "full" ]; then
       case "$track" in
         rapid)
-          [ "$size" = "S" ] || report_fail "$name: the rapid track is for Size S only (got '${size:-none}') — R-2.22"
-          case "$risk" in LOW|STANDARD) ;; *) report_fail "$name: the rapid track is for LOW or STANDARD risk (got '${risk:-none}') — R-2.22";; esac ;;
+          [ "$size" = "S" ] || report_fail "$name: the rapid track is for Size S only (got '${size:-none}') — R-2.8"
+          case "$risk" in LOW|STANDARD) ;; *) report_fail "$name: the rapid track is for LOW or STANDARD risk (got '${risk:-none}') — R-2.8";; esac ;;
         standard)
-          case "$size" in S|M) ;; *) report_fail "$name: the standard track is for Size S or M (got '${size:-none}') — R-2.22";; esac
-          case "$risk" in LOW|STANDARD) ;; *) report_fail "$name: the standard track is for LOW or STANDARD risk (got '${risk:-none}') — R-2.22";; esac ;;
+          case "$size" in S|M) ;; *) report_fail "$name: the standard track is for Size S or M (got '${size:-none}') — R-2.8";; esac
+          case "$risk" in LOW|STANDARD) ;; *) report_fail "$name: the standard track is for LOW or STANDARD risk (got '${risk:-none}') — R-2.8";; esac ;;
         full) ;;
-        *) report_fail "$name: needs 'Track: rapid', 'Track: standard' or 'Track: full' (got '${track:-none}') — R-2.22" ;;
+        *) report_fail "$name: needs 'Track: rapid', 'Track: standard' or 'Track: full' (got '${track:-none}') — R-2.8" ;;
       esac
     fi
-    # Declared second opinion (R-6.7): the full track at Validate and Review; every track at Review above LOW.
+    # Declared second opinion (R-6.2): the full track at Validate and Review; every track at Review above LOW.
     if [ "$risk" != "LOW" ]; then
       if [ "$lane" = "full" ] && [ "$track" = "full" ] && [ "$rank" -ge 1 ] && ! section_body "$record" "Design Verdict" | grep -Eq '^Second opinion:[[:space:]]*[^[:space:]<]'; then
-        report_fail "$name: Design Verdict needs a 'Second opinion:' line (the X-n findings, or 'skipped' with the reason) — R-6.7"
+        report_fail "$name: Design Verdict needs a 'Second opinion:' line (the X-n findings, or 'skipped' with the reason) — R-6.2"
       fi
       if [ "$lane" = "full" ] && [ "$rank" -ge 4 ] && ! section_body "$record" "Review Verdict" | grep -Eq '^Second opinion:[[:space:]]*[^[:space:]<]'; then
-        report_fail "$name: Review Verdict needs a 'Second opinion:' line (the X-n findings, or 'skipped' with the reason) — R-6.7"
+        report_fail "$name: Review Verdict needs a 'Second opinion:' line (the X-n findings, or 'skipped' with the reason) — R-6.2"
       fi
     fi
-    # The certificate's commit exists and carries the gate's own receipt (R-2.7).
+    # The certificate's commit exists and carries the gate's own receipt (R-2.2).
     if [ "$rank" -ge 5 ]; then
       sha=$(sed -n 's/^- Commit SHA:[[:space:]]*//p' "$record" | head -n 1 | grep -oE '[0-9a-f]{7,40}' | head -n 1)
       receipt=$(sed -n 's/^- Gate receipt:[[:space:]]*//p' "$record" | head -n 1 | tr -d '`')
       receipt_sha=$(echo "$receipt" | awk '{print $1}')
       if [ -z "$sha" ]; then
-        report_fail "$name: Regression Certificate's Commit SHA is not a commit id — R-2.7"
+        report_fail "$name: Regression Certificate's Commit SHA is not a commit id — R-2.2"
       elif ! git cat-file -e "${sha}^{commit}" 2>/dev/null; then
-        report_fail "$name: Regression Certificate names commit $sha, which this repository does not have — R-2.7"
+        report_fail "$name: Regression Certificate names commit $sha, which this repository does not have — R-2.2"
       fi
       if [ -z "$receipt" ]; then
-        report_fail "$name: Regression Certificate needs '- Gate receipt:', the line the gate printed — R-2.7"
+        report_fail "$name: Regression Certificate needs '- Gate receipt:', the line the gate printed — R-2.2"
       elif ! echo "$receipt" | grep -q ' PASS '; then
-        report_fail "$name: the gate receipt does not record a pass ('$receipt') — R-2.7"
+        report_fail "$name: the gate receipt does not record a pass ('$receipt') — R-2.2"
       elif [ -n "$sha" ] && [[ "$receipt_sha" != "$sha"* ]] && [[ "$sha" != "$receipt_sha"* ]]; then
-        report_fail "$name: the gate receipt is for $receipt_sha, the certificate names $sha — R-2.7"
+        report_fail "$name: the gate receipt is for $receipt_sha, the certificate names $sha — R-2.2"
       fi
     fi
-    # The budget stop (R-7.10): over budget, a stage may not complete without a human's decision.
+    # The budget stop (R-7.2): over budget, a stage may not complete without a human's decision.
     budget_text=$(sed -n 's/^Budget:[[:space:]]*//p' "$record" | head -n 1 | awk '{print $1}')
     budget=$(python3 -c '
 import re, sys
@@ -131,7 +131,7 @@ print(int(n * (1000 if u == "k" else 1000000 if u == "m" else 1)))' "${budget_te
     for i in "${!SKILLS[@]}"; do [ "${SKILLS[$i]}" = "$last" ] && last_rank=$i; done
     if [ "$budget" -gt 0 ] && [ "$spent" -ge "$budget" ] && [ "$rank" -ge "$last_rank" ] \
        && ! grep -Eq '^Budget decision:.*[^[:space:]].*[0-9]{4}-[0-9]{2}-[0-9]{2}' "$record"; then
-      report_fail "$name: spent $spent of its $budget budget and reached $stage without a human's 'Budget decision:' or a raised Budget — R-7.10"
+      report_fail "$name: spent $spent of its $budget budget and reached $stage without a human's 'Budget decision:' or a raised Budget — R-7.2"
     fi
   fi
 

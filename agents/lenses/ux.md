@@ -1,6 +1,6 @@
 # Lens · UX
 
-Worn by Erik at Validate and Review for anything a person sees, and by any persona briefed with it for a small story (R-6.5). Read the project's design system and its own UX rules first.
+Worn by Erik at Validate and Review for anything a person sees, and by any persona briefed with it for a small story (R-6.1). Read the project's design system and its own UX rules first.
 
 One concern dominates: a person who has never seen the product understands each screen at a glance.
 

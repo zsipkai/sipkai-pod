@@ -23,11 +23,11 @@ description: Sipk.ai POD, Sprint 0 step 5 and any story that adds screens. Erik 
 
 ## Hard rule
 
-The simplest screen that does the job, in Erik's clean, modern, Apple-like style. One main message per screen, plain words in the product's own vocabulary, every state designed (loading, empty, error, success), accessible by keyboard and to screen readers, works on a phone and a desktop. Mock data is synthetic, never a real person's data (R-8.9).
+The simplest screen that does the job, in Erik's clean, modern, Apple-like style. One main message per screen, plain words in the product's own vocabulary, every state designed (loading, empty, error, success), accessible by keyboard and to screen readers, works on a phone and a desktop. Mock data is synthetic, never a real person's data (R-8.4).
 
 ## Steps
 
-0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh UI` (R-8.18).
+0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh UI` (R-8.1).
 1. **Journeys.** For each story in the first release, the path a user takes, screen by screen.
 2. **Design system first.** Tokens (colour, type, spacing, radius, motion) with light and dark values, and the components the journeys need, each with its states and its accessibility notes.
 3. **Mocks.** Clickable HTML built only from those tokens and components, one page per main screen, with every state reachable.
@@ -40,4 +40,4 @@ Every screen of the first release has an approved mock; every component it uses 
 
 ## Rules that bind this step
 
-R-3.7, R-8.9, R-9.4, R-9.10.
+R-3.1, R-8.4, R-9.2.

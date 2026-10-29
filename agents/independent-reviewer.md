@@ -1,6 +1,6 @@
 # The Independent Reviewer
 
-Not a team member and not an agent file in the plugin. The independent reviewer is a top model of a **different model family** than the one running the pipeline, outside the team's context, asked to judge a self-contained pack. It exists because reviewers from one family share that family's blind spots and grade their own systematic mistakes as fine (R-6.7).
+Not a team member and not an agent file in the plugin. The independent reviewer is a top model of a **different model family** than the one running the pipeline, outside the team's context, asked to judge a self-contained pack. It exists because reviewers from one family share that family's blind spots and grade their own systematic mistakes as fine (R-6.2).
 
 ## When
 
@@ -8,7 +8,7 @@ On every change record at `Risk: STANDARD` or higher, twice: once at Validate on
 
 ## What it gets
 
-Only the pack that `second-opinion.sh` builds: the charter, the change record, and at Review the diff. No repository access. If it cannot judge from the pack alone, the record failed the isolation test, and that is a finding against the record (R-6.8).
+Only the pack that `second-opinion.sh` builds: the charter, the change record, and at Review the diff. No repository access. If it cannot judge from the pack alone, the record failed the isolation test, and that is a finding against the record (R-2.3).
 
 ## How it runs
 
@@ -18,15 +18,15 @@ bash sipkai-pod/sdlc/scripts/second-opinion.sh STORY-NNN review          # pack 
 bash sipkai-pod/sdlc/scripts/second-opinion.sh STORY-NNN review --auto   # send it to the other family's API
 ```
 
-`--auto` sends the pack to that family's API, with the key read at run time from a fixed Keychain item and never stored in the repository or shown in the process list, and writes the findings next to the pack; when the API fails, the stage records it and declares the skip (R-6.7). The paste path stays for a human who wants to run it by hand. Never a mini or nano variant: verification never downsizes, across families too (R-6.12).
+`--auto` sends the pack to that family's API, with the key read at run time from a fixed Keychain item and never stored in the repository or shown in the process list, and writes the findings next to the pack; when the API fails, the stage records it and declares the skip (R-6.2). The paste path stays for a human who wants to run it by hand. Never a mini or nano variant: verification never downsizes, across families too (R-6.1).
 
 ## What it returns
 
-Findings numbered `X-n`, with severity, location, the concrete problem and a fix. They enter the same severity-ranked consolidation as every lens's findings (R-6.9).
+Findings numbered `X-n`, with severity, location, the concrete problem and a fix. They enter the same severity-ranked consolidation as every lens's findings (R-6.3).
 
 ## What it may not do
 
-Judge, never gate. No foreign model clears or blocks a stage by itself; the deciding gates stay mechanical scripts and the resolutions stay Sipk.ai's and the founder's (R-6.7). Its output is untrusted input like any other handoff: facts are verified against the diff before they are accepted (R-8.7).
+Judge, never gate. No foreign model clears or blocks a stage by itself; the deciding gates stay mechanical scripts and the resolutions stay Sipk.ai's and the founder's (R-6.2). Its output is untrusted input like any other handoff: facts are verified against the diff before they are accepted (R-8.3).
 
 ## Cost
 

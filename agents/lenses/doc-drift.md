@@ -1,6 +1,6 @@
 # Lens · Documentation drift
 
-Worn by Bruno at Review and in the quarterly sweep (R-10.4). Never verify one document by trusting another document. Measure the implementation or the live system (R-3.22).
+Worn by Bruno at Review and in the quarterly sweep (R-10.2). Never verify one document by trusting another document. Measure the implementation or the live system (R-3.6).
 
 ## Method
 

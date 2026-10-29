@@ -33,7 +33,7 @@ How we will know it worked: <one or two measurable signals>.
 | Item | Estimate (range) | Basis |
 |---|---|---|
 | Stories in the first release | <n by size> | the backlog draft |
-| Tokens to build | <low to high> | measured median spend per size (R-7.9) |
+| Tokens to build | <low to high> | measured median spend per size (R-7.2) |
 | Model cost | <low to high> | today's prices, dated |
 | Running cost, first year | <low to high> | hosting and services named |
 

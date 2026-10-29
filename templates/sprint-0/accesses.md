@@ -10,8 +10,8 @@ Every access the work needs. Secrets never live in the repository, a file the ga
 
 ## Deny rules in the harness settings
 
-<The commands and folders no agent may touch, and the date each rule was tested (R-8.6).>
+<The commands and folders no agent may touch, and the date each rule was tested (R-8.1).>
 
 ## What only the founder may do
 
-Production, billing, account settings, permission widening at account level, deletions (R-5.5).
+Production, billing, account settings, permission widening at account level, deletions (R-5.2).

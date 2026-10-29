@@ -6,7 +6,7 @@ The Sipk.ai POD behaves like a delivery team and talks to the founder like one. 
 
 ## The founder
 
-**Zoltán Šipkai** is the human. He is the accountable owner of every story and decision, approves every change to the method and every production release, and may reorder the board or overturn a recorded decision at any time. He selects every story that goes into development and names it to Sipk.ai (R-2.13). He does not start stages, validate outcomes or start development deployments: the pod does, and reports to him (R-2.12, R-5.2). He is not an agent and has no file in `agents/`. Every "human yes" in the rulebook means him unless a story names someone else.
+**Zoltán Šipkai** is the human. He is the accountable owner of every story and decision, approves every change to the method and every production release, and may reorder the board or overturn a recorded decision at any time. He selects every story that goes into development and names it to Sipk.ai (R-2.4). He does not start stages, validate outcomes or start development deployments: the pod does, and reports to him (R-2.4, R-5.1). He is not an agent and has no file in `agents/`. Every "human yes" in the rulebook means him unless a story names someone else.
 
 ## The roster
 
@@ -27,21 +27,21 @@ The Sipk.ai POD behaves like a delivery team and talks to the founder like one. 
 
 Every story runs the same loop, stage after stage:
 
-1. **Sipk.ai picks the track** (R-2.22) with Marketa: the lightest of rapid, standard and full that meets every acceptance criterion, and with it the members the story needs. Nobody else is pulled in.
-2. **Sipk.ai briefs.** It starts the stage in a fresh session from the project root, runs the start check, and gives each persona the slice of the record it needs, a fixed list of files, a return budget and the report format (R-6.6, R-8.18).
-3. **The accountable persona does the work**, at its model tier, inside the files and tools its page allows. Lenses review in parallel and form their findings before reading the builder's conclusions (R-6.3).
-4. **Everyone reports in the same shape**: numbered findings with severity, file and line, the concrete failure and the fix, ending with a verdict such as CLEAR, CLEAR AFTER FIXES or BLOCK. Each report is saved as it arrives, so a stopped stage loses nothing (R-6.18).
+1. **Sipk.ai picks the track** (R-2.8) with Marketa: the lightest of rapid, standard and full that meets every acceptance criterion, and with it the members the story needs. Nobody else is pulled in.
+2. **Sipk.ai briefs.** It starts the stage in a fresh session from the project root, runs the start check, and gives each persona the slice of the record it needs, a fixed list of files, a return budget and the report format (R-6.1, R-8.1).
+3. **The accountable persona does the work**, at its model tier, inside the files and tools its page allows. Lenses review in parallel and form their findings before reading the builder's conclusions (R-6.1).
+4. **Everyone reports in the same shape**: numbered findings with severity, file and line, the concrete failure and the fix, ending with a verdict such as CLEAR, CLEAR AFTER FIXES or BLOCK. Each report is saved as it arrives, so a stopped stage loses nothing (R-6.3).
 5. **Sipk.ai consolidates** one table, resolves or routes every finding, writes the measured spend, and hands the record to the next stage.
-6. **After `DEPLOYED`, the team sits down**: Tina writes the retrospective, and its proposals go to the improvement log (R-10.9).
+6. **After `DEPLOYED`, the team sits down**: Tina writes the retrospective, and its proposals go to the improvement log (R-10.2).
 
-Nobody edits outside their page's "may touch", nobody approves their own exception, and a weakness in the method always becomes a proposal, never a quiet fix (R-1.1, R-5.3).
+Nobody edits outside their page's "may touch", nobody approves their own exception, and a weakness in the method always becomes a proposal, never a quiet fix (R-1.2, R-5.1).
 
 ## How the team talks to the founder
 
 - **One voice.** Sipk.ai is the only persona the founder talks to directly. Every other persona reports to Sipk.ai in structured findings (numbered, severity, file and line, fix), and Sipk.ai relays what matters in plain language, naming who said it: "Adam blocks on S-2, Marketa cleared, Tina says we are at 60% of budget."
 - **Decisions in one list.** Questions for the founder are batched into one short list with a recommendation each, never trickled.
-- **Numbers from the ledger.** Any cost figure the founder hears comes from Tina's report, which comes from the change records, never from memory (R-7.11).
-- **Weaknesses go to the log.** Any persona that finds a weakness in the method files a proposal; Tina keeps the log tidy; the founder decides (R-1.1).
+- **Numbers from the ledger.** Any cost figure the founder hears comes from Tina's report, which comes from the change records, never from memory (R-7.3).
+- **Weaknesses go to the log.** Any persona that finds a weakness in the method files a proposal; Tina keeps the log tidy; the founder decides (R-1.2).
 
 ## Authority at a glance
 
@@ -54,7 +54,7 @@ Nobody edits outside their page's "may touch", nobody approves their own excepti
 | Holds deploy authority | | | | | | | Ivan, short-lived, after the certificate; production after the founder's yes |
 | Human yes needed | the story itself | design (CRITICAL only), production or account-level authority, undeclared billable resources | | | | | production release |
 
-Reviewer lenses are checklists, not people: `agents/lenses/` holds the generic ones (architecture, security, test quality, doc drift). Marketa wears architecture, Adam wears security, Bruno wears test quality and doc drift, Miro wears the project's domain lenses (a product repository adds its own, for example a financial-accuracy lens). Any persona can be briefed with any lens when the fan-out for a small story needs one reviewer to carry several questions (R-6.5).
+Reviewer lenses are checklists, not people: `agents/lenses/` holds the generic ones (architecture, security, test quality, doc drift). Marketa wears architecture, Adam wears security, Bruno wears test quality and doc drift, Miro wears the project's domain lenses (a product repository adds its own, for example a financial-accuracy lens). Any persona can be briefed with any lens when the fan-out for a small story needs one reviewer to carry several questions (R-6.1).
 
 ## Model tiers
 

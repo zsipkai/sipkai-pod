@@ -1,5 +1,16 @@
 # Sipk.ai POD changelog
 
+## 2.2.0 — 2026-10-29
+
+Approved by Zoltán Šipkai in chat ("Points 1 to 4", 2026-10-29): the six approved improvements applied, plus SI-003, SI-005, SI-029, SI-080, SI-088, SI-089 and SI-154. Thirteen new process evaluations, 41 in all; each new check was broken once to prove its evaluation turns red.
+
+- **Every stage starts with one check** (R-8.18, R-7.10). `scripts/stage-start.sh STORY-NNN` stops a stage that started outside the project root, where the project's deny rules and reviewers do not load, and a stage whose story has spent its budget without a human's decision.
+- **The budget stop is mechanical** (R-7.10, SI-070). The record checker refuses a record that completed a stage over budget without a raised `Budget:` or a `Budget decision: ... — name, date` line. In Money Review, five of the ten finished stories had crossed their budget with nothing recorded.
+- **No silent passes** (R-2.7, R-6.7; SI-003, SI-005, SI-089). A passing `--full`, `--ui` or `--deploy` gate prints a receipt, and the Regression Certificate quotes it; the checker refuses a certificate naming a commit the repository does not have. Every full-lane verdict above LOW risk carries a `Second opinion:` line. `second-opinion.sh --auto` exits 3 with "Second opinion NOT obtained" and leaves no findings file when the API fails or answers nothing.
+- **A small-change lane** (R-4.8, SI-088). Size S, a few files, no user-visible behaviour change, no new contract, never CRITICAL: Plan, Validate and Develop in one session, one lens on the design, one second opinion on the diff, then Accept, Review, Regress and Deploy with every gate.
+- **Rule text** (SI-030, SI-065, SI-066, SI-144, SI-145). Seven-day age for every pin, transitive npm packages included (R-8.11); UI tests change with what they assert and run before such a commit (R-3.24); prescribed test mechanics are tried before a design clears (R-6.16); about 100k tokens per reviewer and a general-purpose fallback for a reviewer the harness cannot load (R-6.6); five forms of adverse proof for a forbidding control (R-3.18).
+- Records finished before 2.2 are listed in the project's `SDLC_LEGACY_RECORDS` and keep the older checks.
+
 ## 2.1.1 — 2026-10-19
 
 Correction by the founder the same evening: he selects every story that goes into development; the pod never picks one (R-2.13). The 2.1.0 text that let Sipk.ai take the next story from the board is withdrawn.

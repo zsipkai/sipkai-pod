@@ -20,7 +20,7 @@ Rules: `RULES.md` section 3.
 
 ## 4. Lanes are the only shortcuts
 
-A stage may be skipped only through a declared lane, said out loud at the start and written in the record: full, test-only, docs/process-only, hotfix, bootstrap. Anything else is the full route. `--no-verify` is not a lane.
+A stage may be skipped only through a declared lane, said out loud at the start and written in the record: full, small-change, test-only, docs/process-only, hotfix, bootstrap. Anything else is the full route. `--no-verify` is not a lane.
 Rules: `RULES.md` section 4.
 
 ## 5. Risk decides the controls, size decides the budget

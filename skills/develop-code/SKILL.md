@@ -32,15 +32,17 @@ Sipk.ai delegates the implementation to Michal with the record's `Execution mode
 
 ## Steps
 
+0. **Start check.** `bash sipkai-pod/scripts/stage-start.sh STORY-NNN`, before any `cd` (R-8.18, R-7.10). Red means stop: a session in the wrong folder is started again from the project root; a budget stop goes to the founder for a raise, a split or an escalation.
 1. **Branch.** `git checkout -b story/STORY-NNN-slug`.
 2. **Load the constraints.** The rules for the surfaces touched (the project's required-reading table), the project's error-handling and naming rules, and the governance rules always.
-3. **Work the tasks in order.** For each task: implement exactly what it says; keep the project buildable in the same edit (R-3.24); new interactive UI gets stable `data-testid` identifiers in the same diff (R-3.7); documented behavior changes its doc in the same commit (R-3.23); shared constants update every side and both contract tests in the same commit (R-3.3); a new durable technical choice gets a decision record and a conflict with an accepted one returns to Validate (R-5.8); run the narrowest trustworthy check for what changed before moving on (R-3.16).
+3. **Work the tasks in order.** For each task: implement exactly what it says; keep the project buildable in the same edit (R-3.24); new interactive UI gets stable `data-testid` identifiers in the same diff (R-3.7); documented behavior changes its doc in the same commit (R-3.23); shared constants update every side and both contract tests in the same commit (R-3.3); a new durable technical choice gets a decision record and a conflict with an accepted one returns to Validate (R-5.8); run the narrowest trustworthy check for what changed before moving on (R-3.16). A change to what a UI or end-to-end test asserts changes that test in the same commit, and the project's UI suite runs before that commit, because the hook does not run it (R-3.24).
 4. **Self-check before handoff.** Read the diff for machine tells and invented APIs (R-9.1, R-9.2) and fix them now. Read it for simplicity: the least code that meets the criteria, readable top to bottom, no speculative abstraction, no unrequested option, no cleverness (R-9.4 to R-9.10); simplify now. Compare actual files, dependencies, tools, network use and permissions with the declared scope; every difference is explained in the record or returned to design; control-plane changes are called out for the owner (R-8.2, R-8.4). The fast gate passes. Never `--no-verify` (R-4.7). Commit in task-sized commits whose messages say why (R-9.13).
 5. **Fill the Implementation Record and hand off.** Changed files with reasons, declared versus actual scope, dependency provenance, authority used, decisions and docs updated, contract mirrors, narrow check commands and results, deviations. Set `Development outcome: DEVELOPED` and `Stage: DEVELOPED`. Sipk.ai appends `Tokens spent (develop-code): n` from harness-measured usage (R-7.11). Update the board and point the founder at `/test-acceptance` in a fresh session. If blocked, leave the stage where the evidence is.
 
 ## Scripts and checks
 
 ```bash
+bash sipkai-pod/scripts/stage-start.sh STORY-NNN        # first, before any cd: folder and budget
 bash sipkai-pod/scripts/sdlc-gate.sh --fast     # must be green before handoff; the hook runs it on every commit
 ```
 

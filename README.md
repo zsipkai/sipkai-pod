@@ -2,7 +2,7 @@
 
 **A pod of AI agents that delivers software through seven evidence-gated stages, owned by one human. Give it to any project; the project's own rules stay in the project.**
 
-Version 2.1.1 (2026-10-19). By Sipk.ai, Zoltán Šipkai. MIT licensed.
+Version 2.2.0 (2026-10-29). By Sipk.ai, Zoltán Šipkai. MIT licensed.
 
 ## The idea in one paragraph
 

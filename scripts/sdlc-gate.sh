@@ -10,6 +10,10 @@
 #   --deploy  --ui + project deployment-bound checks. /deploy-change.
 #
 # Fails closed: a missing tool or an unconfigured project stage fails the gate.
+# A passing --full, --ui or --deploy run prints a gate receipt (commit, mode,
+# result, UTC time) and appends it to build/gate-receipts.log; the Regression
+# Certificate quotes it (R-2.7). A dirty tree gets no receipt: the commit
+# would not be what the gate checked.
 # SDLC_GATE_QUIET=1 keeps success output to one line per stage (full detail in
 # build/gate-last.log); failures always print verbatim.
 
@@ -66,6 +70,15 @@ fi
 echo ""
 if [ "$overall" -eq 0 ]; then
   echo "GATE PASSED ($mode)"
+  if [ "$mode" != "--fast" ]; then
+    if [ -z "$(git status --porcelain --untracked-files=no 2>/dev/null)" ]; then
+      receipt="$(git rev-parse HEAD) ${mode#--} PASS $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+      echo "$receipt" >> build/gate-receipts.log
+      echo "Gate receipt: $receipt"
+    else
+      echo "No gate receipt: tracked files differ from HEAD, so the commit is not what the gate checked."
+    fi
+  fi
 else
   echo "GATE FAILED ($mode). Fix the cause. Do not weaken the check."
 fi

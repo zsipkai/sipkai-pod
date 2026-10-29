@@ -82,7 +82,7 @@ Order small tasks by dependency. Name verified files and tests; label uncertain 
 
 - Token budget (stop-loss): from the size table in the `Budget:` metadata
 - Allowed tier by stage: per sipkai-pod/RULES.md section 7 (execution at the routed tier; verification always top)
-- Stop condition: crossing the budget halts the stage for a human decision — raise, split, or escalate the tier
+- Stop condition: crossing the budget halts the stage for a human decision — raise, split, or escalate the tier. `stage-start.sh` checks it at the start of every stage (R-7.10). A raise changes `Budget:`; a decision to go on without one is a line `Budget decision: <what> — <name>, YYYY-MM-DD`.
 
 Each stage appends one line here as it finishes (mark estimates as such):
 
@@ -105,7 +105,7 @@ Design outcome: PENDING
 
 ### Second opinion (rule 16 — Risk ≠ LOW)
 
-<Family and model used; `X-n` findings in the table above — or the skip, declared.>
+Second opinion: <family and model, and the `X-n` findings in the table above — or `skipped`, with the reason (R-6.7)>
 
 ### Exceptions and waivers
 
@@ -163,7 +163,7 @@ Review outcome: PENDING
 
 ### Second opinion (rule 16 — Risk ≠ LOW)
 
-<Family and model used; `X-n` findings below — or the skip, declared.>
+Second opinion: <family and model, and the `X-n` findings below — or `skipped`, with the reason (R-6.7)>
 
 ### Findings, fixes, and focused retests
 
@@ -180,6 +180,7 @@ Regression outcome: PENDING
 - Commit SHA:
 - Environment:
 - Full gate command:
+- Gate receipt: <the line the passing gate printed: commit, mode, PASS, time (R-2.7)>
 - Build and static analysis:
 - Unit and integration:
 - UI or end-to-end:

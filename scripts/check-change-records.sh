@@ -6,6 +6,10 @@
 # SUPERSEDED. Also enforces metadata, the routing floor (HIGH/CRITICAL run
 # on `top`), no placeholders in completed sections, regression and
 # deployment receipts, and a fully checked Definition of Done at DEPLOYED.
+# Since 2.2 also: the small-change lane's limits (R-4.8), the declared second
+# opinion (R-6.7), the gate receipt behind a Regression Certificate (R-2.7)
+# and the budget stop (R-7.10). Records listed in SDLC_LEGACY_RECORDS
+# (sdlc.config.sh) were finished before 2.2 and keep the old checks only.
 # Runs in `sdlc-gate.sh --fast`, so the pre-commit hook enforces it.
 #
 # CHECK_RECORDS_DIR overrides the folder (the process evaluations use fixtures).
@@ -20,6 +24,9 @@ report_fail() { echo "FAIL  $1"; fail=1; }
 STAGES=(PLANNED DESIGN-VALIDATED DEVELOPED ACCEPTANCE-TEST-PROVEN REVIEW-CLEARED REGRESSION-TEST-PROVEN DEPLOYED)
 KEYS=("Planning outcome" "Design outcome" "Development outcome" "Acceptance outcome" "Review outcome" "Regression outcome" "Deployment outcome")
 SECTIONS=("Discovery Brief" "Design Verdict" "Implementation Record" "Acceptance Evidence" "Review Verdict" "Regression Certificate" "Deployment Record")
+
+SKILLS=(plan-task validate-design develop-code test-acceptance clear-review test-regression deploy-change)
+LEGACY=" ${SDLC_LEGACY_RECORDS:-} "
 
 section_body() { awk -v h="## $2" '$0==h{on=1;next} on&&/^## /{exit} on{print}' "$1"; }
 field_has_value() { grep -Eq "^- ${2}:[[:space:]]*[^[:space:]<]" "$1"; }
@@ -40,13 +47,19 @@ while IFS= read -r record; do
   grep -Eq '^Budget:[[:space:]]*[0-9]' "$record" || report_fail "$name: needs a numeric Budget from the size table"
   grep -Eq '^Owner:[[:space:]]*[^[:space:]<]' "$record" || report_fail "$name: needs an accountable owner"
   grep -Eq "^Story:[[:space:]]*\`?${SDLC_STORIES_DIR}/STORY-" "$record" || report_fail "$name: needs a story path under ${SDLC_STORIES_DIR}/"
-  grep -Eq '^Lane: (full|test-only|docs/process-only|hotfix|bootstrap)$' "$record" || report_fail "$name: needs one declared Lane"
+  grep -Eq '^Lane: (full|small-change|test-only|docs/process-only|hotfix|bootstrap)$' "$record" || report_fail "$name: needs one declared Lane"
 
   risk=$(sed -n 's/^Risk:[[:space:]]*//p' "$record" | head -n 1 | awk '{print $1}')
   tier=$(sed -n 's/^Execution model:[[:space:]]*//p' "$record" | head -n 1 | awk '{print $1}')
   case "$risk" in HIGH|CRITICAL)
     [ "$tier" = "top" ] || report_fail "$name: Risk $risk requires 'Execution model: top' (got '${tier:-none}') — routing rule 7";;
   esac
+  lane=$(sed -n 's/^Lane:[[:space:]]*//p' "$record" | head -n 1 | tr -d '[:space:]')
+  size=$(sed -n 's/^Size:[[:space:]]*//p' "$record" | head -n 1 | awk '{print $1}')
+  if [ "$lane" = "small-change" ]; then
+    [ "$size" = "S" ] || report_fail "$name: the small-change lane is for Size S only (got '${size:-none}') — R-4.8"
+    [ "$risk" = "CRITICAL" ] && report_fail "$name: a CRITICAL change never takes the small-change lane — R-4.8"
+  fi
 
   for i in "${!SECTIONS[@]}"; do
     grep -Fqx "## ${SECTIONS[$i]}" "$record" || { report_fail "$name: missing section '## ${SECTIONS[$i]}'"; continue; }
@@ -66,6 +79,52 @@ while IFS= read -r record; do
   if [ "$rank" -ge 5 ]; then
     for f in "Commit SHA" "Full gate command" "Result"; do field_has_value "$record" "$f" || report_fail "$name: Regression Certificate needs '$f'"; done
   fi
+  id="${name%.md}"
+  if [[ "$LEGACY" != *" $id "* ]]; then
+    # Declared second opinion (R-6.7): full lane at Validate and Review, small-change at Review.
+    if [ "$risk" != "LOW" ]; then
+      if [ "$lane" = "full" ] && [ "$rank" -ge 1 ] && ! section_body "$record" "Design Verdict" | grep -Eq '^Second opinion:[[:space:]]*[^[:space:]<]'; then
+        report_fail "$name: Design Verdict needs a 'Second opinion:' line (the X-n findings, or 'skipped' with the reason) — R-6.7"
+      fi
+      if { [ "$lane" = "full" ] || [ "$lane" = "small-change" ]; } && [ "$rank" -ge 4 ] && ! section_body "$record" "Review Verdict" | grep -Eq '^Second opinion:[[:space:]]*[^[:space:]<]'; then
+        report_fail "$name: Review Verdict needs a 'Second opinion:' line (the X-n findings, or 'skipped' with the reason) — R-6.7"
+      fi
+    fi
+    # The certificate's commit exists and carries the gate's own receipt (R-2.7).
+    if [ "$rank" -ge 5 ]; then
+      sha=$(sed -n 's/^- Commit SHA:[[:space:]]*//p' "$record" | head -n 1 | grep -oE '[0-9a-f]{7,40}' | head -n 1)
+      receipt=$(sed -n 's/^- Gate receipt:[[:space:]]*//p' "$record" | head -n 1 | tr -d '`')
+      receipt_sha=$(echo "$receipt" | awk '{print $1}')
+      if [ -z "$sha" ]; then
+        report_fail "$name: Regression Certificate's Commit SHA is not a commit id — R-2.7"
+      elif ! git cat-file -e "${sha}^{commit}" 2>/dev/null; then
+        report_fail "$name: Regression Certificate names commit $sha, which this repository does not have — R-2.7"
+      fi
+      if [ -z "$receipt" ]; then
+        report_fail "$name: Regression Certificate needs '- Gate receipt:', the line the gate printed — R-2.7"
+      elif ! echo "$receipt" | grep -q ' PASS '; then
+        report_fail "$name: the gate receipt does not record a pass ('$receipt') — R-2.7"
+      elif [ -n "$sha" ] && [[ "$receipt_sha" != "$sha"* ]] && [[ "$sha" != "$receipt_sha"* ]]; then
+        report_fail "$name: the gate receipt is for $receipt_sha, the certificate names $sha — R-2.7"
+      fi
+    fi
+    # The budget stop (R-7.10): over budget, a stage may not complete without a human's decision.
+    budget_text=$(sed -n 's/^Budget:[[:space:]]*//p' "$record" | head -n 1 | awk '{print $1}')
+    budget=$(python3 -c '
+import re, sys
+m = re.match(r"([0-9]+(?:\.[0-9]+)?)\s*([kKmM]?)", sys.argv[1])
+n = float(m.group(1)) if m else 0; u = m.group(2).lower() if m else ""
+print(int(n * (1000 if u == "k" else 1000000 if u == "m" else 1)))' "${budget_text:-x}")
+    spent=$(grep -E '^Tokens spent \(' "$record" | sed -E 's/.*\):[[:space:]]*~?([0-9]+).*/\1/' | awk '{s+=$1} END {print s+0}')
+    last=$(grep -E '^Tokens spent \(' "$record" | tail -n 1 | sed -E 's/^Tokens spent \(([a-z-]+).*/\1/')
+    last_rank=-1
+    for i in "${!SKILLS[@]}"; do [ "${SKILLS[$i]}" = "$last" ] && last_rank=$i; done
+    if [ "$budget" -gt 0 ] && [ "$spent" -ge "$budget" ] && [ "$rank" -ge "$last_rank" ] \
+       && ! grep -Eq '^Budget decision:.*[^[:space:]].*[0-9]{4}-[0-9]{2}-[0-9]{2}' "$record"; then
+      report_fail "$name: spent $spent of its $budget budget and reached $stage without a human's 'Budget decision:' or a raised Budget — R-7.10"
+    fi
+  fi
+
   if [ "$rank" -ge 6 ]; then
     for f in "Human deployment approval" "Required CI URL or receipt" "Merge SHA" "Live behavior observed" "Rollback status"; do
       field_has_value "$record" "$f" || report_fail "$name: Deployment Record needs '$f'"

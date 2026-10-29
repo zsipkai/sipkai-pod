@@ -39,13 +39,15 @@ The gate already includes tools, change records, links, doc drift, secrets, the 
 
 ## Steps
 
+0. **Start check.** `bash sipkai-pod/scripts/stage-start.sh STORY-NNN`, before any `cd` (R-8.18, R-7.10). Red means stop: a session in the wrong folder is started again from the project root; a budget stop goes to the founder for a raise, a split or an escalation.
 1. **Pin the candidate.** Update from `main` without discarding unrelated work, then `git rev-parse HEAD`. If anything changes after this point, start over.
 2. **Run the matrix.** The gate mode from the table above, in a clean environment when available. The known baseline is zero failing tests; any red is signal about this change and is triaged like Accept (code, test or design wrong), never parked as a new known failure. Environmental reruns are recorded as discarded runs, not hidden (R-3.17). Confirm required CI reports green on the same commit when CI is configured (R-8.14).
-3. **Issue the certificate.** Fill `## Regression Certificate`: `- Commit SHA:`, `- Environment:`, `- Full gate command:` verbatim, results per layer, counts, duration, skips, discarded runs, CI evidence, and `- Result: PASS` (or FAIL, which keeps the stage at `REVIEW-CLEARED`) (R-2.7). On PASS set `Regression outcome: REGRESSION-TEST-PROVEN` and `Stage: REGRESSION-TEST-PROVEN`. Sipk.ai appends the spend line (R-7.11). Update the board and point the founder at `/deploy-change`, which runs only on his deliberate invocation in a fresh session.
+3. **Issue the certificate.** Fill `## Regression Certificate`: `- Commit SHA:`, `- Environment:`, `- Full gate command:` verbatim, results per layer, counts, duration, skips, discarded runs, CI evidence, and `- Result: PASS` (or FAIL, which keeps the stage at `REVIEW-CLEARED`) (R-2.7). On PASS set `Regression outcome: REGRESSION-TEST-PROVEN` and `Stage: REGRESSION-TEST-PROVEN`. Sipk.ai appends the spend line (R-7.11). Update the board and point the founder at `/deploy-change`, which runs only on his deliberate invocation in a fresh session. Quote the line the gate printed as `- Gate receipt:`; the checker refuses a certificate without it, with another commit in it, or naming a commit the repository does not have (R-2.7).
 
 ## Scripts and checks
 
 ```bash
+bash sipkai-pod/scripts/stage-start.sh STORY-NNN        # first, before any cd: folder and budget
 git rev-parse HEAD
 bash sipkai-pod/scripts/sdlc-gate.sh --full
 bash sipkai-pod/scripts/sdlc-gate.sh --ui

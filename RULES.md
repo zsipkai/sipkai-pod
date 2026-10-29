@@ -36,7 +36,7 @@ Product rules (money arithmetic, five sections, deduplication and so on) are not
 
 **R-2.6 No placeholders in a completed section.** *was SDLC 3*
 
-**R-2.7 Regression and deployment carry receipts.** SHA, gate command, result, approval, CI evidence, merge, live observation and rollback status. *was SDLC 3*
+**R-2.7 Regression and deployment carry receipts.** SHA, gate command, result, approval, CI evidence, merge, live observation and rollback status. Since 2.2 the Regression Certificate also quotes the gate receipt, the line a passing `--full`, `--ui` or `--deploy` run prints with the commit, mode, result and time, and the checker refuses a certificate whose commit the repository does not have or whose receipt names another commit. *was SDLC 3; amended by SI-003, 2026-10-29*
 
 **R-2.8 A `DEPLOYED` record has no unchecked Definition of Done box.** *was SDLC 3*
 
@@ -98,7 +98,7 @@ Product rules (money arithmetic, five sections, deduplication and so on) are not
 
 **R-3.17 Measured, never reported.** Exact commands, counts, failures investigated and manual gaps are recorded, and every number comes from a command run at evidence time and quoted in the record. A subagent's self-report is a lead, not evidence. *was evidence 17, governance 18*
 
-**R-3.18 Changed tests show they can fail.** A controlled counterexample, a deliberate break of the protected behavior, turns the proof red. *was evidence 18*
+**R-3.18 Changed tests show they can fail.** A controlled counterexample, a deliberate break of the protected behavior, turns the proof red. For a control that forbids a type or an API (an architecture rule, a lint rule), the adverse proofs cover a direct call, a method reference, a field read, an array type and a generic type argument, or the record names each form it leaves out as a limit. *was evidence 18; amended by SI-145, 2026-10-29*
 
 **R-3.19 Acceptance proof and regression proof are recorded separately;** neither is presented as the other. *was evidence 19*
 
@@ -110,7 +110,7 @@ Product rules (money arithmetic, five sections, deduplication and so on) are not
 
 **R-3.23 Docs change with behavior, in the same commit.** A diff that changes documented behavior without touching the doc fails review, and usually the drift gate. *was constitution 4, governance 12*
 
-**R-3.24 The project is buildable at every commit.** Generated or project files the build depends on change in the same edit as the code. *was constitution 3, governance 13*
+**R-3.24 The project is buildable at every commit.** Generated or project files the build depends on change in the same edit as the code. A commit that changes what a UI or end-to-end test asserts changes that test in the same commit, and the project's UI suite runs before such a commit, because the hook's fast gate does not run it. *was constitution 3, governance 13; amended by SI-065, 2026-10-29*
 
 **R-3.25 No invented facts in docs.** Counts, prices, limits and resource names come from running the command, not from memory. New claims get new drift checks. *was governance 9*
 
@@ -133,6 +133,8 @@ Product rules (money arithmetic, five sections, deduplication and so on) are not
 **R-4.6 Bootstrap lane.** The project's documented one-time sequence before the gate exists; never repeated. *was SDLC 4*
 
 **R-4.7 `--no-verify` is not a lane.** It needs an explicit human yes and is recorded as an exception. *was SDLC 4*
+
+**R-4.8 Small-change lane.** For a Size S change of a few files with no user-visible behaviour change and no new or changed public contract, never CRITICAL. Plan, Validate and Develop run in one session and fill their three sections briefly; one lens reviews the design; the second opinion runs once, on the diff at Review; Accept, Review, Regress and Deploy run as usual, with every gate. The checker refuses the lane on any size but S and on CRITICAL risk. A record that accepts a warning as known noise names a follow-up story or a written reason to keep it. *2.2, SI-088, the founder's decision, 2026-10-29*
 
 ---
 
@@ -172,9 +174,9 @@ Product rules (money arithmetic, five sections, deduplication and so on) are not
 
 **R-6.5 The fan-out is sized by the story.** Size S: one specialist for the key lens, with the other lenses' checklists added to its brief as short questions; doc drift checked by grep. Size M: at most three specialists. Size L and above: the full roster. *was validate-design and clear-review step 2*
 
-**R-6.6 A reviewer gets a bounded brief.** The line ranges of the record it needs, not the whole record; a fixed list of files from the context manifest plus the diff; at most five more files it finds itself; a report of at most 700 words. When it needs more, it names the files and why, and is re-briefed. A reviewer never reads whole folders. *was validate-design and clear-review step 2 (SI-090, SI-140, SI-150)*
+**R-6.6 A reviewer gets a bounded brief.** The line ranges of the record it needs, not the whole record; a fixed list of files from the context manifest plus the diff; at most five more files it finds itself; a report of at most 700 words. When it needs more, it names the files and why, and is re-briefed. A reviewer never reads whole folders. Plan about 100k tokens per reviewer: a Size M review aims at three reviewers of about 100k each plus the orchestrator. When a project reviewer is not available as an agent type, it runs as a general-purpose agent whose first step is to read its charter file, read-only, and the verdict says so. *was validate-design and clear-review step 2 (SI-090, SI-140, SI-150); amended by SI-144, 2026-10-29*
 
-**R-6.7 Cross-family second opinion.** On a record at `Risk: STANDARD` or higher, `/validate-design` and `/clear-review` each add one reviewer from a different model family than the one running the pipeline, always that family's top model. Reviewers from one family share that family's blind spots. The pack is built and sent by `second-opinion.sh --auto` without human hands; when the other family's API cannot be reached, the stage records the failure, declares the skip and continues rather than waiting for a paste. Findings enter the consolidation as `X-n`. Judge, never gate: no foreign model clears or blocks a stage by itself. Skipping on an eligible record is declared in the verdict, out loud. *was routing 16; amended by the founder's decision, 2026-10-19 (SI-157)*
+**R-6.7 Cross-family second opinion.** On a record at `Risk: STANDARD` or higher, `/validate-design` and `/clear-review` each add one reviewer from a different model family than the one running the pipeline, always that family's top model. Reviewers from one family share that family's blind spots. The pack is built and sent by `second-opinion.sh --auto` without human hands; when the other family's API cannot be reached, the stage records the failure, declares the skip and continues rather than waiting for a paste. Findings enter the consolidation as `X-n`. Judge, never gate: no foreign model clears or blocks a stage by itself. Skipping on an eligible record is declared in the verdict, out loud. The verdict carries one line, `Second opinion:`, naming the X-n findings or the skip and its reason; the checker refuses a full-lane Design Verdict or Review Verdict, or a small-change Review Verdict, without it. When the script cannot get an answer it exits 3 with "Second opinion NOT obtained" and leaves no findings file. *was routing 16; amended by the founder's decision, 2026-10-19 (SI-157); amended by SI-005 and SI-089, 2026-10-29*
 
 **R-6.8 The pack doubles as the isolation test.** If a model with no repository access cannot judge from the pack alone, the change record was incomplete, and that is a finding. *was routing 16*
 
@@ -191,6 +193,8 @@ Product rules (money arithmetic, five sections, deduplication and so on) are not
 **R-6.14 Never clear politely.** The design gate never rewrites the proposal until objections disappear; the whole pipeline inherits this gate's honesty. *was validate-design hard rule*
 
 **R-6.15 A repeated review finding is promoted** into the reviewer's standing checklist or a deterministic check. *was SDLC 14*
+
+**R-6.16 Prescribed test mechanics are tried before the design clears.** A timer technique, a browser or runtime API used by a test, or the types it needs, named in a Design Verdict, is run in a scratch check before `DESIGN-VALIDATED` or marked as a hypothesis that `/develop-code` re-checks; the dependency list includes the type packages those tests need. *2.2, SI-066, the founder's decision, 2026-10-29*
 
 ---
 
@@ -214,7 +218,7 @@ Product rules (money arithmetic, five sections, deduplication and so on) are not
 
 **R-7.9 Size sets the token budget.** S: 300k. M: 750k. L: 1.5M. XL: 3M total tokens, input and output, for the whole pipeline, written into `Budget:` at `/plan-task`. XXL is not runnable: it is split before `/plan-task` ends. *was routing 8*
 
-**R-7.10 Crossing the budget is a stop, not a warning.** The stage halts, records where the tokens went, and the human chooses: raise the budget, split the story or escalate the tier. A cheap model burning its budget usually means the plan was under-specified. *was routing 9*
+**R-7.10 Crossing the budget is a stop, not a warning.** The stage halts, records where the tokens went, and the human chooses: raise the budget, split the story or escalate the tier. A cheap model burning its budget usually means the plan was under-specified. The mechanics: every stage starts with `stage-start.sh`, which sums the ledger against `Budget:` and stops the stage when the sum is at or above it. The human's answer is a new `Budget:` value or a line `Budget decision: <what> — <name>, YYYY-MM-DD`. The checker refuses a record that completed a stage over budget without one; a stage that halted inside its work may commit the halt. *was routing 9; amended by SI-070, 2026-10-29*
 
 **R-7.11 Every stage appends its spend to the record** as `Tokens spent (<stage>): <n> — <note>`. The orchestrator writes the line from harness-measured usage, never the executor; a subagent's self-estimate is a lead, not a number. `cost-report.sh` aggregates the lines across all records: the repository computes its own bill, and cost claims come from that report, never from memory. *was routing 10*
 
@@ -252,7 +256,7 @@ Product rules (money arithmetic, five sections, deduplication and so on) are not
 
 **R-8.10 Secrets never enter source control, client bundles, logs, fixtures, generated artifacts or prompts.** The gate scans for them on every commit. *was control-plane 11, constitution 6*
 
-**R-8.11 Dependencies and automation actions are reviewed for provenance and risk.** CI actions are pinned to full commit SHAs. The gate scans dependencies for known vulnerabilities. A new dependency needs a reason in the change record. *was control-plane 12, governance 24*
+**R-8.11 Dependencies and automation actions are reviewed for provenance and risk.** CI actions are pinned to full commit SHAs. The gate scans dependencies for known vulnerabilities. A new dependency needs a reason in the change record. A new or upgraded dependency, action, runtime or tool release is at least 7 days old on the day it is pinned; npm trees are installed with `npm install --save-exact --before` set 7 days back so transitive packages follow the same rule. A newer pin, such as a security release, is named with its reason in the Design Verdict. *was control-plane 12, governance 24; amended by SI-030, 2026-10-29*
 
 **R-8.12 Debug bypasses fail closed outside development.** No "skip auth" or "skip check" switch exists in deployed builds. *was control-plane 13*
 
@@ -265,6 +269,8 @@ Product rules (money arithmetic, five sections, deduplication and so on) are not
 **R-8.16 Context discipline.** Load only the rules, decisions, code, tests and docs relevant to the current story. Prefer a small verified context set over a large contradictory one. Name every important context source in the record so later stages can reconstruct the same view. Split a skill when it contains unrelated jobs or repeatedly exhausts useful context. *was constitution "Context discipline"*
 
 **R-8.17 The repository remembers.** Agents forget between sessions, so memory lives in layers: the constitution (always loaded), the method rules (by stage), the project rules (by surface, each citing its bug), decisions (when planning and validating), stories and records (per story), living docs (change with behavior). *was SDLC 8*
+
+**R-8.18 Every stage starts in the project root.** A harness loads the project's deny rules and reviewers only for a session started in the folder that holds them, so a stage started in a parent folder or a scratchpad runs without them. Sipk.ai starts every stage session in the project root or the story's worktree root, and every stage's first step is `bash sipkai-pod/scripts/stage-start.sh STORY-NNN`, run before any `cd`; when it reports the wrong folder the stage stops and is started again in the right one. *2.2, SI-029, SI-080, SI-144, SI-154, the founder's decision, 2026-10-29*
 
 ---
 

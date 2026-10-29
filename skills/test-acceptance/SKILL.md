@@ -32,6 +32,7 @@ Test authoring runs at the record's tier capped at `mid`; tests that encode a co
 
 ## Steps
 
+0. **Start check.** `bash sipkai-pod/scripts/stage-start.sh STORY-NNN`, before any `cd` (R-8.18, R-7.10). Red means stop: a session in the wrong folder is started again from the project root; a budget stop goes to the founder for a raise, a split or an escalation.
 1. **Write the tests the record promised.** Every criterion maps to at least one named test covering its primary, adverse, boundary and error paths (R-3.1, R-3.2). Expected values come from an independent source, never from the code under test (R-3.6). Shared constants have both-side contract tests (R-3.3). Anything a person sees on screen gets a UI test using the shipped `data-testid` identifiers, at the widths the project requires, with an accessibility check (R-3.7). Changed tests get a controlled counterexample that shows they can fail (R-3.18). Tests carry their provenance tag and story id (R-3.15).
 2. **Run targeted evidence, fast first.** The narrow targets for everything the change touches, with the exact commands from the project's coverage doc quoted in the record: drift and change-record checks, unit and contract tests, the targeted UI journeys (R-3.16). Criteria marked (live) are proven against a dev deployment of the candidate that the founder approved and started. The complete matrix runs later in Regress.
 3. **Triage honestly.** Classify every failure as product defect, test defect, requirement defect, environment defect or flaky infrastructure (R-3.8). Product defects return to `/develop-code`; a wrong design returns to `/validate-design` and resets downstream outcomes (R-2.9).
@@ -41,6 +42,7 @@ Test authoring runs at the record's tier capped at `mid`; tests that encode a co
 ## Scripts and checks
 
 ```bash
+bash sipkai-pod/scripts/stage-start.sh STORY-NNN        # first, before any cd: folder and budget
 bash sipkai-pod/scripts/check-doc-drift.sh
 bash sipkai-pod/scripts/check-change-records.sh
 # plus the project's exact narrow test commands from its coverage doc

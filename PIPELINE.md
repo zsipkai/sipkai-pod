@@ -85,6 +85,7 @@ The gate fails closed, runs identically in the hook, in CI and at deploy (R-3.21
 | Lane | Stages run | When it applies |
 |---|---|---|
 | Full | all seven | any change a user can observe, any money, security, data or infrastructure change |
+| Small-change | Plan, Validate and Develop in one session; one lens on the design; Accept, Review with one second opinion on the diff, Regress, Deploy | Size S, a few files, no user-visible behaviour change, no new contract, never CRITICAL (R-4.8) |
 | Test-only | Develop, Accept, Regress, Deploy, with a short plan note | adding or fixing tests with zero production-code change |
 | Docs/process-only | edit plus the fast gate at commit | docs, rules, skills, templates; batched between stories, control-plane edits still reviewed by the owner |
 | Hotfix | Develop, Accept, Regress, Deploy now; Discovery Brief and Design Verdict written retroactively the same day | production is broken and users are hurting |

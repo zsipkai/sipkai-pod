@@ -16,11 +16,14 @@ Planning outcome: PLANNED
 
 Evidence recorded for the fixture.
 
+
 ## Design Verdict
 
 Design outcome: DESIGN-VALIDATED
 
 Evidence recorded for the fixture.
+
+Second opinion: X-1 and X-2 from the other family, both resolved.
 
 ## Implementation Record
 
@@ -40,14 +43,17 @@ Review outcome: REVIEW-CLEARED
 
 Evidence recorded for the fixture.
 
+Second opinion: skipped — the API answered NOT obtained; declared.
+
 ## Regression Certificate
 
 Regression outcome: REGRESSION-TEST-PROVEN
 
 Evidence recorded for the fixture.
 
-- Commit SHA: 0123abc
+- Commit SHA: SHA_HEAD
 - Full gate command: bash sipkai-pod/scripts/sdlc-gate.sh --full
+- Gate receipt: SHA_HEAD full PASS 2026-10-29T10:00:00Z
 - Result: PASS
 
 ## Deployment Record
@@ -65,4 +71,3 @@ Evidence recorded for the fixture.
 ## Definition of Done
 
 - [x] Every acceptance criterion has recorded evidence.
-

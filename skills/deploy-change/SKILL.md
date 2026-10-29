@@ -28,6 +28,7 @@ This stage can merge, deploy and spend, so Sipk.ai invokes it only once the Regr
 
 ## Steps
 
+0. **Start check.** `bash sipkai-pod/scripts/stage-start.sh STORY-NNN`, before any `cd` (R-8.18, R-7.10). Red means stop: a session in the wrong folder is started again from the project root; a budget stop goes to the founder for a raise, a split or an escalation.
 1. **The hard gate again, on the merge candidate.** `--deploy`, or `--ui` when there is no deployable surface. Red means stop. No "it's the known failure" hand-waving: fix it, which invalidates the certificate and returns to `/clear-review` (R-3.21).
 2. **Pre-flight for release-bound work.** Walk `templates/release-preflight.md` and record each item with evidence. Inspect the exact file set for secrets, workflow changes, generated artifacts and unrelated changes (R-8.10, R-8.11).
 3. **Merge through the protected route.** Open the pull request with the Review Verdict as its description and let required CI pass (R-8.14). A merge that was not clean changed the candidate: rerun `/test-regression` on the merged tree first. Where a project does not use pull requests, its own documented protected route applies, and Ivan pushes `main` afterwards where the project allows it.
@@ -37,6 +38,7 @@ This stage can merge, deploy and spend, so Sipk.ai invokes it only once the Regr
 ## Scripts and checks
 
 ```bash
+bash sipkai-pod/scripts/stage-start.sh STORY-NNN        # first, before any cd: folder and budget
 bash sipkai-pod/scripts/sdlc-gate.sh --deploy      # needs the project's dev URL; fails closed without it
 bash sipkai-pod/scripts/sdlc-gate.sh --ui          # when there is no deployable surface
 bash sipkai-pod/scripts/check-change-records.sh

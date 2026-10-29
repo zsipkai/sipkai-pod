@@ -27,3 +27,7 @@ project_full_tests()      { sdlc_unconfigured "full automated tests (integration
 project_ui_tests()        { sdlc_unconfigured "UI journeys and accessibility checks"; }
 project_deploy_checks()   { sdlc_unconfigured "deployment-bound checks"; }
 project_drift_checks()    { return 0; }   # add measured doc-versus-code contracts here
+
+# Change records finished before Sipk.ai POD 2.2 keep the older checks: list
+# their ids here, separated by spaces. New records always get every check.
+SDLC_LEGACY_RECORDS=""

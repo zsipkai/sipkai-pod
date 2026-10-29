@@ -20,7 +20,12 @@ evaluate() {
   if [ -n "$text" ] && ! printf '%s' "$out" | grep -qF -- "$text"; then ok=0; fi
   if [ "$ok" -eq 1 ]; then echo "PASS  $name"; pass=$((pass+1)); else echo "FAIL  $name (exit $rc, expected $want; wanted text: '$text')"; printf '%s\n' "$out" | sed 's/^/      /' | head -12; fail=$((fail+1)); fi
 }
-records() { CHECK_RECORDS_DIR="$F/records/$1" bash "$S/check-change-records.sh"; }
+# Fixtures write SHA_HEAD where a certificate needs a commit this repository has.
+records() {
+  rm -rf "$tmp/records-$1"; cp -R "$F/records/$1" "$tmp/records-$1"
+  sed -i.bak "s/SHA_HEAD/$(git rev-parse HEAD)/g" "$tmp/records-$1"/*.md && rm -f "$tmp/records-$1"/*.bak
+  CHECK_RECORDS_DIR="$tmp/records-$1" bash "$S/check-change-records.sh"
+}
 
 evaluate "records: valid PLANNED record passes"           0       "PASS"                      records good-planned
 evaluate "records: valid DEPLOYED record passes"          0       "PASS"                      records good-deployed
@@ -30,6 +35,19 @@ evaluate "records: later section already claimed"         nonzero "must be PENDI
 evaluate "records: placeholder in a completed section"    nonzero "template placeholders"     records placeholder-in-completed-section
 evaluate "records: DEPLOYED with unchecked Done box"      nonzero "unchecked Definition"      records deployed-unchecked-dod
 evaluate "records: DEPLOYED without receipts"             nonzero "Deployment Record needs"   records deployed-missing-receipts
+evaluate "records: review without a declared second opinion" nonzero "Review Verdict needs a 'Second opinion:'" records missing-second-opinion
+evaluate "records: certificate names an unknown commit"    nonzero "does not have"             records receipt-unknown-sha
+evaluate "records: certificate without the gate receipt"   nonzero "needs '- Gate receipt:'"   records receipt-missing
+evaluate "records: over budget, stage completed anyway"    nonzero "without a human's"         records over-budget-no-decision
+evaluate "records: over budget, halted inside the stage"   0       "PASS"                      records over-budget-halted
+evaluate "records: over budget with a human's decision"    0       "PASS"                      records over-budget-decided
+evaluate "records: small-change lane on a Size M story"    nonzero "Size S only"               records small-change-size-m
+evaluate "records: small-change lane, LOW risk, reviewed"  0       "PASS"                      records small-change-low-risk
+
+# Start-of-stage check: the session's folder and the budget stop.
+evaluate "stage start: session outside the project root"   nonzero "not in the project root"   bash -c 'cd sipkai-pod && bash scripts/stage-start.sh STORY-901'
+evaluate "stage start: over budget stops the stage"         nonzero "token budget (R-7.10)"     env CHECK_RECORDS_DIR="$F/records/over-budget-no-decision" bash "$S/stage-start.sh" STORY-901
+evaluate "stage start: a human's budget decision lets it go" 0      "a human decided"           env CHECK_RECORDS_DIR="$F/records/over-budget-decided" bash "$S/stage-start.sh" STORY-901
 
 evaluate "drift: clean file with angle brackets passes"   0       "no TODO or UNCONFIGURED"   env CHECK_TRUTH_FILES="$F/drift/clean.md" bash "$S/check-doc-drift.sh"
 evaluate "drift: TODO marker is caught"                   nonzero "markers remain"            env CHECK_TRUTH_FILES="$F/drift/marker.md" bash "$S/check-doc-drift.sh"
@@ -52,6 +70,23 @@ mkdir -p "$tmp/nokey"
 printf '#!/bin/sh\nexit 44\n' > "$tmp/nokey/security"; chmod +x "$tmp/nokey/security"
 evaluate "second opinion: missing key exits 2 with a message" 0   "no key: exit 2"            bash -c 'PATH="$1:$PATH" bash "$2/second-opinion.sh" STORY-001 design --auto 2>&1; rc=$?; [ "$rc" -eq 2 ] && echo "no key: exit 2"' _ "$tmp/nokey" "$S"
 evaluate "second opinion: missing key names the Keychain item" nonzero "sipkai-openai-api"   env PATH="$tmp/nokey:$PATH" bash "$S/second-opinion.sh" STORY-001 design --auto
+
+# Second opinion: an API error or an empty answer ends in exit 3, "NOT
+# obtained", and no findings file (SI-089). Stand-ins for `security` and
+# `curl` keep the real Keychain and the real API out of the evaluation.
+for answer in error empty; do
+  mkdir -p "$tmp/api-$answer"
+  printf '#!/bin/sh\necho sk-evaluation\n' > "$tmp/api-$answer/security"
+  if [ "$answer" = error ]; then body='{"error":{"message":"insufficient_quota"}}'; else body='{"choices":[{"message":{"content":""}}]}'; fi
+  printf '#!/bin/sh\ncat >/dev/null\necho %s\n' "'$body'" > "$tmp/api-$answer/curl"
+  chmod +x "$tmp/api-$answer/security" "$tmp/api-$answer/curl"
+done
+so_failed() {
+  PATH="$tmp/api-$1:$PATH" bash "$S/second-opinion.sh" STORY-001 design --auto 2>&1; rc=$?
+  [ "$rc" -eq 3 ] && [ ! -e build/second-opinion-STORY-001-design-findings.md ] && echo "exit 3, no findings file"
+}
+evaluate "second opinion: API error is NOT obtained"       0       "exit 3, no findings file"  so_failed error
+evaluate "second opinion: empty answer is NOT obtained"    0       "exit 3, no findings file"  so_failed empty
 
 # Pre-commit hook: the commit must hold what the gate checks. A throwaway
 # repository with a stand-in gate isolates the hook's own refusal.

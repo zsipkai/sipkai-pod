@@ -14,6 +14,7 @@
 #           (key read only from the macOS Keychain item
 #           sipkai-openai-api, never stored in the repo; per-token cost
 #           on that account — the manual paste stays the free path).
+#           Exit 2: no key. Exit 3: the second opinion was NOT obtained.
 # Adjust the diff base below if your integration branch is not `main`.
 
 set -euo pipefail
@@ -102,24 +103,45 @@ if [ "$AUTO" = "1" ]; then
     "$OUT" "$MODEL" > "$PAYLOAD"
   # The Authorization header goes to curl on stdin (-H @-), so the key
   # never appears in the process list. printf is a shell builtin.
+  # Any failure (network, API error, empty answer) ends in exit 3 with
+  # "Second opinion NOT obtained" and no findings file, so an unattended
+  # stage can never record an empty file as a second opinion (SI-089).
+  not_obtained() {
+    rm -f "$FINDINGS"
+    echo "Second opinion NOT obtained: $1" >&2
+    echo "Record the skip in the verdict ('Second opinion: skipped — <reason>') or paste the pack by hand." >&2
+    exit 3
+  }
+  rm -f "$FINDINGS"
   printf 'Authorization: Bearer %s\n' "$OPENAI_KEY" |
     curl -sS --max-time 600 https://api.openai.com/v1/chat/completions \
       -H @- \
       -H "Content-Type: application/json" \
-      --data-binary @"$PAYLOAD" > "$RESPONSE"
+      --data-binary @"$PAYLOAD" > "$RESPONSE" || { unset OPENAI_KEY; not_obtained "the request to the API failed"; }
   unset OPENAI_KEY
-  python3 - "$RESPONSE" "$MODEL" > "$FINDINGS" <<'PY'
+  python3 - "$RESPONSE" "$MODEL" > "$FINDINGS" <<'PY2' || not_obtained "the API did not return findings (see the message above)"
 import json, sys
-body = json.load(open(sys.argv[1], encoding="utf-8"))
+try:
+    body = json.load(open(sys.argv[1], encoding="utf-8"))
+except ValueError:
+    sys.stderr.write("The API answer is not JSON.\n")
+    sys.exit(1)
 if "error" in body:
     sys.stderr.write("OpenAI API error: %s\n" % json.dumps(body["error"])[:500])
     sys.exit(1)
-print(body["choices"][0]["message"]["content"])
+try:
+    text = body["choices"][0]["message"]["content"] or ""
+except (KeyError, IndexError, TypeError):
+    text = ""
+if not text.strip():
+    sys.stderr.write("The API answered with no findings text.\n")
+    sys.exit(1)
+print(text)
 u = body.get("usage", {})
 sys.stderr.write("usage: %s prompt + %s completion tokens (%s)\n"
                  % (u.get("prompt_tokens", "?"),
                     u.get("completion_tokens", "?"), sys.argv[2]))
-PY
+PY2
   echo "Second opinion ($MODEL) → $FINDINGS"
   echo "Consolidate its X-n rows like any reviewer's — judge, never gate."
 else

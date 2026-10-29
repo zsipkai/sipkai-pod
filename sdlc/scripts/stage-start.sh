@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Start-of-stage check (R-8.1, R-7.2). Every stage runs it before anything else:
 #
-#   bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN
+#   bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN <step>
 #
 # 1. The session started in the project root, the folder that holds
 #    sdlc.config.sh. A harness loads its project settings (deny rules,
@@ -14,6 +14,9 @@
 #    above it, the stage stops unless a `Budget decision:` line quotes the
 #    founder's own words and names
 #    human and a date (SI-070).
+# 3. The step can finish inside what is left (SI-179). Each step of a route
+#    is planned at a share of the budget; when less than that share is
+#    left, the step stops before it starts, not halfway through.
 #
 # CHECK_RECORDS_DIR overrides the records folder (the process evaluations use fixtures).
 
@@ -22,7 +25,8 @@ started_in="$(pwd -P)"
 charter="$(cd "$(dirname "$0")/../.." && pwd)/agents/CHARTER.md"
 source "$(dirname "$0")/lib.sh"
 root="$(pwd -P)"
-story="${1:?usage: stage-start.sh STORY-NNN}"
+story="${1:?usage: stage-start.sh STORY-NNN <step>}"
+step="${2:-}"
 fail=0
 
 # The charter comes first (R-1.1): every stage begins with its agreements in view.
@@ -58,6 +62,26 @@ print(int(n * (1000 if u == "k" else 1000000 if u == "m" else 1)))' "${budget_te
     echo "FAIL  $story has no numeric Budget: line"; fail=1
   elif [ "$spent" -lt "$budget" ]; then
     echo "PASS  $story has spent $spent of its $budget token budget"
+    # The step's planned share of the budget (R-7.2), by size and route.
+    size=$(sed -n 's/^Size:[[:space:]]*//p' "$record" | head -n 1 | awk '{print $1}')
+    case "$size:$step" in
+      *:quick) share=100 ;;
+      M:build) share=60 ;; M:ship) share=40 ;;
+      L:design) share=30 ;; L:build) share=45 ;; L:ship) share=25 ;;
+      *:plan-task|*:test-acceptance|*:test-regression) share=10 ;;
+      *:validate-design) share=15 ;;
+      *:develop-code|*:clear-review) share=25 ;;
+      *:deploy-change) share=5 ;;
+      *) share=0 ;;
+    esac
+    need=$(( budget * share / 100 )); left=$(( budget - spent ))
+    if [ "$share" -gt 0 ] && [ "$left" -lt "$need" ] \
+       && ! grep -Eq '^Budget decision:[[:space:]]*"[^"]{3,}".*[0-9]{4}-[0-9]{2}-[0-9]{2}' "$record"; then
+      echo "FAIL  $story has $left tokens left, and $step is planned at about $need ($share% of the Size $size budget) (R-7.2)."
+      echo "      Stop before starting, not halfway. The founder chooses: raise the budget, split the story, or go on."
+      echo "      Record his answer as a new Budget: value, or as 'Budget decision: \"<his own words>\" — <name>, YYYY-MM-DD'."
+      fail=1
+    fi
   elif grep -Eq '^Budget decision:[[:space:]]*"[^"]{3,}".*[0-9]{4}-[0-9]{2}-[0-9]{2}' "$record"; then
     echo "PASS  $story is over budget ($spent of $budget), and a human decided to go on:"
     grep -E '^Budget decision:' "$record" | tail -n 1 | sed 's/^/      /'

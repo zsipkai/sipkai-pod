@@ -24,6 +24,7 @@ Budget decision: raise it, relayed by the orchestrating session — Evaluation o
 ## Design Verdict
 
 Design outcome: DESIGN-VALIDATED
+Found only by: Adam none; Marketa none
 
 Evidence recorded for the fixture.
 
@@ -42,6 +43,7 @@ Acceptance outcome: PENDING
 ## Review Verdict
 
 Review outcome: PENDING
+Found only by: Adam none; second opinion none
 
 ## Regression Certificate
 

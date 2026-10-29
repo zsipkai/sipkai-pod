@@ -18,7 +18,8 @@
 # Adjust the diff base below if your integration branch is not `main`.
 
 set -euo pipefail
-source "$(dirname "$0")/lib.sh"
+SCRIPTS="$(cd "$(dirname "$0")" && pwd)"
+source "$SCRIPTS/lib.sh"
 
 STORY="${1:?usage: second-opinion.sh STORY-NNN design|review [--auto]}"
 STAGE="${2:?usage: second-opinion.sh STORY-NNN design|review [--auto]}"
@@ -52,6 +53,7 @@ fi
 
 mkdir -p build
 OUT="build/second-opinion-${STORY}-${STAGE}.md"
+PACK=$(bash "$SCRIPTS/review-pack.sh" "$STORY" "$STAGE")
 
 {
   echo "# Second-opinion ${STAGE} pass — ${STORY}"
@@ -81,40 +83,8 @@ OUT="build/second-opinion-${STORY}-${STAGE}.md"
   echo
   echo "---"
   echo
-  echo "## The change record"
-  echo
-  cat "$RECORD"
-  # The current text of the existing files the record says it changes, so a
-  # reviewer without repository access can judge an edit to an existing file
-  # (SI-023, SI-151). Taken from the record's "Expected files or
-  # directories:" line; at most 400 lines per file and 4000 in all.
-  scope=$(grep -m1 -E '^- Expected files or directories:' "$RECORD" | grep -oE '`[^`]+`' | tr -d '`' || true)
-  budget=4000
-  for f in $scope; do
-    [ -f "$f" ] || continue
-    n=$(wc -l < "$f" | tr -d ' ')
-    [ "$budget" -le 0 ] && { echo; echo "(More files are named in the record; the pack's 4000-line limit was reached.)"; break; }
-    take=$(( n < 400 ? n : 400 )); [ "$take" -gt "$budget" ] && take=$budget
-    echo
-    echo "---"
-    echo
-    echo "## Current text of $f ($n lines$([ "$take" -lt "$n" ] && echo ", first $take shown"))"
-    echo
-    echo '```'
-    head -n "$take" "$f"
-    echo '```'
-    budget=$(( budget - take ))
-  done
-  if [ "$STAGE" = "review" ]; then
-    echo
-    echo "---"
-    echo
-    echo "## The diff (${SDLC_MAIN_BRANCH:-main}...HEAD)"
-    echo
-    echo '```diff'
-    git diff "${SDLC_MAIN_BRANCH:-main}"...HEAD
-    echo '```'
-  fi
+  # The same pack every reviewer of this round starts from (R-6.1).
+  cat "$PACK"
 } > "$OUT"
 
 echo "Prompt pack: $OUT ($(wc -l < "$OUT" | tr -d ' ') lines)"

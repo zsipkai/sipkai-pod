@@ -23,6 +23,7 @@ Tokens spent (develop-code): 10000 — measured, fixture
 ## Design Verdict
 
 Design outcome: DESIGN-VALIDATED
+Found only by: Adam none; Marketa none
 
 Evidence recorded for the fixture.
 
@@ -41,6 +42,7 @@ Acceptance outcome: PENDING
 ## Review Verdict
 
 Review outcome: PENDING
+Found only by: Adam none; second opinion none
 
 ## Regression Certificate
 

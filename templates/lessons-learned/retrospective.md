@@ -31,6 +31,8 @@ The best, the quickest, the cheapest, in that order (the charter). Compared with
 |---|---|---|
 | <Marketa, Adam, Bruno, Miro, independent reviewer> | <count by severity> | <count> |
 
+<Taken from the `Found only by:` lines in the Design and Review Verdicts. Name any lens that has now caught nothing alone in five stories in a row; that is a proposal to fold it into another (R-10.2).>
+
 <One sentence on what the gate or a test caught that no reviewer did, if anything.>
 
 ## Outside practice

@@ -20,6 +20,7 @@ Evidence recorded for the fixture.
 ## Design Verdict
 
 Design outcome: DESIGN-VALIDATED
+Found only by: Adam none; Marketa none
 
 Evidence recorded for the fixture.
 
@@ -40,6 +41,7 @@ Evidence recorded for the fixture.
 ## Review Verdict
 
 Review outcome: REVIEW-CLEARED
+Found only by: Adam none; second opinion none
 
 Evidence recorded for the fixture.
 

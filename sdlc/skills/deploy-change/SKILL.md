@@ -28,7 +28,7 @@ This stage can merge, deploy and spend, so Sipk.ai invokes it only once the Regr
 
 ## Steps
 
-0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN`, before any `cd` (R-8.1, R-7.2). Red means stop: a session in the wrong folder is started again from the project root; a budget stop goes to the founder for a raise, a split or an escalation.
+0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN deploy-change`, before any `cd` (R-8.1, R-7.2). Red means stop: a session in the wrong folder is started again from the project root; a budget stop goes to the founder for a raise, a split or an escalation.
 1. **The hard gate again, on the merge candidate.** `--deploy`, or `--ui` when there is no deployable surface. Red means stop. No "it's the known failure" hand-waving: fix it, which invalidates the certificate and returns to `/clear-review` (R-3.5).
 2. **Pre-flight for release-bound work.** Walk `templates/reviews/release-preflight.md` and record each item with evidence. Inspect the exact file set for secrets, workflow changes, generated artifacts and unrelated changes (R-8.4, R-8.5).
 3. **Merge through the project's protected route.** The route the project names in its own docs: a pull request with the Review Verdict as its description and required CI, or a local merge after the certificate followed by Ivan's push of `main` where the project allows it (R-3.5). A merge that was not clean changed the candidate: rerun `/test-regression` on the merged tree first.

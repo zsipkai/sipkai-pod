@@ -20,6 +20,7 @@ Evidence recorded for the fixture.
 ## Design Verdict
 
 Design outcome: PENDING
+Found only by: Adam none; Marketa none
 
 ## Implementation Record
 
@@ -32,6 +33,7 @@ Acceptance outcome: PENDING
 ## Review Verdict
 
 Review outcome: PENDING
+Found only by: Adam none; second opinion none
 
 ## Regression Certificate
 

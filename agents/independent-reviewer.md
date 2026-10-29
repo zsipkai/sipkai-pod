@@ -8,7 +8,7 @@ On every story at `Risk: STANDARD` or higher, once on the diff at Review; for an
 
 ## What it gets
 
-Only the pack that `second-opinion.sh` builds: the reviewer's brief written into the script, the change record, the current text of the files the record says it changes, and at Review the diff. No repository access. If it cannot judge from the pack alone, the record failed the isolation test, and that is a finding against the record (R-2.3).
+Only the pack that `second-opinion.sh` builds: the reviewer's brief written into the script on top of the round's review pack (`review-pack.sh`: the record's contract without its ledger, earlier findings or verdicts, the current text of the files the record says it changes, and at Review the diff), the same pack the team's lenses start from. No repository access. If it cannot judge from the pack alone, the record failed the isolation test, and that is a finding against the record (R-2.3).
 
 ## How it runs
 

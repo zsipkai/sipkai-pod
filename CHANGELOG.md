@@ -1,5 +1,16 @@
 # Sipk.ai POD changelog
 
+## 2.8.0 — 2026-10-30
+
+Approved by Zoltán Šipkai in chat on 2026-10-30 ("Yes, build 2.8"), after asking "can you make the AI POD half of the token and still the same quality?". Built from the ledger of Money Review's ten finished stories (15.7M tokens; 31% Review, 23% Validate, 12% Plan). SI-177 to SI-180. 63 process evaluations. No control is removed: every criterion keeps a proof that can fail, the design check and the review stay with someone other than the builder, the second model family, Adam at HIGH risk, `top` for verification, the gate on the exact commit and the founder's authority are unchanged.
+
+- **One review pack per round** (SI-177). `review-pack.sh` builds the one file every lens and the second opinion start from: the record's contract without its ledger, earlier findings or verdicts, the current text of the named files, and at Review the diff. It never holds the Review Verdict, so findings still form before conclusions. Reviewers are planned at about 60k tokens instead of 100k.
+- **Short records** (SI-178). Evidence goes in by reference; a record runs to at most S 300, M 450, L 600, XL 800 lines, refused by `check-change-records.sh`.
+- **No step abandoned halfway** (SI-179). Each step has a planned share of the budget; `stage-start.sh STORY-NNN <step>` stops it before it starts when less is left.
+- **Lenses earn their place** (SI-180). Each verdict carries a `Found only by:` line, refused when missing; after five stories in which a lens caught nothing alone, Tina proposes folding it.
+- **Fixed on the way.** The record template's budget line still showed the 2.0 sizes, and its second-opinion headings cited the retired "rule 16"; clear-review said the second opinion's pack holds the charter, which it never did; and the checker refused the template's own `Size: S — <reason>` line (found by STORY-045, Money Review MR-002).
+- **Expected effect, not yet measured:** with the size routes of 2.6, about half the tokens of the first ten stories. Tina checks it over the next five stories.
+
 ## 2.7.0 — 2026-10-29
 
 Approved by Zoltán Šipkai in chat on 2026-10-29 ("Yes, all five"; "fix my team comprehensively based on the independent study ... hierarchical, no duplication, no drift, but all the rules in place ... this is a hard rule"). The study is filed as `method/reviews/2026-10-29-independent-study.md`. SI-172 to SI-176. 56 process evaluations.

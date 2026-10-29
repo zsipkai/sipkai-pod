@@ -46,11 +46,28 @@ evaluate "records: a ledger line without measured or estimate" nonzero "'measure
 evaluate "records: a CRITICAL story below XL"              nonzero "always planned as XL"      records critical-below-xl
 evaluate "records: Size S at LOW risk, reviewed alone"     0       "PASS"                      records s-low-risk-reviewed
 evaluate "records: Size L design needs no second opinion"  0       "PASS"                      records l-high-design-without-opinion
+evaluate "records: a verdict without 'Found only by:'"    nonzero "needs a 'Found only by:'"  records missing-lens-line
+evaluate "records: Size with its one line of reason passes" 0       "PASS"                      records size-with-reason
+evaluate "records: a Size S record over 300 lines"         nonzero "over the Size S limit"     records record-too-long
 
 # Start-of-stage check: the session's folder and the budget stop.
 evaluate "stage start: session outside the project root"   nonzero "not in the project root"   bash -c 'cd sipkai-pod && bash sdlc/scripts/stage-start.sh STORY-901'
 evaluate "stage start: over budget stops the stage"         nonzero "token budget (R-7.2)"     env CHECK_RECORDS_DIR="$F/records/over-budget-no-decision" bash "$S/stage-start.sh" STORY-901
 evaluate "stage start: the founder's quoted decision lets it go" 0   "a human decided"           env CHECK_RECORDS_DIR="$F/records/over-budget-decided" bash "$S/stage-start.sh" STORY-901
+evaluate "stage start: a step that cannot finish stops first" nonzero "Stop before starting"  env CHECK_RECORDS_DIR="$F/records/step-share-short" bash "$S/stage-start.sh" STORY-901 ship
+evaluate "stage start: a step that fits what is left starts" 0      "PASS"                      env CHECK_RECORDS_DIR="$F/records/step-share-short" bash "$S/stage-start.sh" STORY-901 test-regression
+
+# Review pack: the contract and the work, never the ledger, earlier findings or conclusions (R-6.1).
+pack_ok() {
+  local p; p=$(CHECK_RECORDS_DIR="$F/records/review-pack" bash "$S/review-pack.sh" STORY-901 "$1") || return 1
+  grep -q "$2" "$p" || { echo "the pack lacks $2"; return 1; }
+  for absent in LEDGER-ROW DESIGN-FINDING-ROW REVIEW-CONCLUSION-ROW "## Review Verdict"; do
+    grep -q "$absent" "$p" && { echo "the pack leaks $absent"; return 1; }
+  done
+  echo "pack ok"
+}
+evaluate "review pack: design pack holds the contract only" 0       "pack ok"                   pack_ok design CONTRACT-ROW
+evaluate "review pack: review pack holds the validated design" 0    "pack ok"                   pack_ok review DESIGN-CONTRACT-ROW
 
 evaluate "drift: clean file with angle brackets passes"   0       "no TODO or UNCONFIGURED"   env CHECK_TRUTH_FILES="$F/drift/clean.md" bash "$S/check-doc-drift.sh"
 evaluate "drift: TODO marker is caught"                   nonzero "markers remain"            env CHECK_TRUTH_FILES="$F/drift/marker.md" bash "$S/check-doc-drift.sh"

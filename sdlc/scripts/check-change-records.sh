@@ -8,7 +8,8 @@
 # deployment receipts, and a fully checked Definition of Done at DEPLOYED.
 # Since 2.2 also: size as the route (R-2.8, since 2.6), the declared second
 # opinion (R-6.2), the gate receipt behind a Regression Certificate (R-2.2)
-# and the budget stop (R-7.2). Records listed in SDLC_LEGACY_RECORDS
+# and the budget stop (R-7.2); since 2.8 the record's length by size
+# (R-2.1) and the 'Found only by:' line in each verdict (R-10.2). Records listed in SDLC_LEGACY_RECORDS
 # (sdlc.config.sh) were finished before 2.2 and keep the old checks only.
 # Runs in `sdlc-gate.sh --fast`, so the pre-commit hook enforces it.
 #
@@ -42,7 +43,7 @@ while IFS= read -r record; do
 
   grep -Eq '^# STORY-[0-9]+: [^<].+' "$record" || report_fail "$name: needs a concrete story title"
   grep -Eq '^Risk: (LOW|STANDARD|HIGH|CRITICAL)$' "$record" || report_fail "$name: needs one valid risk tier"
-  grep -Eq '^Size: (S|M|L|XL)$' "$record" || report_fail "$name: needs one valid size (S|M|L|XL; XXL must be split)"
+  grep -Eq '^Size: (S|M|L|XL)([[:space:]]+—[[:space:]]+[^[:space:]<].*)?$' "$record" || report_fail "$name: needs one valid size (S|M|L|XL; XXL must be split)"
   grep -Eq '^Execution model: (small|mid|top)' "$record" || report_fail "$name: needs an execution tier (small|mid|top)"
   grep -Eq '^Budget:[[:space:]]*[0-9]' "$record" || report_fail "$name: needs a numeric Budget from the size table"
   grep -Eq '^Owner:[[:space:]]*[^[:space:]<]' "$record" || report_fail "$name: needs an accountable owner"
@@ -111,6 +112,18 @@ while IFS= read -r record; do
     # Every ledger line says whether its number is measured or an estimate (R-7.3).
     if grep -E '^Tokens spent \(' "$record" | grep -Evq '^Tokens spent \([^)]+\):[[:space:]]*~?[0-9]+[[:space:]]*—[[:space:]]*(measured|estimate)'; then
       report_fail "$name: a 'Tokens spent' line does not say 'measured' or 'estimate' after its number — R-7.3"
+    fi
+    # A short record (R-2.1, SI-178): every step and every reviewer reads it, so
+    # evidence goes in by reference (the command and its receipt), never pasted.
+    case "$size" in S) cap=300 ;; M) cap=450 ;; L) cap=600 ;; *) cap=800 ;; esac
+    lines=$(wc -l < "$record" | tr -d ' ')
+    [ "$lines" -le "$cap" ] || report_fail "$name: $lines lines, over the Size ${size:-?} limit of $cap; put evidence in by reference, not pasted — R-2.1"
+    # What each lens alone caught (R-10.2, SI-180): one line in each verdict.
+    if [ "$rank" -ge 1 ] && ! section_body "$record" "Design Verdict" | grep -Eq '^Found only by:[[:space:]]*[^[:space:]<]'; then
+      report_fail "$name: Design Verdict needs a 'Found only by:' line (each reviewer and the findings no one else raised, or 'none') — R-10.2"
+    fi
+    if [ "$rank" -ge 4 ] && ! section_body "$record" "Review Verdict" | grep -Eq '^Found only by:[[:space:]]*[^[:space:]<]'; then
+      report_fail "$name: Review Verdict needs a 'Found only by:' line (each reviewer and the findings no one else raised, or 'none') — R-10.2"
     fi
     # The budget stop (R-7.2): over budget, a stage may not complete without a human's decision.
     budget_text=$(sed -n 's/^Budget:[[:space:]]*//p' "$record" | head -n 1 | awk '{print $1}')

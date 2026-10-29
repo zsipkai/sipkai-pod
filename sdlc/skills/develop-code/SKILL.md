@@ -32,7 +32,7 @@ Sipk.ai delegates the implementation to Michal with the record's `Execution mode
 
 ## Steps
 
-0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN`, before any `cd` (R-8.1, R-7.2). Red means stop: a session in the wrong folder is started again from the project root; a budget stop goes to the founder for a raise, a split or an escalation.
+0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN develop-code`, before any `cd` (R-8.1, R-7.2). Red means stop: a session in the wrong folder is started again from the project root; a budget stop goes to the founder for a raise, a split or an escalation.
 1. **Branch.** `git checkout -b story/STORY-NNN-slug`.
 2. **Load the constraints.** The rules for the surfaces touched (the project's required-reading table), the project's error-handling and naming rules, and the governance rules always.
 3. **Work the tasks in order.** For each task: implement exactly what it says; keep the project buildable in the same edit (R-3.6); new interactive UI gets stable test identifiers in the same diff (R-3.1); documented behavior changes its doc in the same commit (R-3.6); shared constants update every side and both contract tests in the same commit (R-3.3); a new durable technical choice gets a decision record and a conflict with an accepted one returns to Validate (R-5.3); run the narrowest trustworthy check for what changed before moving on (R-3.4). A change to what a UI or end-to-end test asserts changes that test in the same commit, and the project's UI suite runs before that commit, because the hook does not run it (R-3.6).

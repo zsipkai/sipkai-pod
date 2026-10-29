@@ -1,10 +1,12 @@
 # STORY-NNN: <Title>
 
+<!-- Keep it short: evidence by reference (command, file, receipt), never pasted. At most S 300, M 450, L 600, XL 800 lines (R-2.1). -->
+
 Stage: PLANNED
 Risk: LOW | STANDARD | HIGH | CRITICAL
 Size: <S | M | L | XL> — <one line: the route this size takes and why (R-2.8); XXL is split first; CRITICAL is always XL>
 Execution model: small | mid | top (per sipkai-pod/sdlc/RULES.md section 7 — assigned in /plan-task, checked in /validate-design; HIGH/CRITICAL risk requires top)
-Budget: <from the size table — S=750k M=2M L=2.5M XL=4M (total tokens); XXL must be split>
+Budget: <from the size table in R-7.2, or the project's own in docs/SDLC-PROJECT.md (total tokens); XXL must be split>
 Owner: <accountable human>
 Story: `backlog/stories/STORY-NNN-<slug>.md`
 Lane: full | test-only | docs/process-only | hotfix | bootstrap
@@ -103,7 +105,9 @@ Design outcome: PENDING
 |---|---|---|---|---|
 | <ID> | <BLOCKER/SHOULD/NOTE/QUESTION> | <finding> | <reference> | <resolution> |
 
-### Second opinion (rule 16 — Risk ≠ LOW)
+Found only by: <each reviewer and the findings no one else raised, or none (R-10.2)>
+
+### Second opinion (R-6.2, Risk above LOW)
 
 Second opinion: <family and model, and the `X-n` findings in the table above — or `skipped`, with the reason (R-6.2)>
 
@@ -161,13 +165,15 @@ Review outcome: PENDING
 
 - <reviewer and reviewed surface>
 
-### Second opinion (rule 16 — Risk ≠ LOW)
+### Second opinion (R-6.2, Risk above LOW)
 
 Second opinion: <family and model, and the `X-n` findings below — or `skipped`, with the reason (R-6.2)>
 
 ### Findings, fixes, and focused retests
 
 - <finding, resolution, and retest evidence>
+
+Found only by: <each reviewer and the findings no one else raised, or none (R-10.2)>
 
 ### Remaining risks and human acceptance
 

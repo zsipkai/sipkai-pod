@@ -14,7 +14,7 @@ Sipk.ai runs the review; one or two lenses (M) or up to three (L), chosen for th
 
 ## Steps
 
-0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN`, before any `cd` (R-8.1, R-7.2).
+0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN ship`, before any `cd` (R-8.1, R-7.2).
 1. **Review**, as `/clear-review` describes, sized by the story: scope the diff, brief the lenses in parallel (each report saved as it arrives, R-6.3), run the second opinion when the risk asks for it and write the `Second opinion:` line, do the generalist pass, fix surgically and re-run the affected proofs. A finding this size cannot absorb moves the story up a size (R-2.8).
 2. **Regress**, as `/test-regression` describes: pin the reviewed commit, run the full gate, quote the gate receipt in the certificate.
 3. **Deploy**, as `/deploy-change` describes: the hard gate on the merge candidate, merge through the project's route, deploy to development, verify live, record the rollback, close the story, update the board.

@@ -7,6 +7,7 @@ Execution model: small | mid | top (per sipkai-pod/sdlc/RULES.md section 7 — a
 Budget: <from the size table — S=750k M=2M L=2.5M XL=4M (total tokens); XXL must be split>
 Owner: <accountable human>
 Story: `backlog/stories/STORY-NNN-<slug>.md`
+Track: <rapid | standard | full> — <one line: why this is the lightest track that meets every criterion (R-2.22)>
 Lane: full | test-only | docs/process-only | hotfix | bootstrap
 Coordination issue: <optional URL or key>
 Deployment candidate: PENDING

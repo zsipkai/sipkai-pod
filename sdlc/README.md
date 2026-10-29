@@ -24,14 +24,15 @@ flowchart LR
     AC --> POC[/prove-concept/]
     POC --> G0[gate green:<br/>ready to develop]
     G0 --> SP{founder names a story<br/>or approves a sprint}
-    SP --> ST[seven stages,<br/>story after story]
+    SP --> TR{track:<br/>rapid, standard, full}
+    TR --> ST[build and ship,<br/>story after story]
     ST --> RT[retrospective]
     RT --> SP
 ```
 
 1. **Sprint 0** (`/sprint-zero`, R-2.20). Once per project, time-boxed. It ends when the team is ready to develop: the founder said go on the business case, the backlog is ordered, the riskiest assumption is proven, the mocks are approved, every access works and the gate is green.
 2. **The founder names a story, or approves a sprint** (R-2.13): an ordered list of stories from the top of the board.
-3. **Each story walks the seven stages**, each in a fresh session that Sipk.ai starts, each leaving its evidence in the change record. Stories in a sprint run one after another; a story never starts while a story it depends on is open.
+3. **Each story runs on the lightest track that meets every criterion** (R-2.22): rapid in two sessions, standard in three, full through the seven stage pages. Every session is fresh, started by Sipk.ai, and leaves its evidence in the change record. Stories in a sprint run one after another; a story never starts while a story it depends on is open.
 4. **After every story the team sits down** (R-10.9): Tina's one-page retrospective with the bill and at most three lean proposals.
 5. **After the sprint** Sipk.ai reports to the founder: what shipped, what it cost, what was learned, and the recommended next sprint.
 
@@ -46,6 +47,16 @@ flowchart LR
 | merging and pushing `main` where the project allows it | a production release |
 | writing improvement proposals | approving any change to the method |
 | | a budget crossed, money beyond a story, deletions, permission widening at account level |
+
+## Three tracks
+
+| Track | When | Sessions | Who works on it | Second opinion |
+|---|---|---|---|---|
+| **Rapid** | Size S, LOW or STANDARD risk; no new contract, dependency, data schema or screen; nothing touching money, security, authentication, personal data, infrastructure or the control plane | 2: `/build` then `/ship` | Michal, Bruno, one reviewer, Ivan | once on the diff at STANDARD, none at LOW |
+| **Standard** | Size S or M, LOW or STANDARD risk, outside the rapid limits | 3: `/design`, `/build`, `/ship` | plus Marketa, at most two reviewers, Erik if a screen changes | once, on the diff |
+| **Full** | HIGH or CRITICAL; Size L or XL; money, security, authentication, personal data, infrastructure, the control plane, a new architecture or a new external service | the seven stage pages | the whole team | at Validate and at Review |
+
+Every track keeps, without exception: a proof that can fail for every acceptance criterion; the gate on the exact commit with its receipt; review by someone other than the builder; one change record with all seven sections; the budget stop and the founder's authority. A surprise moves a story up a track at once, never down (R-2.22).
 
 ## Sprint 0
 
@@ -136,7 +147,6 @@ The gate fails closed, runs identically in the hook, in CI and at deploy (R-3.21
 | Lane | Stages run | When it applies |
 |---|---|---|
 | Full | all seven | any change a user can observe, any money, security, data or infrastructure change |
-| Small-change | Plan, Validate and Develop in one session; one lens on the design; Accept, Review with one second opinion on the diff, Regress, Deploy | Size S, a few files, no user-visible behaviour change, no new contract, never CRITICAL (R-4.8) |
 | Test-only | Develop, Accept, Regress, Deploy, with a short plan note | adding or fixing tests with zero production-code change |
 | Docs/process-only | edit plus the fast gate at commit | docs, rules, skills, templates; batched between stories, control-plane edits still reviewed by the owner |
 | Hotfix | Develop, Accept, Regress, Deploy now; Discovery Brief and Design Verdict written retroactively the same day | production is broken and users are hurting |

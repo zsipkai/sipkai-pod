@@ -2,7 +2,7 @@
 
 **A digital agile team of AI agents, owned by one human. Give it a project description: it runs Sprint 0, then delivers story after story through seven evidence-gated stages. Give it to any project; everything project-specific stays in the project.**
 
-Version 2.3.0 (2026-10-29). By Sipk.ai, Zoltán Šipkai. MIT licensed.
+Version 2.4.0 (2026-10-29). By Sipk.ai, Zoltán Šipkai. MIT licensed.
 
 ## The idea in one paragraph
 
@@ -36,7 +36,11 @@ Project description
   -> Sprint 0: business case (go?) -> backlog -> plan and architecture
                -> UI mocks and design system -> accesses -> proof of concept -> gate green
   -> the founder names a story or approves a sprint
-  -> per story: Plan -> Validate -> Develop -> Accept -> Review -> Regress -> Deploy -> retrospective
+  -> per story, the lightest track that meets every criterion:
+       rapid:    /build -> /ship
+       standard: /design -> /build -> /ship
+       full:     Plan -> Validate -> Develop -> Accept -> Review -> Regress -> Deploy
+  -> retrospective
 ```
 
 | Step | Proves | Owner |

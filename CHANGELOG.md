@@ -1,5 +1,14 @@
 # Sipk.ai POD changelog
 
+## 2.4.0 — 2026-10-29
+
+Approved by Zoltán Šipkai in chat on 2026-10-29 ("Yes, build 2.4"): a simpler, faster flow where the team decides from each story's complexity who it needs (SI-169). 51 process evaluations.
+
+- **Three tracks** (R-2.22). Sipk.ai picks, with Marketa, the lightest track that meets every acceptance criterion and brings in only the members it needs. **Rapid** (Size S, LOW or STANDARD, nothing sensitive, no new contract or screen): two sessions, `/build` and `/ship`. **Standard** (Size S or M, LOW or STANDARD): three sessions, `/design`, `/build`, `/ship`. **Full** (HIGH or CRITICAL, Size L or XL, or anything sensitive): the seven stage pages. A surprise moves a story up a track, never down.
+- **Kept in every track:** a proof that can fail for every criterion, the gate on the exact commit with its receipt, review by someone other than the builder, one change record with all seven sections, the budget stop and the founder's authority.
+- New step pages `/design`, `/build`, `/ship`; the record checker requires `Track:` on new records and enforces each track's limits and its second opinion (full: at Validate and Review; standard and rapid: once on the diff, none for a rapid LOW story). The small-change lane of 2.2 is retired into the rapid track.
+- The charter's agreement 6 now says it plainly: the lightest track that meets all the criteria, only the members the story needs.
+
 ## 2.3.0 — 2026-10-29
 
 Approved by Zoltán Šipkai in chat on 2026-10-29: Tina's eight-point decision list ("approved") and his instructions for a top-down structure, Sprint 0 and a digital agile team (SADR-006, SI-162 to SI-168). 49 process evaluations.

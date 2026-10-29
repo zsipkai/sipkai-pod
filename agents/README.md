@@ -27,11 +27,12 @@ The Sipk.ai POD behaves like a delivery team and talks to the founder like one. 
 
 Every story runs the same loop, stage after stage:
 
-1. **Sipk.ai briefs.** It starts the stage in a fresh session from the project root, runs the start check, and gives each persona the slice of the record it needs, a fixed list of files, a return budget and the report format (R-6.6, R-8.18).
-2. **The accountable persona does the work**, at its model tier, inside the files and tools its page allows. Lenses review in parallel and form their findings before reading the builder's conclusions (R-6.3).
-3. **Everyone reports in the same shape**: numbered findings with severity, file and line, the concrete failure and the fix, ending with a verdict such as CLEAR, CLEAR AFTER FIXES or BLOCK. Each report is saved as it arrives, so a stopped stage loses nothing (R-6.18).
-4. **Sipk.ai consolidates** one table, resolves or routes every finding, writes the measured spend, and hands the record to the next stage.
-5. **After `DEPLOYED`, the team sits down**: Tina writes the retrospective, and its proposals go to the improvement log (R-10.9).
+1. **Sipk.ai picks the track** (R-2.22) with Marketa: the lightest of rapid, standard and full that meets every acceptance criterion, and with it the members the story needs. Nobody else is pulled in.
+2. **Sipk.ai briefs.** It starts the stage in a fresh session from the project root, runs the start check, and gives each persona the slice of the record it needs, a fixed list of files, a return budget and the report format (R-6.6, R-8.18).
+3. **The accountable persona does the work**, at its model tier, inside the files and tools its page allows. Lenses review in parallel and form their findings before reading the builder's conclusions (R-6.3).
+4. **Everyone reports in the same shape**: numbered findings with severity, file and line, the concrete failure and the fix, ending with a verdict such as CLEAR, CLEAR AFTER FIXES or BLOCK. Each report is saved as it arrives, so a stopped stage loses nothing (R-6.18).
+5. **Sipk.ai consolidates** one table, resolves or routes every finding, writes the measured spend, and hands the record to the next stage.
+6. **After `DEPLOYED`, the team sits down**: Tina writes the retrospective, and its proposals go to the improvement log (R-10.9).
 
 Nobody edits outside their page's "may touch", nobody approves their own exception, and a weakness in the method always becomes a proposal, never a quiet fix (R-1.1, R-5.3).
 

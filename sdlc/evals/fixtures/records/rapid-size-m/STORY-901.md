@@ -7,7 +7,8 @@ Execution model: mid
 Budget: 100k
 Owner: Evaluation owner
 Story: `backlog/stories/STORY-901-fixture.md`
-Lane: small-change
+Track: rapid
+Lane: full
 Deployment candidate: PENDING
 
 ## Discovery Brief

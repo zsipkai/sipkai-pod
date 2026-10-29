@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+echo "pre-commit: Sipk.ai POD fast gate"
+
+# The gate checks the working tree, so the commit must hold exactly what the
+# gate sees. A staged copy that differs from its working copy would be
+# committed unchecked (SI-015).
+differing=$(git diff --name-only)
+if [ -n "$differing" ]; then
+  echo "pre-commit: refused. These tracked files differ between the index and the working tree:"
+  printf '%s\n' "$differing" | sed 's/^/  /'
+  echo "Stage or restore them so the commit matches what the gate checks, then commit again."
+  exit 1
+fi
+
+SDLC_GATE_QUIET=1 bash sipkai-pod/sdlc/scripts/sdlc-gate.sh --fast

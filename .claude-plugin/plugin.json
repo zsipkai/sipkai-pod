@@ -1,10 +1,30 @@
 {
   "name": "sipkai-pod",
-  "version": "2.2.0",
-  "description": "Sipk.ai POD: a gated, evidence-driven delivery lifecycle run by a pod of AI agent personas and owned by one human. Seven stage commands and eight personas.",
+  "version": "2.3.0",
+  "description": "Sipk.ai POD: a digital agile team of AI agent personas, owned by one human. Sprint 0 from a project description, then seven evidence-gated stages per story.",
   "author": {
     "name": "Sipk.ai, Zoltán Šipkai"
   },
   "license": "MIT",
-  "keywords": ["sdlc", "agents", "review", "gates", "evidence"]
+  "keywords": [
+    "sdlc",
+    "agents",
+    "review",
+    "gates",
+    "evidence"
+  ],
+  "agents": [
+    "./agents/sipkai.md",
+    "./agents/miro.md",
+    "./agents/marketa.md",
+    "./agents/erik.md",
+    "./agents/michal.md",
+    "./agents/bruno.md",
+    "./agents/adam.md",
+    "./agents/ivan.md",
+    "./agents/tina.md"
+  ],
+  "skills": [
+    "./sdlc/skills/"
+  ]
 }

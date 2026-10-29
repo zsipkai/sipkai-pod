@@ -1,0 +1,3 @@
+# Decisions about the method
+
+`SADR-001` (seven-stage evidence model), `SADR-002` (routing, budgets and the second opinion) and `SADR-003` (method isolated from product, connected through `sdlc.config.sh`) came over unchanged from version 1.2.0. `SADR-004` (own repository, included as a submodule, loaded as a plugin) and `SADR-005` (the pod of named personas) were accepted by the founder on 2026-10-19 with version 2.0.0. `SADR-006` (a digital agile team, organised top-down, that starts from a project description with Sprint 0) was accepted on 2026-10-29 with version 2.3.0. The migration map of 2.0.0 is `MIGRATION-1.2-to-2.0.md`.

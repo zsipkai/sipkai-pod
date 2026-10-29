@@ -3,8 +3,8 @@
 Stage: PLANNED
 Risk: LOW | STANDARD | HIGH | CRITICAL
 Size: S | M | L | XL | XXL
-Execution model: small | mid | top (per sipkai-pod/RULES.md section 7 — assigned in /plan-task, checked in /validate-design; HIGH/CRITICAL risk requires top)
-Budget: <from the size table — S=300k M=750k L=1.5M XL=3M (total tokens); XXL must be split>
+Execution model: small | mid | top (per sipkai-pod/sdlc/RULES.md section 7 — assigned in /plan-task, checked in /validate-design; HIGH/CRITICAL risk requires top)
+Budget: <from the size table — S=750k M=2M L=2.5M XL=4M (total tokens); XXL must be split>
 Owner: <accountable human>
 Story: `backlog/stories/STORY-NNN-<slug>.md`
 Lane: full | test-only | docs/process-only | hotfix | bootstrap
@@ -81,14 +81,14 @@ Order small tasks by dependency. Name verified files and tests; label uncertain 
 ### Agent budget and spend ledger
 
 - Token budget (stop-loss): from the size table in the `Budget:` metadata
-- Allowed tier by stage: per sipkai-pod/RULES.md section 7 (execution at the routed tier; verification always top)
+- Allowed tier by stage: per sipkai-pod/sdlc/RULES.md section 7 (execution at the routed tier; verification always top)
 - Stop condition: crossing the budget halts the stage for a human decision — raise, split, or escalate the tier. `stage-start.sh` checks it at the start of every stage (R-7.10). A raise changes `Budget:`; a decision to go on without one is a line `Budget decision: <what> — <name>, YYYY-MM-DD`.
 
 Each stage appends one line here as it finishes (mark estimates as such):
 
 `Tokens spent (<stage>): <n> — <note>`
 
-`sipkai-pod/scripts/cost-report.sh` aggregates these lines across all records.
+`sipkai-pod/sdlc/scripts/cost-report.sh` aggregates these lines across all records.
 - Actual cost:
 
 ## Design Verdict
@@ -205,7 +205,7 @@ Deployment outcome: PENDING
 
 ## SDLC findings
 
-Weaknesses, gaps or contradictions in the Sipk.ai POD or the project's rules noticed during this story, each logged in `sipkai-pod/IMPROVEMENTS.md` as `PROPOSED` (R-1.1). Write `None` if there were none. Nothing here is applied without a recorded human approval.
+Weaknesses, gaps or contradictions in the Sipk.ai POD or the project's rules noticed during this story, each logged in `sipkai-pod/method/IMPROVEMENTS.md` as `PROPOSED` (R-1.1). Write `None` if there were none. Nothing here is applied without a recorded human approval.
 
 | Improvement id | Stage that found it | Summary |
 |---|---|---|
@@ -222,7 +222,7 @@ Weaknesses, gaps or contradictions in the Sipk.ai POD or the project's rules not
 - [ ] Every control-plane change has explicit human owner review and evidence that the control was not weakened.
 - [ ] Every exception has an owner, compensating control, and expiry or follow-up.
 - [ ] The implementation is the simplest readable design that meets the criteria (R-9.4 to R-9.11).
-- [ ] SDLC weaknesses found during this story are logged as proposals in `sipkai-pod/IMPROVEMENTS.md`; none were applied without human approval.
+- [ ] SDLC weaknesses found during this story are logged as proposals in `sipkai-pod/method/IMPROVEMENTS.md`; none were applied without human approval.
 - [ ] Required human checkpoints are recorded.
 - [ ] The reviewed combined tree passed the full required matrix.
 - [ ] Deployment, live verification, observation, and rollback status are recorded when applicable.

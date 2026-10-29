@@ -13,9 +13,9 @@ Only the pack that `second-opinion.sh` builds: the charter, the change record, a
 ## How it runs
 
 ```bash
-bash sipkai-pod/scripts/second-opinion.sh STORY-NNN design          # pack for Validate
-bash sipkai-pod/scripts/second-opinion.sh STORY-NNN review          # pack for Review
-bash sipkai-pod/scripts/second-opinion.sh STORY-NNN review --auto   # send it to the other family's API
+bash sipkai-pod/sdlc/scripts/second-opinion.sh STORY-NNN design          # pack for Validate
+bash sipkai-pod/sdlc/scripts/second-opinion.sh STORY-NNN review          # pack for Review
+bash sipkai-pod/sdlc/scripts/second-opinion.sh STORY-NNN review --auto   # send it to the other family's API
 ```
 
 `--auto` sends the pack to that family's API, with the key read at run time from a fixed Keychain item and never stored in the repository or shown in the process list, and writes the findings next to the pack; when the API fails, the stage records it and declares the skip (R-6.7). The paste path stays for a human who wants to run it by hand. Never a mini or nano variant: verification never downsizes, across families too (R-6.12).

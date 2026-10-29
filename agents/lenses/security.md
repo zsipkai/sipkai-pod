@@ -1,6 +1,6 @@
 # Lens · Security
 
-Worn by Adam at Validate and Review. Read the control-plane rules (`RULES.md` section 8) and the project's security rules first. The project names its dominant threat; the lens starts there.
+Worn by Adam at Validate and Review. Read the control-plane rules (`sdlc/RULES.md` section 8) and the project's security rules first. The project names its dominant threat; the lens starts there.
 
 ## Checklist
 

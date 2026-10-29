@@ -1,5 +1,22 @@
 # Sipk.ai POD changelog
 
+## 2.3.0 — 2026-10-29
+
+Approved by Zoltán Šipkai in chat on 2026-10-29: Tina's eight-point decision list ("approved") and his instructions for a top-down structure, Sprint 0 and a digital agile team (SADR-006, SI-162 to SI-168). 49 process evaluations.
+
+- **The team charter** (`agents/CHARTER.md`, R-1.7): vision, mission, the mandate to be the best, the quickest and the cheapest AI delivery team in the world (ranked in that order, proven with numbers), and eleven agreements in priority order that outrank every other page. Every stage's start check prints them; every persona page names the charter first; the retrospective and Tina measure the team against the mandate.
+- **Top-down structure.** `CLAUDE.md` is the top: what the pod is, the ten key rules, the flow, how the pod talks, what it keeps; `AGENTS.md` is the same file. Then `agents/` (the team), `sdlc/` (the flow in `sdlc/README.md`, every rule in `sdlc/RULES.md`, the step pages in `sdlc/skills/`, the gate in `sdlc/scripts/`, the cases in `sdlc/evals/`), `templates/` (the artefacts a project gets), `method/` (the pod's own decisions and log). Every script path moved from `sipkai-pod/scripts/` to `sipkai-pod/sdlc/scripts/`.
+- **Sprint 0** (R-2.20): `/sprint-zero` runs business case, workspace, backlog, release plan and architecture sketch, UI mocks and design system, accesses, proof of concept and a green gate, with an exit list. New steps `/business-case` (R-2.21: no backlog without the founder's go), `/define-backlog` (R-2.19: intake and prioritisation), `/design-ui`, `/prove-concept`, and templates for each output.
+- **Erik, UX and UI Designer**, clean, modern and simple in the spirit of Apple's design, with a UX lens.
+- **Sprints** (R-2.13): the founder names a story or approves a sprint; the pod delivers its stories one after another on its own.
+- **The project workspace** (R-8.19): every artefact lives in the project, in the folders `sdlc.config.sh` names (default `delivery/`); `adopt.sh` creates them.
+- **The team sits down after every story** (R-10.9): Tina's one-page retrospective with the bill and three lean proposals.
+- **Budgets recalibrated from the ledger** (R-7.9): S 750k, M 2M, L 2.5M, XL 4M; nine of ten stories had crossed the old ones.
+- **Drift is a script, not a reviewer run**: `check-record-drift.sh` compares card, board and record, and refuses retired phrases.
+- **Claims are run, not asserted** (R-6.17), one checklist for 18 proposals; **a stopped stage keeps its findings** (R-6.18); the second-opinion pack carries the current text of the files a change edits.
+- **The pod holds nothing project-specific**: Java and Node checks moved to a project's `project_tool_checks`; the second-opinion endpoint and Keychain item come from the bridge; two stale stage sentences fixed.
+- **A lean log**: open rows grouped by theme in `method/IMPROVEMENTS.md`, applied and rejected rows in `method/IMPROVEMENTS-ARCHIVE.md`, project rows in each project's own log, all checked. Seven stale rows closed. The log check no longer breaks on an apostrophe.
+
 ## 2.2.0 — 2026-10-29
 
 Approved by Zoltán Šipkai in chat ("Points 1 to 4", 2026-10-29): the six approved improvements applied, plus SI-003, SI-005, SI-029, SI-080, SI-088, SI-089 and SI-154. Thirteen new process evaluations, 41 in all; each new check was broken once to prove its evaluation turns red.

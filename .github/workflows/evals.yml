@@ -42,5 +42,10 @@ jobs:
           cp osv-scanner bin/ && chmod +x bin/osv-scanner
           echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
 
+      # Each failing case also becomes an annotation, readable on the run page.
       - name: Run the process evaluations
-        run: bash sdlc/evals/run-evals.sh
+        run: |
+          bash sdlc/evals/run-evals.sh 2>&1 | tee "$RUNNER_TEMP/evals.log"
+          rc=${PIPESTATUS[0]}
+          grep -A3 '^FAIL' "$RUNNER_TEMP/evals.log" | tr '\n' ' ' | sed 's/ --/\n/g' | sed 's/^ *FAIL/::error::FAIL/' || true
+          exit "$rc"

@@ -45,6 +45,7 @@ jobs:
       # Each failing case also becomes an annotation, readable on the run page.
       - name: Run the process evaluations
         run: |
+          set +e   # the step's shell stops at the first error; collect the result first
           bash sdlc/evals/run-evals.sh 2>&1 | tee "$RUNNER_TEMP/evals.log"
           rc=${PIPESTATUS[0]}
           if [ "$rc" -ne 0 ]; then

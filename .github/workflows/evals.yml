@@ -47,5 +47,8 @@ jobs:
         run: |
           bash sdlc/evals/run-evals.sh 2>&1 | tee "$RUNNER_TEMP/evals.log"
           rc=${PIPESTATUS[0]}
-          grep -A3 '^FAIL' "$RUNNER_TEMP/evals.log" | tr '\n' ' ' | sed 's/ --/\n/g' | sed 's/^ *FAIL/::error::FAIL/' || true
+          if [ "$rc" -ne 0 ]; then
+            grep '^FAIL' "$RUNNER_TEMP/evals.log" | sed 's/^/::error::/' || true
+            echo "::error title=Last lines::$(tail -n 25 "$RUNNER_TEMP/evals.log" | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')"
+          fi
           exit "$rc"

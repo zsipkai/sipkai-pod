@@ -1,0 +1,46 @@
+name: Process evaluations
+
+# Every push runs the pod's process evaluations on their own, in a throwaway
+# project (sdlc/evals/run-evals.sh, SI-186), so a check that stopped biting
+# is caught before any project pins the commit.
+on:
+  push:
+
+permissions: {}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  evals:
+    name: evals
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # Each SHA-256 is copied from the project's own published checksum file
+      # for that release; the same versions Money Review's CI pins. The check
+      # runs before anything is unpacked or made executable.
+      - name: Install ripgrep, gitleaks and osv-scanner
+        run: |
+          cd "$RUNNER_TEMP" && mkdir bin
+          curl -fsSL --proto '=https' -o ripgrep.tar.gz https://github.com/BurntSushi/ripgrep/releases/download/15.2.0/ripgrep-15.2.0-x86_64-unknown-linux-musl.tar.gz
+          echo "33e15bcf1624b25cdd2a55813a47a2f95dbe126268203e76aa6a585d1e7b149c  ripgrep.tar.gz" | sha256sum -c
+          tar -xzf ripgrep.tar.gz -C bin --strip-components=1 ripgrep-15.2.0-x86_64-unknown-linux-musl/rg
+          curl -fsSL --proto '=https' -o gitleaks.tar.gz https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  gitleaks.tar.gz" | sha256sum -c
+          tar -xzf gitleaks.tar.gz -C bin gitleaks
+          curl -fsSL --proto '=https' -o osv-scanner https://github.com/google/osv-scanner/releases/download/v2.7.0/osv-scanner_linux_amd64
+          echo "160c6253e2922e9e0a6a9771c5c4c40a4b3c6090b34a3cdd5e80c96cc2e4218b  osv-scanner" | sha256sum -c
+          cp osv-scanner bin/ && chmod +x bin/osv-scanner
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+
+      - name: Run the process evaluations
+        run: bash sdlc/evals/run-evals.sh

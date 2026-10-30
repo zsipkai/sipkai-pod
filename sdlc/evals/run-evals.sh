@@ -4,7 +4,20 @@
 # the run. Add a case for every new failure class (R-3.5).
 
 set -uo pipefail
-cd "$(cd "$(dirname "$0")/../../.." && pwd)"
+pod="$(cd "$(dirname "$0")/../.." && pwd)"
+# Run on its own (the pod's CI, SI-186), outside a project: build a throwaway
+# project that includes this pod and run there.
+if [ ! -f "$pod/../sdlc.config.sh" ]; then
+  proj=$(mktemp -d); mkdir "$proj/sipkai-pod"
+  (cd "$pod" && tar --exclude=.git -cf - .) | tar -xf - -C "$proj/sipkai-pod"
+  cp "$pod/sdlc/evals/project/sdlc.config.sh" "$proj/sdlc.config.sh"
+  git -C "$proj" init -q && git -C "$proj" add -A && git -C "$proj" -c user.email=eval@example.test -c user.name=eval commit -qm "evaluation project"
+  bash "$proj/sipkai-pod/sdlc/evals/run-evals.sh"; rc=$?
+  rm -rf "$proj"; exit "$rc"
+fi
+cd "$pod/.."
+# A session whose project settings loaded carries SIPKAI_PROJECT (R-8.1, SI-182).
+SIPKAI_PROJECT=$(set +u; . ./sdlc.config.sh >/dev/null 2>&1; printf '%s' "${SDLC_PROJECT_NAME:-}"); export SIPKAI_PROJECT
 S=sipkai-pod/sdlc/scripts
 F=sipkai-pod/sdlc/evals/fixtures
 tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
@@ -49,9 +62,12 @@ evaluate "records: Size L design needs no second opinion"  0       "PASS"       
 evaluate "records: a verdict without 'Found only by:'"    nonzero "needs a 'Found only by:'"  records missing-lens-line
 evaluate "records: Size with its one line of reason passes" 0       "PASS"                      records size-with-reason
 evaluate "records: a Size S record over 300 lines"         nonzero "over the Size S limit"     records record-too-long
+evaluate "records: dependency lane with its receipt passes" 0       "PASS"                      records dependency-lane-receipt
+evaluate "records: dependency lane without its receipt"    nonzero "needs '- Dependency lane receipt:'" records dependency-lane-no-receipt
 
 # Start-of-stage check: the session's folder and the budget stop.
 evaluate "stage start: session outside the project root"   nonzero "not in the project root"   bash -c 'cd sipkai-pod && bash sdlc/scripts/stage-start.sh STORY-901'
+evaluate "stage start: project settings not loaded"        nonzero "harness settings are not loaded" env -u SIPKAI_PROJECT CHECK_RECORDS_DIR="$F/records/over-budget-decided" bash "$S/stage-start.sh" STORY-901
 evaluate "stage start: over budget stops the stage"         nonzero "token budget (R-7.2)"     env CHECK_RECORDS_DIR="$F/records/over-budget-no-decision" bash "$S/stage-start.sh" STORY-901
 evaluate "stage start: the founder's quoted decision lets it go" 0   "a human decided"           env CHECK_RECORDS_DIR="$F/records/over-budget-decided" bash "$S/stage-start.sh" STORY-901
 evaluate "stage start: a step that cannot finish stops first" nonzero "Stop before starting"  env CHECK_RECORDS_DIR="$F/records/step-share-short" bash "$S/stage-start.sh" STORY-901 ship
@@ -108,8 +124,8 @@ evaluate "drift: retired phrase in an open story"          nonzero "retired phra
 # Keychain out of the evaluation.
 mkdir -p "$tmp/nokey"
 printf '#!/bin/sh\nexit 44\n' > "$tmp/nokey/security"; chmod +x "$tmp/nokey/security"
-evaluate "second opinion: missing key exits 2 with a message" 0   "no key: exit 2"            bash -c 'PATH="$1:$PATH" bash "$2/second-opinion.sh" STORY-001 design --auto 2>&1; rc=$?; [ "$rc" -eq 2 ] && echo "no key: exit 2"' _ "$tmp/nokey" "$S"
-evaluate "second opinion: missing key names the Keychain item" nonzero "sipkai-openai-api"   env PATH="$tmp/nokey:$PATH" bash "$S/second-opinion.sh" STORY-001 design --auto
+evaluate "second opinion: missing key exits 2 with a message" 0   "no key: exit 2"            env CHECK_RECORDS_DIR="$F/records/good-planned" bash -c 'PATH="$1:$PATH" bash "$2/second-opinion.sh" STORY-901 design --auto 2>&1; rc=$?; [ "$rc" -eq 2 ] && echo "no key: exit 2"' _ "$tmp/nokey" "$S"
+evaluate "second opinion: missing key names the Keychain item" nonzero "sipkai-openai-api"   env CHECK_RECORDS_DIR="$F/records/good-planned" PATH="$tmp/nokey:$PATH" bash "$S/second-opinion.sh" STORY-901 design --auto
 
 # Second opinion: an API error or an empty answer ends in exit 3, "NOT
 # obtained", and no findings file (SI-089). Stand-ins for `security` and
@@ -122,12 +138,12 @@ for answer in error empty; do
   chmod +x "$tmp/api-$answer/security" "$tmp/api-$answer/curl"
 done
 so_failed() {
-  PATH="$tmp/api-$1:$PATH" bash "$S/second-opinion.sh" STORY-001 design --auto 2>&1; rc=$?
-  [ "$rc" -eq 3 ] && [ ! -e build/second-opinion-STORY-001-design-findings.md ] && echo "exit 3, no findings file"
+  CHECK_RECORDS_DIR="$F/records/good-planned" PATH="$tmp/api-$1:$PATH" bash "$S/second-opinion.sh" STORY-901 design --auto 2>&1; rc=$?
+  [ "$rc" -eq 3 ] && [ ! -e build/second-opinion-STORY-901-design-findings.md ] && echo "exit 3, no findings file"
 }
 evaluate "second opinion: API error is NOT obtained"       0       "exit 3, no findings file"  so_failed error
 evaluate "second opinion: empty answer is NOT obtained"    0       "exit 3, no findings file"  so_failed empty
-evaluate "second opinion: a key file inside the repository is refused" nonzero "refuses a key file inside the repository" env SDLC_SECOND_OPINION_KEY_FILE="$PWD/README.md" bash "$S/second-opinion.sh" STORY-001 design --auto
+evaluate "second opinion: a key file inside the repository is refused" nonzero "refuses a key file inside the repository" env CHECK_RECORDS_DIR="$F/records/good-planned" SDLC_SECOND_OPINION_KEY_FILE="$PWD/README.md" bash "$S/second-opinion.sh" STORY-901 design --auto
 mkdir -p "$tmp/so-records"
 printf '# STORY-902: Fixture\n\nStage: PLANNED\n\n- Expected files or directories: `sipkai-pod/VERSION`, `no/such/file.txt`\n' > "$tmp/so-records/STORY-902.md"
 evaluate "second opinion: the pack carries the current text of named files" 0 "## Current text of sipkai-pod/VERSION" bash -c 'CHECK_RECORDS_DIR="$1" bash "$2/second-opinion.sh" STORY-902 design >/dev/null && cat build/second-opinion-STORY-902-design.md' _ "$tmp/so-records" "$S"
@@ -147,6 +163,28 @@ dir=$(hook_repo refused); echo "fixed" > "$dir/file.txt"
 evaluate "hook: staged copy differing from working copy is refused" nonzero "file.txt"   bash -c 'cd "$1" && bash "$2"' _ "$dir" "$PWD/$S/pre-commit"
 dir=$(hook_repo clean)
 evaluate "hook: index matching the working tree runs the gate"      0       "stand-in gate ran" bash -c 'cd "$1" && bash "$2"' _ "$dir" "$PWD/$S/pre-commit"
+
+# Dependency lane (R-4.1, SI-184): a throwaway repository whose project
+# functions read the lockfile, and a stand-in osv-scanner that finds nothing.
+mkdir -p "$tmp/osv-ok"; printf '#!/bin/sh\nexit 0\n' > "$tmp/osv-ok/osv-scanner"; chmod +x "$tmp/osv-ok/osv-scanner"
+lane() {   # name | what the story branch changes
+  local d="$tmp/lane-$1"
+  mkdir -p "$d/sipkai-pod/sdlc" "$d/records" "$d/stories"; cp -R sipkai-pod/sdlc/scripts "$d/sipkai-pod/sdlc/scripts"
+  cat > "$d/sdlc.config.sh" <<'CFG'
+SDLC_STORIES_DIR="stories"; SDLC_RECORDS_DIR="records"; SDLC_BOARD="board.md"
+project_lock_check() { ! grep -q unsatisfied package-lock.json; }
+project_build_fingerprint() { sed -n 's/.*"bundle": *"\([^"]*\)".*/\1/p' package-lock.json; }
+CFG
+  printf '{"lockfileVersion":3,"bundle":"v1","dep":"1.0.0"}\n' > "$d/package-lock.json"
+  git -C "$d" init -q && git -C "$d" checkout -q -b main && git -C "$d" add -A && git -C "$d" -c user.email=eval@example.test -c user.name=eval commit -qm main
+  git -C "$d" checkout -q -b story
+  (cd "$d" && eval "$2")
+  git -C "$d" add -A && git -C "$d" -c user.email=eval@example.test -c user.name=eval commit -qm story
+  (cd "$d" && PATH="$tmp/osv-ok:$PATH" bash sipkai-pod/sdlc/scripts/check-dependency-lane.sh)
+}
+evaluate "dependency lane: a lockfile-only update passes"   0       "DEPENDENCY LANE PASS"      lane only-lock 'sed -i.bak s/1.0.0/1.0.1/ package-lock.json && rm package-lock.json.bak && echo note > records/STORY-1.md'
+evaluate "dependency lane: a code change is refused"        nonzero "neither a lockfile"        lane code 'sed -i.bak s/1.0.0/1.0.1/ package-lock.json && rm package-lock.json.bak && echo code > app.js'
+evaluate "dependency lane: a changed build is refused"      nonzero "differs from main"         lane build 'sed -i.bak s/v1/v2/ package-lock.json && rm package-lock.json.bak'
 
 improvements() { CHECK_IMPROVEMENTS_FILE="$F/improvements/$1.md" bash "$S/check-improvements.sh"; }
 evaluate "improvements: human-approved and proposed rows pass" 0     "every approval is human"   improvements good

@@ -6,10 +6,10 @@ Stage: PLANNED
 Risk: LOW | STANDARD | HIGH | CRITICAL
 Size: <S | M | L | XL> — <one line: the route this size takes and why (R-2.8); XXL is split first; CRITICAL is always XL>
 Execution model: small | mid | top (per sipkai-pod/sdlc/RULES.md section 7 — assigned in /plan-task, checked in /validate-design; HIGH/CRITICAL risk requires top)
-Budget: <from the size table in R-7.2, or the project's own in docs/SDLC-PROJECT.md (total tokens); XXL must be split>
+Budget: <from the size and risk table in R-7.2, or the project's own in docs/SDLC-PROJECT.md (total tokens); XXL must be split>
 Owner: <accountable human>
 Story: `backlog/stories/STORY-NNN-<slug>.md`
-Lane: full | test-only | docs/process-only | hotfix | bootstrap
+Lane: full | test-only | docs/process-only | hotfix | dependency | bootstrap
 Coordination issue: <optional URL or key>
 Deployment candidate: PENDING
 Harness and version: <agent harness and version when available>
@@ -130,6 +130,7 @@ Development outcome: PENDING
 ### Actual scope and authority used
 
 - Files outside declared scope: <None, or reason and approval>
+- Dependency lane receipt: <only on the dependency lane: the last line `check-dependency-lane.sh` printed>
 - Control-plane files changed: <None, or list and human owner review>
 - Dependencies added or changed: <None, or provenance, security review, and lockfile evidence>
 - Tools and network destinations used:

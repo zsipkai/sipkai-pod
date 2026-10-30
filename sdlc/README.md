@@ -32,7 +32,7 @@ flowchart LR
 
 1. **Sprint 0** (`/sprint-zero`, R-2.5). Once per project, time-boxed. It ends when the team is ready to develop: the founder said go on the business case, the backlog is ordered, the riskiest assumption is proven, the mocks are approved, every access works and the gate is green.
 2. **The founder names a story, or approves a sprint** (R-2.4): an ordered list of stories from the top of the board.
-3. **Each story runs the route its size sets** (R-2.8): S in one session, M in two, L in three, XL through the seven stage pages; an XXL is split first. Every session is fresh, started by Sipk.ai, and leaves its evidence in the change record. Stories in a sprint run one after another; a story never starts while a story it depends on is open.
+3. **Each story runs the route its size sets** (R-2.8): S in one session, M in two, L in three, XL through the seven stage pages; an XXL is split first. Every session is fresh, started by Sipk.ai, and leaves its evidence in the change record. Stories in a sprint run two at a time where they are independent (no blocking link, no shared declared files), each in its own worktree, and merge one at a time; a story never starts while a story it depends on is open (R-2.4).
 4. **After every story the team sits down** (R-10.2): Tina's one-page retrospective with the bill and at most three lean proposals.
 5. **After the sprint** Sipk.ai reports to the founder: what shipped, what it cost, what was learned, and the recommended next sprint.
 
@@ -40,7 +40,7 @@ flowchart LR
 
 | Runs on its own | Waits for the founder |
 |---|---|
-| every stage of a named story or an approved sprint, one after another | go or no-go on the business case |
+| every stage of a named story or an approved sprint, two independent stories at a time | go or no-go on the business case |
 | design questions, answered with the best-supported option and reported (R-6.3) | approving the mocks |
 | the second opinion, through the API | creating account-level accesses only he can create |
 | deploying to development inside an approved story (R-5.2) | naming the story or approving the sprint |
@@ -52,10 +52,10 @@ flowchart LR
 
 | Size | What it is | Route | Sessions | Who works on it | Approx. tokens |
 |---|---|---|---|---|---|
-| **S** | a small, clear change of a few files | `/quick` | 1 | Michal, Bruno, one fresh reviewer, Ivan | about 300k |
-| **M** | a contained feature or change | `/build`, `/ship` | 2 | plus one or two reviewers | about 800k |
-| **L** | a feature with design choices, or a new contract, dependency or screen | `/design`, `/build`, `/ship` | 3 | plus Marketa, up to three reviewers, Erik for a screen | about 1.6M |
-| **XL** | a large or architectural change, and every CRITICAL story | the seven stage pages | 7 | the whole team | about 3M |
+| **S** | a small, clear change of a few files | `/quick` | 1 | Michal, Bruno, one fresh reviewer, Ivan | 300k, 450k at HIGH |
+| **M** | a contained feature or change | `/build`, `/ship` | 2 | plus one or two reviewers | 800k, 1.1M at HIGH |
+| **L** | a feature with design choices, or a new contract, dependency or screen | `/design`, `/build`, `/ship` | 3 | plus Marketa, up to three reviewers, Erik for a screen | 1.6M, 2.1M at HIGH |
+| **XL** | a large or architectural change, and every CRITICAL story | the seven stage pages | 7 | the whole team | 3M, 3.6M at HIGH or CRITICAL |
 | **XXL** | too big to build as one story | `/business-case` with feasibility, then `/define-backlog` | n/a | Miro, Marketa, Tina, Erik | split into S to XL stories |
 
 Risk never shrinks a route; it adds controls on top: at STANDARD and above the second model family reviews the diff; at HIGH the work runs on the top model and Adam's lens joins every review; a CRITICAL story is always XL, with the founder's design approval. Every size keeps a proof that can fail for every acceptance criterion, the gate on the exact commit with its receipt, a reviewer who is not the builder, one change record, the budget stop and the founder's authority. A surprise moves a story up a size at once, never down (R-2.8). The token figures are budgets: XL sits above what the first ten full-route stories measured; S, M and L are set from the measured stage averages and re-measured every ten stories.
@@ -151,6 +151,7 @@ The gate fails closed, runs identically in the hook, in CI and at deploy (R-3.5)
 | Full | every stage, in the sessions the story's size sets (S one, M two, L three, XL seven) | any change a user can observe, any money, security, data or infrastructure change |
 | Test-only | Develop, Accept, Regress, Deploy, with a short plan note | adding or fixing tests with zero production-code change |
 | Docs/process-only | edit plus the fast gate at commit | docs, rules, skills, templates; batched between stories, control-plane edits still reviewed by the owner |
+| Dependency | `/quick` at Size S, 200k | lockfiles only, when `check-dependency-lane.sh` passes: no other file changed, manifests still satisfied, the shipped build byte-identical, the scan green; one review by Adam's lens, no design check or second opinion; a refusal means the full route |
 | Hotfix | Develop, Accept, Regress, Deploy now; Discovery Brief and Design Verdict written retroactively the same day | production is broken and users are hurting |
 | Bootstrap | the project's documented one-time sequence before the gate exists | creating the repository and the first gate; never repeated |
 

@@ -23,7 +23,7 @@ The desktop app and the command line can start a new session for a step; where S
 
 ## Deny rules
 
-`settings.json` in this folder is a starting set of deny rules for a project. `adopt.sh` copies it to the project's `.claude/settings.json` when the project has none; the project adds its own private folders and cloud commands. Settings load only for a session started in the project root, which is why every step starts with `stage-start.sh` (R-8.1). Each rule is tested once and the denial recorded.
+`settings.json` in this folder is a starting set of deny rules for a project. `adopt.sh` copies it to the project's `.claude/settings.json` when the project has none; the project adds its own private folders and cloud commands. Settings load only for a session started in the project root, which is why every step starts with `stage-start.sh` (R-8.1). Its `env` sets `SIPKAI_PROJECT` to the project's `SDLC_PROJECT_NAME`; change both together, because the start check stops any session that does not carry it, the sign that the session began outside the project (SI-182). The desktop app starts a session in a folder only after the founder has trusted it once. Each rule is tested once and the denial recorded.
 
 ## Usage report
 

@@ -7,7 +7,7 @@
 # run yet calls `sdlc_none "<reason>"`: green until the first story builds
 # code, then it must be configured. `sdlc_unconfigured "<what>"` fails always.
 
-SDLC_PROJECT_NAME="Project name"
+SDLC_PROJECT_NAME="Project name"   # also SIPKAI_PROJECT in the harness settings (SI-182)
 
 # The team's workspace in this project (R-8.6). Everything the pod produces
 # for this project lives here, never inside sipkai-pod/. adopt.sh creates it.
@@ -31,6 +31,9 @@ SDLC_TRUTH_FILES=(
 project_static_analysis() { sdlc_none "no code yet; configure static analysis (formatters, linters, type checks) with the first story that needs it"; }
 project_fast_tests() { sdlc_none "no code yet; configure fast tests (unit and architecture tests) with the first story that needs it"; }
 project_build() { sdlc_none "no code yet; configure build with the first story that needs it"; }
+# The dependency lane (R-4.1) needs both; until they exist, lockfile updates take the full route.
+# project_lock_check()        { npm ci --dry-run --ignore-scripts; }          # the lockfiles still satisfy their manifests
+# project_build_fingerprint() { npm ci --silent && npm run build --silent >/dev/null && find dist -type f -exec shasum -a 256 {} + | sort | shasum -a 256 | cut -c1-16; }
 project_full_tests() { sdlc_none "no code yet; configure full automated tests (integration) with the first story that needs it"; }
 project_ui_tests() { sdlc_none "no code yet; configure UI journeys and accessibility checks with the first story that needs it"; }
 project_deploy_checks() { sdlc_none "no code yet; configure deployment-bound checks with the first story that needs it"; }

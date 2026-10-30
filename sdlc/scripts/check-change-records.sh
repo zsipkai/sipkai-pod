@@ -9,7 +9,8 @@
 # Since 2.2 also: size as the route (R-2.8, since 2.6), the declared second
 # opinion (R-6.2), the gate receipt behind a Regression Certificate (R-2.2)
 # and the budget stop (R-7.2); since 2.8 the record's length by size
-# (R-2.1) and the 'Found only by:' line in each verdict (R-10.2). Records listed in SDLC_LEGACY_RECORDS
+# (R-2.1) and the 'Found only by:' line in each verdict (R-10.2); since 2.9 the
+# dependency lane's size and receipt (R-4.1). Records listed in SDLC_LEGACY_RECORDS
 # (sdlc.config.sh) were finished before 2.2 and keep the old checks only.
 # Runs in `sdlc-gate.sh --fast`, so the pre-commit hook enforces it.
 #
@@ -48,7 +49,7 @@ while IFS= read -r record; do
   grep -Eq '^Budget:[[:space:]]*[0-9]' "$record" || report_fail "$name: needs a numeric Budget from the size table"
   grep -Eq '^Owner:[[:space:]]*[^[:space:]<]' "$record" || report_fail "$name: needs an accountable owner"
   grep -Eq "^Story:[[:space:]]*\`?${SDLC_STORIES_DIR}/STORY-" "$record" || report_fail "$name: needs a story path under ${SDLC_STORIES_DIR}/"
-  grep -Eq '^Lane: (full|test-only|docs/process-only|hotfix|bootstrap)$' "$record" || report_fail "$name: needs one declared Lane"
+  grep -Eq '^Lane: (full|test-only|docs/process-only|hotfix|dependency|bootstrap)$' "$record" || report_fail "$name: needs one declared Lane"
 
   risk=$(sed -n 's/^Risk:[[:space:]]*//p' "$record" | head -n 1 | awk '{print $1}')
   tier=$(sed -n 's/^Execution model:[[:space:]]*//p' "$record" | head -n 1 | awk '{print $1}')
@@ -107,6 +108,13 @@ while IFS= read -r record; do
         report_fail "$name: the gate receipt does not record a pass ('$receipt') — R-2.2"
       elif [ -n "$sha" ] && [[ "$receipt_sha" != "$sha"* ]] && [[ "$sha" != "$receipt_sha"* ]]; then
         report_fail "$name: the gate receipt is for $receipt_sha, the certificate names $sha — R-2.2"
+      fi
+    fi
+    # The dependency lane (R-4.1, SI-184): Size S, and from DEVELOPED the receipt of check-dependency-lane.sh.
+    if [ "$lane" = "dependency" ]; then
+      [ "$size" = "S" ] || report_fail "$name: the dependency lane is Size S (got '${size:-none}') — R-4.1"
+      if [ "$rank" -ge 2 ] && ! section_body "$record" "Implementation Record" | grep -Eq '^- Dependency lane receipt:.*DEPENDENCY LANE PASS [0-9a-f]{7,40}'; then
+        report_fail "$name: the dependency lane needs '- Dependency lane receipt:' with the PASS line check-dependency-lane.sh printed — R-4.1"
       fi
     fi
     # Every ledger line says whether its number is measured or an estimate (R-7.3).

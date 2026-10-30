@@ -1,5 +1,17 @@
 # Sipk.ai POD changelog
 
+## 2.9.0 — 2026-10-30
+
+Approved by Zoltán Šipkai in chat on 2026-10-30 ("Yes, build 2.9"), after asking "I need to speed up and make my pipeline more effective, what are the improvement points? Can you make it happen?". Built from STORY-045, the first story on a short route, and the 2.8.0 push. SI-181 to SI-186. 69 process evaluations, run both inside a project and on their own. No control is removed.
+
+- **Budgets follow risk too** (SI-181, R-7.2). HIGH adds the reviews it requires: S 450k, M 1.1M, L 2.1M, XL 3.6M; LOW and STANDARD keep 300k, 800k, 1.6M, 3M. STORY-045 stopped for the founder because its reviews alone used two thirds of an S budget.
+- **The start check sees where a session began** (SI-182). The project's harness settings set `SIPKAI_PROJECT`; `stage-start.sh` stops any session without it. Comparing folders could not catch a session that started in the parent folder and then moved in.
+- **Two stories at a time** (SI-183, R-2.4). Stories in a sprint that do not block each other and share no declared files run at once, each in its own worktree; they merge one at a time, and the second re-runs its full gate on the new `main`.
+- **A dependency lane** (SI-184, R-4.1). `check-dependency-lane.sh` proves an update changed only lockfiles, still satisfies its manifests, leaves the shipped build byte-identical and keeps the scan green; such an update takes one session, Adam's review and a 200k budget. Any refusal is the full route. A project opts in with `project_lock_check` and `project_build_fingerprint`.
+- **Reviewers start light** (SI-185, R-6.1). Each persona is briefed as its own agent type, with only its job's tools, never as a general-purpose agent.
+- **The pod checks itself** (SI-186). `run-evals.sh` runs on its own in a throwaway project, and a GitHub workflow runs it on every push. Five second-opinion evaluations no longer lean on a project's STORY-001.
+- **Expected effect, not yet measured:** fewer founder stops on HIGH stories, about half the calendar time of a sprint with independent stories, and about 200k saved on each dependency update. Tina measures it over the next five stories.
+
 ## 2.8.0 — 2026-10-30
 
 Approved by Zoltán Šipkai in chat on 2026-10-30 ("Yes, build 2.8"), after asking "can you make the AI POD half of the token and still the same quality?". Built from the ledger of Money Review's ten finished stories (15.7M tokens; 31% Review, 23% Validate, 12% Plan). SI-177 to SI-180. 63 process evaluations. No control is removed: every criterion keeps a proof that can fail, the design check and the review stay with someone other than the builder, the second model family, Adam at HIGH risk, `top` for verification, the gate on the exact commit and the founder's authority are unchanged.

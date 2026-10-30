@@ -10,7 +10,9 @@ description: Sipk.ai POD, the route for a Size S story. One session: a short pla
 
 ## Who
 
-Sipk.ai orchestrates; Michal builds at the tier the risk routes; Bruno proves; one reviewer, a fresh subagent who never saw the build, wears the lens the story's surface needs (Adam's at HIGH risk); the second model family reviews the diff at STANDARD risk and above (R-6.2); Ivan ships; Tina adds the line to the bill.
+Sipk.ai orchestrates; Michal builds at the tier the risk routes; Bruno proves; one reviewer, a fresh subagent of its own agent type (`sipkai-pod:adam` and so on, R-6.1) who never saw the build, wears the lens the story's surface needs (Adam's at HIGH risk); the second model family reviews the diff at STANDARD risk and above (R-6.2); Ivan ships; Tina adds the line to the bill.
+
+On the dependency lane (R-4.1), step 1 is only `bash sipkai-pod/sdlc/scripts/check-dependency-lane.sh` once the update is committed: its receipt replaces the design check, Adam's lens is the one review and there is no second opinion; a refusal moves the story to the full route.
 
 ## Steps
 

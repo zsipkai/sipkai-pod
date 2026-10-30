@@ -9,12 +9,16 @@
 #    stage started in a parent folder runs without them (SI-029, SI-144).
 #    Run this before any `cd`; the folder you are in is the folder you
 #    started in.
-# 2. The story is inside its budget, or a named human decided to go on.
+# 2. The project's own harness settings loaded (SI-182). The folder test
+#    passes once a session has moved into the root, but settings load only
+#    at start, so the project's settings set SIPKAI_PROJECT to the
+#    SDLC_PROJECT_NAME in sdlc.config.sh, and a session without it stops.
+# 3. The story is inside its budget, or a named human decided to go on.
 #    The record's `Tokens spent` lines are summed against `Budget:`; at or
 #    above it, the stage stops unless a `Budget decision:` line quotes the
 #    founder's own words and names
 #    human and a date (SI-070).
-# 3. The step can finish inside what is left (SI-179). Each step of a route
+# 4. The step can finish inside what is left (SI-179). Each step of a route
 #    is planned at a share of the budget; when less than that share is
 #    left, the step stops before it starts, not halfway through.
 #
@@ -43,6 +47,17 @@ else
   echo "FAIL  this session started in $started_in, not in the project root $root."
   echo "      The project's deny rules and reviewers load only for a session started in the root."
   echo "      Stop and start the stage again from $root (or from the story's worktree root)."
+  fail=1
+fi
+
+if [ -z "${SDLC_PROJECT_NAME:-}" ]; then
+  echo "FAIL  SDLC_PROJECT_NAME is not set in sdlc.config.sh"; fail=1
+elif [ "${SIPKAI_PROJECT:-}" = "$SDLC_PROJECT_NAME" ]; then
+  echo "PASS  the project's harness settings are loaded (SIPKAI_PROJECT)"
+else
+  echo "FAIL  the project's harness settings are not loaded: SIPKAI_PROJECT is '${SIPKAI_PROJECT:-unset}', not '$SDLC_PROJECT_NAME'."
+  echo "      This session started outside the project, so its deny rules and environment never loaded."
+  echo "      Stop and start a new session in $root (its settings must set SIPKAI_PROJECT, adapters/claude-code/README.md)."
   fail=1
 fi
 

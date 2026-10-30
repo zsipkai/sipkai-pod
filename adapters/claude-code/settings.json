@@ -14,7 +14,17 @@
     ]
   },
   "extraKnownMarketplaces": {
-    "sipkai-pod": { "source": { "source": "directory", "path": "./sipkai-pod" } }
+    "sipkai-pod": {
+      "source": {
+        "source": "directory",
+        "path": "./sipkai-pod"
+      }
+    }
   },
-  "enabledPlugins": { "sipkai-pod@sipkai-pod": true }
+  "enabledPlugins": {
+    "sipkai-pod@sipkai-pod": true
+  },
+  "env": {
+    "SIPKAI_PROJECT": "Project name"
+  }
 }

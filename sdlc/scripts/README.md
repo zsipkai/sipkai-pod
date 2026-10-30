@@ -14,6 +14,7 @@ The gate and its checks. They read folders, gate stages and tools from the proje
 | `check-dependencies.sh` | known vulnerabilities (R-8.5) | `--full` and above, Adam |
 | `check-tools.sh` | required tools present, fail closed | every gate |
 | `check-md-links.py` | no broken relative links | every gate |
+| `check-dependency-lane.sh` | whether a lockfile-only update may take the dependency lane: only lockfiles and paperwork changed, manifests still satisfied, the shipped build byte-identical to `main`'s, the scan green; prints the receipt the record quotes (R-4.1) | Sipk.ai on `/quick`, before choosing the lane |
 | `review-pack.sh` | the one pack every reviewer of a round starts from: the record's contract without its ledger, earlier findings or verdicts, the named files' current text, and at Review the diff (R-6.1) | Sipk.ai at every design check and review |
 | `second-opinion.sh` | the pack for the independent reviewer, paste or `--auto`; exit 3 when no second opinion was obtained (R-6.2) | Marketa at Validate, Sipk.ai at Review |
 | `cost-report.sh` | the bill from the ledger lines (R-7.3) | Tina |

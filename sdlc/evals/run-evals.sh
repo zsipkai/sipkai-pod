@@ -11,7 +11,7 @@ if [ ! -f "$pod/../sdlc.config.sh" ]; then
   proj=$(mktemp -d); mkdir "$proj/sipkai-pod"
   (cd "$pod" && tar --exclude=.git -cf - .) | tar -xf - -C "$proj/sipkai-pod"
   cp "$pod/sdlc/evals/project/sdlc.config.sh" "$proj/sdlc.config.sh"
-  git -C "$proj" init -q && git -C "$proj" add -A && git -C "$proj" -c user.email=eval@example.test -c user.name=eval commit -qm "evaluation project"
+  git -C "$proj" init -q -b main && git -C "$proj" add -A && git -C "$proj" -c user.email=eval@example.test -c user.name=eval commit -qm "evaluation project"
   bash "$proj/sipkai-pod/sdlc/evals/run-evals.sh"; rc=$?
   rm -rf "$proj"; exit "$rc"
 fi

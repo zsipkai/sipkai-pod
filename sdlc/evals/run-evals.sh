@@ -167,7 +167,7 @@ evaluate "hook: index matching the working tree runs the gate"      0       "sta
 # Dependency lane (R-4.1, SI-184): a throwaway repository whose project
 # functions read the lockfile, and a stand-in osv-scanner that finds nothing.
 mkdir -p "$tmp/osv-ok"; printf '#!/bin/sh\nexit 0\n' > "$tmp/osv-ok/osv-scanner"; chmod +x "$tmp/osv-ok/osv-scanner"
-lane() {   # name | what the story branch changes
+lane() {   # name | what the story branch commits | what it leaves uncommitted
   local d="$tmp/lane-$1"
   mkdir -p "$d/sipkai-pod/sdlc" "$d/records" "$d/stories"; cp -R sipkai-pod/sdlc/scripts "$d/sipkai-pod/sdlc/scripts"
   cat > "$d/sdlc.config.sh" <<'CFG'
@@ -180,10 +180,13 @@ CFG
   git -C "$d" checkout -q -b story
   (cd "$d" && eval "$2")
   git -C "$d" add -A && git -C "$d" -c user.email=eval@example.test -c user.name=eval commit -qm story
+  (cd "$d" && eval "${3:-:}")
   (cd "$d" && PATH="$tmp/osv-ok:$PATH" bash sipkai-pod/sdlc/scripts/check-dependency-lane.sh)
 }
 evaluate "dependency lane: a lockfile-only update passes"   0       "DEPENDENCY LANE PASS"      lane only-lock 'sed -i.bak s/1.0.0/1.0.1/ package-lock.json && rm package-lock.json.bak && echo note > records/STORY-1.md'
 evaluate "dependency lane: a code change is refused"        nonzero "neither a lockfile"        lane code 'sed -i.bak s/1.0.0/1.0.1/ package-lock.json && rm package-lock.json.bak && echo code > app.js'
+evaluate "dependency lane: code renamed onto a lockfile is refused" nonzero "install-hooks.sh changed (D)" lane rename 'mkdir -p lib && git mv sipkai-pod/sdlc/scripts/install-hooks.sh lib/package-lock.json'
+evaluate "dependency lane: uncommitted changes are refused"  nonzero "uncommitted changes"      lane dirty 'sed -i.bak s/1.0.0/1.0.1/ package-lock.json && rm package-lock.json.bak' 'echo x > stray.txt'
 evaluate "dependency lane: a changed build is refused"      nonzero "differs from main"         lane build 'sed -i.bak s/v1/v2/ package-lock.json && rm package-lock.json.bak'
 
 improvements() { CHECK_IMPROVEMENTS_FILE="$F/improvements/$1.md" bash "$S/check-improvements.sh"; }

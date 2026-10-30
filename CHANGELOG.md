@@ -1,5 +1,14 @@
 # Sipk.ai POD changelog
 
+## 2.9.1 — 2026-10-30
+
+Fixes to the dependency lane (SI-184), found by Adam's review of Money Review's pin of 2.9.0; within the founder's approval of 2.9 ("Yes, build 2.9"). 71 process evaluations.
+
+- `check-dependency-lane.sh` reads the diff without rename detection, so code renamed onto a lockfile name shows as the deletion it is, and accepts only lockfiles changed in place (S-3).
+- It refuses a working tree with uncommitted changes, because the fingerprint builds the working tree, not the commit (S-4).
+- It stops at the first refusal of its file check, and removes its throwaway worktree of `main` on every exit (S-7).
+- The pod's own CI annotates each failing case, and its evaluations run on `main` on every machine (a Linux runner's git defaults to `master`).
+
 ## 2.9.0 — 2026-10-30
 
 Approved by Zoltán Šipkai in chat on 2026-10-30 ("Yes, build 2.9"), after asking "I need to speed up and make my pipeline more effective, what are the improvement points? Can you make it happen?". Built from STORY-045, the first story on a short route, and the 2.8.0 push. SI-181 to SI-186. 69 process evaluations, run both inside a project and on their own. No control is removed.

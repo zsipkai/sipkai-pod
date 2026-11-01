@@ -1,5 +1,13 @@
 # Sipk.ai POD changelog
 
+## 2.10.0 — 2026-11-01
+
+Token budgets no longer stop for the founder (SI-187). His decision, in his words: "You dont need to ask my anymore about budget raise, just raise and dont ask me never anynore", then "Yes, both", 2026-11-01.
+
+- R-7.2 and the charter: when a budget runs out, Sipk.ai raises it, writes a `Budget raised:` line and reports the overrun.
+- `stage-start.sh` prints a NOTE on a budget instead of failing. `check-change-records.sh` still refuses a stage completed over budget with no raised `Budget:`, so the ledger stays honest.
+- Tokens only: cloud spending, caps and everything else in R-5.2 still wait for him.
+
 ## 2.9.1 — 2026-10-30
 
 Fixes to the dependency lane (SI-184), found by Adam's review of Money Review's pin of 2.9.0; within the founder's approval of 2.9 ("Yes, build 2.9"). 71 process evaluations.

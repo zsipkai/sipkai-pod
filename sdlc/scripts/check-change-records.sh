@@ -8,7 +8,7 @@
 # deployment receipts, and a fully checked Definition of Done at DEPLOYED.
 # Since 2.2 also: size as the route (R-2.8, since 2.6), the declared second
 # opinion (R-6.2), the gate receipt behind a Regression Certificate (R-2.2)
-# and the budget stop (R-7.2); since 2.8 the record's length by size
+# and the raised budget (R-7.2); since 2.8 the record's length by size
 # (R-2.1) and the 'Found only by:' line in each verdict (R-10.2); since 2.9 the
 # dependency lane's size and receipt (R-4.1). Records listed in SDLC_LEGACY_RECORDS
 # (sdlc.config.sh) were finished before 2.2 and keep the old checks only.
@@ -133,7 +133,7 @@ while IFS= read -r record; do
     if [ "$rank" -ge 4 ] && ! section_body "$record" "Review Verdict" | grep -Eq '^Found only by:[[:space:]]*[^[:space:]<]'; then
       report_fail "$name: Review Verdict needs a 'Found only by:' line (each reviewer and the findings no one else raised, or 'none') — R-10.2"
     fi
-    # The budget stop (R-7.2): over budget, a stage may not complete without a human's decision.
+    # The raised budget (R-7.2): over budget, a stage may not complete until Budget: is raised, so the ledger stays honest.
     budget_text=$(sed -n 's/^Budget:[[:space:]]*//p' "$record" | head -n 1 | awk '{print $1}')
     budget=$(python3 -c '
 import re, sys
@@ -146,7 +146,7 @@ print(int(n * (1000 if u == "k" else 1000000 if u == "m" else 1)))' "${budget_te
     for i in "${!SKILLS[@]}"; do [ "${SKILLS[$i]}" = "$last" ] && last_rank=$i; done
     if [ "$budget" -gt 0 ] && [ "$spent" -ge "$budget" ] && [ "$rank" -ge "$last_rank" ] \
        && ! grep -Eq '^Budget decision:[[:space:]]*"[^"]{3,}".*[0-9]{4}-[0-9]{2}-[0-9]{2}' "$record"; then
-      report_fail "$name: spent $spent of its $budget budget and reached $stage without a 'Budget decision:' quoting the founder's own words, or a raised Budget — R-7.2"
+      report_fail "$name: spent $spent of its $budget budget and reached $stage without a raised Budget: raise it and add a 'Budget raised:' line (no founder needed) — R-7.2"
     fi
   fi
 

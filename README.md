@@ -2,7 +2,7 @@
 
 **A digital agile team of AI agents that you can drop into any project. Give it a project description and it knows what to do: business case and feasibility, backlog, Sprint 0, then development, story by story, with evidence at every step and one human who owns every decision that matters.**
 
-Version 2.9.1 (2026-10-30). By Sipk.ai, Zoltán Šipkai. MIT licensed.
+Version 2.10.0 (2026-11-01). By Sipk.ai, Zoltán Šipkai. MIT licensed.
 
 ## Start here
 

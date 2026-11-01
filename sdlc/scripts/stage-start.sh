@@ -13,14 +13,10 @@
 #    passes once a session has moved into the root, but settings load only
 #    at start, so the project's settings set SIPKAI_PROJECT to the
 #    SDLC_PROJECT_NAME in sdlc.config.sh, and a session without it stops.
-# 3. The story is inside its budget, or a named human decided to go on.
-#    The record's `Tokens spent` lines are summed against `Budget:`; at or
-#    above it, the stage stops unless a `Budget decision:` line quotes the
-#    founder's own words and names
-#    human and a date (SI-070).
-# 4. The step can finish inside what is left (SI-179). Each step of a route
-#    is planned at a share of the budget; when less than that share is
-#    left, the step stops before it starts, not halfway through.
+# 3. The budget (R-7.2, SI-187). The record's `Tokens spent` lines are summed
+#    against `Budget:`. A token budget never stops a step: at or above it, or
+#    with less left than the step's planned share (SI-179), this prints a NOTE
+#    and Sipk.ai raises `Budget:` without asking the founder.
 #
 # CHECK_RECORDS_DIR overrides the records folder (the process evaluations use fixtures).
 
@@ -92,19 +88,15 @@ print(int(n * (1000 if u == "k" else 1000000 if u == "m" else 1)))' "${budget_te
     need=$(( budget * share / 100 )); left=$(( budget - spent ))
     if [ "$share" -gt 0 ] && [ "$left" -lt "$need" ] \
        && ! grep -Eq '^Budget decision:[[:space:]]*"[^"]{3,}".*[0-9]{4}-[0-9]{2}-[0-9]{2}' "$record"; then
-      echo "FAIL  $story has $left tokens left, and $step is planned at about $need ($share% of the Size $size budget) (R-7.2)."
-      echo "      Stop before starting, not halfway. The founder chooses: raise the budget, split the story, or go on."
-      echo "      Record his answer as a new Budget: value, or as 'Budget decision: \"<his own words>\" — <name>, YYYY-MM-DD'."
-      fail=1
+      echo "NOTE  $story has $left tokens left, and $step is planned at about $need ($share% of the Size $size budget) (R-7.2)."
+      echo "      Raise the budget now and go on: a new Budget: value and a 'Budget raised: <old> to <new> — <why>, YYYY-MM-DD' line. Never stop for the founder; report the overrun."
     fi
   elif grep -Eq '^Budget decision:[[:space:]]*"[^"]{3,}".*[0-9]{4}-[0-9]{2}-[0-9]{2}' "$record"; then
     echo "PASS  $story is over budget ($spent of $budget), and a human decided to go on:"
     grep -E '^Budget decision:' "$record" | tail -n 1 | sed 's/^/      /'
   else
-    echo "FAIL  $story has spent $spent of its $budget token budget (R-7.2)."
-    echo "      Stop. The founder chooses: raise the budget, split the story, or escalate the tier."
-    echo "      Record his answer as a new Budget: value, or as 'Budget decision: \"<his own words>\" — <name>, YYYY-MM-DD'."
-    fail=1
+    echo "NOTE  $story has spent $spent of its $budget token budget (R-7.2)."
+    echo "      Raise the budget now and go on: a new Budget: value and a 'Budget raised: <old> to <new> — <why>, YYYY-MM-DD' line. Never stop for the founder; report the overrun."
   fi
 fi
 exit "$fail"

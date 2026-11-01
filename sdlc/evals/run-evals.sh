@@ -51,10 +51,10 @@ evaluate "records: DEPLOYED without receipts"             nonzero "Deployment Re
 evaluate "records: review without a declared second opinion" nonzero "Review Verdict needs a 'Second opinion:'" records missing-second-opinion
 evaluate "records: certificate names an unknown commit"    nonzero "does not have"             records receipt-unknown-sha
 evaluate "records: certificate without the gate receipt"   nonzero "needs '- Gate receipt:'"   records receipt-missing
-evaluate "records: over budget, stage completed anyway"    nonzero "quoting the founder's own words" records over-budget-no-decision
+evaluate "records: over budget, stage completed anyway"    nonzero "without a raised Budget" records over-budget-no-decision
 evaluate "records: over budget, halted inside the stage"   0       "PASS"                      records over-budget-halted
 evaluate "records: over budget with a human's decision"    0       "PASS"                      records over-budget-decided
-evaluate "records: a budget decision without the founder's words" nonzero "quoting the founder's own words" records over-budget-unquoted
+evaluate "records: a budget decision without the founder's words" nonzero "without a raised Budget" records over-budget-unquoted
 evaluate "records: a ledger line without measured or estimate" nonzero "'measured' or 'estimate'" records unlabelled-ledger
 evaluate "records: a CRITICAL story below XL"              nonzero "always planned as XL"      records critical-below-xl
 evaluate "records: Size S at LOW risk, reviewed alone"     0       "PASS"                      records s-low-risk-reviewed
@@ -68,9 +68,9 @@ evaluate "records: dependency lane without its receipt"    nonzero "needs '- Dep
 # Start-of-stage check: the session's folder and the budget stop.
 evaluate "stage start: session outside the project root"   nonzero "not in the project root"   bash -c 'cd sipkai-pod && bash sdlc/scripts/stage-start.sh STORY-901'
 evaluate "stage start: project settings not loaded"        nonzero "harness settings are not loaded" env -u SIPKAI_PROJECT CHECK_RECORDS_DIR="$F/records/over-budget-decided" bash "$S/stage-start.sh" STORY-901
-evaluate "stage start: over budget stops the stage"         nonzero "token budget (R-7.2)"     env CHECK_RECORDS_DIR="$F/records/over-budget-no-decision" bash "$S/stage-start.sh" STORY-901
+evaluate "stage start: over budget says raise it, never stops" 0    "Never stop for the founder"   env CHECK_RECORDS_DIR="$F/records/over-budget-no-decision" bash "$S/stage-start.sh" STORY-901
 evaluate "stage start: the founder's quoted decision lets it go" 0   "a human decided"           env CHECK_RECORDS_DIR="$F/records/over-budget-decided" bash "$S/stage-start.sh" STORY-901
-evaluate "stage start: a step that cannot finish stops first" nonzero "Stop before starting"  env CHECK_RECORDS_DIR="$F/records/step-share-short" bash "$S/stage-start.sh" STORY-901 ship
+evaluate "stage start: a step short of budget says raise it" 0      "Never stop for the founder" env CHECK_RECORDS_DIR="$F/records/step-share-short" bash "$S/stage-start.sh" STORY-901 ship
 evaluate "stage start: a step that fits what is left starts" 0      "PASS"                      env CHECK_RECORDS_DIR="$F/records/step-share-short" bash "$S/stage-start.sh" STORY-901 test-regression
 
 # Review pack: the contract and the work, never the ledger, earlier findings or conclusions (R-6.1).

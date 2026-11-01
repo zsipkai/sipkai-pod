@@ -82,9 +82,9 @@ Order small tasks by dependency. Name verified files and tests; label uncertain 
 
 ### Agent budget and spend ledger
 
-- Token budget (stop-loss): from the size table in the `Budget:` metadata
+- Token budget: from the size table in the `Budget:` metadata
 - Allowed tier by stage: per sipkai-pod/sdlc/RULES.md section 7 (execution at the routed tier; verification always top)
-- Stop condition: crossing the budget halts the stage for a human decision — raise, split, or escalate the tier. `stage-start.sh` checks it at the start of every stage (R-7.2). A raise changes `Budget:`; a decision to go on without one is a line `Budget decision: <what> — <name>, YYYY-MM-DD`.
+- When it runs out: Sipk.ai raises it without asking (R-7.2). A raise changes `Budget:` and adds a line `Budget raised: <old> to <new> — <why>, YYYY-MM-DD`; `stage-start.sh` says at the start of every stage when one is due.
 
 Each stage appends one line here as it finishes (mark estimates as such):
 

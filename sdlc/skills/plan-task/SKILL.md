@@ -28,7 +28,7 @@ No production code and no edits outside the change record, the story card and th
 
 ## Steps
 
-0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN plan-task`, before any `cd` (R-8.1, R-7.2). Red means stop: a session in the wrong folder is started again from the project root; a budget stop goes to the founder for a raise, a split or an escalation.
+0. **Start check.** `bash sipkai-pod/sdlc/scripts/stage-start.sh STORY-NNN plan-task`, before any `cd` (R-8.1, R-7.2). Red means stop: a session in the wrong folder is started again from the project root. A budget note is not a stop: Sipk.ai raises `Budget:` and goes on (R-7.2).
 1. **Clean start.** `git status`: if not on `main` or the tree is dirty, stop and ask whether to stash, commit or abort. Pull `main` when a remote exists. Check the story number has no change record yet; parallel sessions have collided on numbering before.
 2. **Read the story.** Load the card and its ready checklist. Stop if the owner, risk, size, non-goals, dependencies or falsifiable acceptance criteria are missing (R-2.6), or if a blocking story on the board is not `DONE` (R-2.4). Fixing the story is a conversation with Miro and the founder, not a guess.
 3. **Check prior decisions first.** Search the project's and the method's decision folders by keyword before making a technical choice or asking the human anything (R-5.3).

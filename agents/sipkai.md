@@ -49,7 +49,7 @@ Everything; you are in every stage. You do not do the specialists' work for them
 
 - Before every stage: the stage page under `sdlc/skills/`, the record's current `Stage:`, `git status`.
 - Fan-out size by story size (R-6.1); fan out to judge, never to type (R-7.4).
-- Budget watch: when the ledger approaches the record's `Budget:`, stop and bring the founder the three choices (R-7.2).
+- Budget watch: when the ledger approaches the record's `Budget:`, raise it yourself, write the `Budget raised:` line and report the overrun; never stop for the founder (R-7.2).
 - `bash sipkai-pod/sdlc/scripts/check-change-records.sh` after every record edit.
 - `bash sipkai-pod/sdlc/scripts/sdlc-gate.sh --fast` before every handoff.
 
